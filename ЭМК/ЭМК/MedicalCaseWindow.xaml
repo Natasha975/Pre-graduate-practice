@@ -451,7 +451,146 @@
                 </ScrollViewer>
             </TabItem>
 
-            <TabItem Header="Направления"/>
+            <TabItem Header="Направления">
+                <ScrollViewer>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Форма направления -->
+                        <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto">
+                            <Grid Margin="10" x:Name="PrintContent">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <!-- Шапка направления -->
+                                <StackPanel Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Center">
+                                    <TextBlock Text="НАПРАВЛЕНИЕ" FontWeight="Bold" FontSize="16" Margin="0,0,0,10"/>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="№ 3 от "/>
+                                        <TextBlock x:Name="DateNaprTB"/>
+                                    </StackPanel>
+                                </StackPanel>
+
+                                <!-- Данные пациента -->
+                                <TextBlock Grid.Row="1" Grid.Column="0" Text="Пациент:" Margin="5"/>
+                                <TextBox Grid.Row="1" Grid.Column="1" x:Name="PatientNameTextBox" Margin="5"/>
+
+                                <TextBlock Grid.Row="2" Grid.Column="0" Text="Дата рождения:" Margin="5,10,10,10"/>
+                                <TextBlock Grid.Row="2" Grid.Column="1" x:Name="PatientBirthDatePicker" Margin="10"/>
+
+                                <TextBlock Grid.Row="3" Grid.Column="0" Text="Направлен в:" Margin="5"/>
+                                <ComboBox Grid.Row="3" Grid.Column="1" x:Name="DirectionComboBox" Margin="5"
+                                          TextSearch.TextPath="Content"
+                                          IsEditable="True"
+                                          IsTextSearchEnabled="True"
+                                          StaysOpenOnEdit="True"
+                                          ToolTip="Выберите или введите вид направления">
+                                    <!-- Консультации специалистов -->
+                                    <ComboBoxItem Content="Консультация кардиолога"/>
+                                    <ComboBoxItem Content="Консультация невролога"/>
+                                    <ComboBoxItem Content="Консультация эндокринолога"/>
+                                    <ComboBoxItem Content="Консультация гастроэнтеролога"/>
+                                    <ComboBoxItem Content="Консультация пульмонолога"/>
+                                    <ComboBoxItem Content="Консультация ревматолога"/>
+                                    <ComboBoxItem Content="Консультация нефролога"/>
+                                    <ComboBoxItem Content="Консультация гематолога"/>
+                                    <ComboBoxItem Content="Консультация аллерголога-иммунолога"/>
+                                    <ComboBoxItem Content="Консультация инфекциониста"/>
+
+                                    <!-- Инструментальные исследования -->
+                                    <ComboBoxItem Content="Рентгенография"/>
+                                    <ComboBoxItem Content="Флюорография"/>
+                                    <ComboBoxItem Content="Компьютерная томография (КТ)"/>
+                                    <ComboBoxItem Content="Магнитно-резонансная томография (МРТ)"/>
+                                    <ComboBoxItem Content="Ультразвуковое исследование (УЗИ)"/>
+                                    <ComboBoxItem Content="Эхокардиография (ЭхоКГ)"/>
+                                    <ComboBoxItem Content="Электроэнцефалография (ЭЭГ)"/>
+                                    <ComboBoxItem Content="Электрокардиография (ЭКГ)"/>
+                                    <ComboBoxItem Content="Суточное мониторирование ЭКГ (Холтер)"/>
+                                    <ComboBoxItem Content="Спирометрия"/>
+
+                                    <!-- Лабораторные исследования -->
+                                    <ComboBoxItem Content="Общий анализ крови"/>
+                                    <ComboBoxItem Content="Биохимический анализ крови"/>
+                                    <ComboBoxItem Content="Коагулограмма"/>
+                                    <ComboBoxItem Content="Гормональные исследования"/>
+                                    <ComboBoxItem Content="Общий анализ мочи"/>
+                                    <ComboBoxItem Content="Анализ мочи по Нечипоренко"/>
+                                    <ComboBoxItem Content="Анализ кала (копрограмма)"/>
+                                    <ComboBoxItem Content="Микробиологические исследования"/>
+
+                                    <!-- Процедуры и манипуляции -->
+                                    <ComboBoxItem Content="Физиотерапия"/>
+                                    <ComboBoxItem Content="Массаж"/>
+                                    <ComboBoxItem Content="Лечебная физкультура (ЛФК)"/>
+                                    <ComboBoxItem Content="Иглорефлексотерапия"/>
+                                    <ComboBoxItem Content="Перевязка"/>
+                                    <ComboBoxItem Content="Капельница"/>
+
+                                    <!-- Специализированные исследования -->
+                                    <ComboBoxItem Content="Колоноскопия"/>
+                                    <ComboBoxItem Content="Гастроскопия (ФГДС)"/>
+                                    <ComboBoxItem Content="Бронхоскопия"/>
+                                    <ComboBoxItem Content="Цистоскопия"/>
+                                </ComboBox>
+
+                                <ComboBox x:Name="cbNDiagnosis" 
+                                          Grid.Row="4" Grid.Column="1"
+                                          Margin="5,5,5,10"
+                                          IsEditable="True"
+                                          IsTextSearchEnabled="True"
+                                          TextSearch.TextPath="Code"
+                                          StaysOpenOnEdit="True"
+                                          ToolTip="Выберите диагноз по МКБ-10"
+                                          PreviewKeyUp="DiagnosisComboBox_PreviewKeyUp">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{Binding Code}" FontWeight="Bold" Width="60"/>
+                                                <TextBlock Text="{Binding Name}" Margin="5,0,0,0"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                                <TextBlock Grid.Row="4" Grid.Column="0" Text="Диагноз:" Margin="5"/>
+
+                                <TextBlock Grid.Row="5" Grid.Column="0" Text="Примечания:" Margin="5"/>
+                                <TextBox Grid.Row="5" Grid.Column="1" x:Name="NotesTextBox" Margin="5" Height="60" TextWrapping="Wrap" AcceptsReturn="True"/>
+                            </Grid>
+                        </ScrollViewer>
+
+                        <!-- Подпись -->
+                        <StackPanel Grid.Row="1" HorizontalAlignment="Right" Margin="10">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Врач: " Margin="0,0,0,5"/>
+                                <TextBlock x:Name="txtDoctorInfoFree" Margin="0,0,0,5"/>
+                            </StackPanel>
+                            <TextBlock Text="Подпись: _______________________"/>
+                            <TextBlock Text="М. П." TextAlignment="Center"/>
+                        </StackPanel>
+
+                        <!-- Панель инструментов -->
+                        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="5">
+                            <Button Content="Создать направление" Margin="5" />
+                            <Button Content="Печать" Margin="5"/>
+                        </StackPanel>
+                    </Grid>
+                </ScrollViewer>
+            </TabItem>
             <!--<TabItem Header="Услуги"/>-->
 
             <TabItem Header="Листки нетрудоспособности"/>
