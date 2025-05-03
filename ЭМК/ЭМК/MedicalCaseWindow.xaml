@@ -714,14 +714,16 @@
                                             <TextBlock Text="по" VerticalAlignment="Center" Margin="0,0,10,0"/>
                                             <DatePicker Width="120" Margin="0,0,10,0"
                                                         SelectedDate="{Binding EndDate, Mode=TwoWay}"/>
-                                            <Button Content="-" x:Name="RemoveDateRange" Width="30" Margin="10,0,0,0"/>
+                                            <Button Content="-" x:Name="RemoveDateRange" Width="30" Margin="10,0,0,0"
+                                                    Click="RemoveDateRange_Click"/>
                                         </StackPanel>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
 
                             <!-- Кнопка добавления нового периода -->
-                            <Button Content="+" x:Name="AddDateRange" Width="50" Margin="30,5,30,5" HorizontalAlignment="Left"/>
+                            <Button Content="+" Width="50" Margin="30,5,30,5" HorizontalAlignment="Left"
+                                    Click="AddDateRange_Click"/>
                         </StackPanel>
 
                         <StackPanel Grid.Row="17" Grid.ColumnSpan="2">
@@ -735,7 +737,7 @@
                         <StackPanel Grid.Row="18" Orientation="Horizontal" Margin="30">
                             <Button Content="Создать" Width="100" Margin="5"/>
                             <Button Content="Печать" Width="100" Margin="5"/>
-                            <Button Content="Экспорт в PDF" x:Name="ExportToPdf" Width="130" Margin="5"/>
+                            <Button Content="Экспорт в PDF" x:Name="ExportToPdf" Width="130" Margin="5" Click="ExportToPdf_Click"/>
                         </StackPanel>
                     </Grid>
                 </ScrollViewer>

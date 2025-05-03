@@ -116,6 +116,7 @@
     <Compile Include="Model\attachment.cs">
       <DependentUpon>ModelDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\DateRange.cs" />
     <Compile Include="Model\doctor.cs">
       <DependentUpon>ModelDB.tt</DependentUpon>
     </Compile>

@@ -1,9 +1,11 @@
 ﻿using iTextSharp.text;
+using iTextSharp.text.pdf;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -69,6 +71,10 @@ namespace ЭМК
 			PatientNameTextBox.Text = medicalCase.PatientName;
 			PatientBirthDatePicker.Text = medicalCase.PatientBirthDate;
 			DateNaprTB.Text = DateTime.Now.ToString("dd.MM.yyyy");
+
+			// Добавляем первый период по умолчанию
+			AddDateRange();
+			DateRangesContainer.ItemsSource = _dateRanges;
 		}
 
 		public async Task NumberVoidAsync()
@@ -281,6 +287,10 @@ namespace ЭМК
 			txtPatientSnils.Text = medicalCase.PatientSnils;
 			txtPatientAge.Text = medicalCase.PatientAge;
 			IDPatientTextBlock.Text = medicalCase.IdPatient.ToString();
+
+			DateCpNaprTB.Text = DateTime.Now.ToString("dd.MM.yyyy");
+			FullNameTextBox.Text = medicalCase.PatientName;
+			BirthDatePicker.Text = medicalCase.PatientBirthDate;
 		}
 
 		// Текущая вводимая жалоба
@@ -595,6 +605,267 @@ namespace ЭМК
 			document.Add(paragraph);
 		}
 
+		private void AddDateRange_Click(object sender, RoutedEventArgs e)
+		{
+			AddDateRange();
+		}
+
+		private void AddDateRange()
+		{
+			_dateRanges.Add(new object()); // Просто добавляем пустой объект как placeholder
+		}
+
+		private void RemoveDateRange_Click(object sender, RoutedEventArgs e)
+		{
+			if (sender is Button button && button.DataContext is object item)
+			{
+				_dateRanges.Remove(item);
+			}
+		}
+
+		private void ExportToPdf_Click(object sender, RoutedEventArgs e)
+		{
+			try
+			{
+				// Создаем диалог сохранения файла
+				var saveFileDialog = new Microsoft.Win32.SaveFileDialog
+				{
+					Filter = "PDF файлы (*.pdf)|*.pdf",
+					FileName = $"Справка_{DateTime.Now:yyyyMMdd_HHmmss}.pdf"
+				};
+
+				if (saveFileDialog.ShowDialog() == true)
+				{
+					// Создаем документ PDF
+					Document document = new Document(PageSize.A4, 50, 50, 50, 50);
+					PdfWriter writer = PdfWriter.GetInstance(document, new FileStream(saveFileDialog.FileName, FileMode.Create));
+
+					document.Open();
+
+					// Добавляем шрифт с поддержкой кириллицы
+					string fontPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "arial.ttf");
+					BaseFont baseFont = BaseFont.CreateFont(fontPath, BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+					Font regularFont = new Font(baseFont, 9);
+					Font font = new Font(baseFont, 12, Font.NORMAL);
+					Font boldFont = new Font(baseFont, 11, Font.BOLD);
+					Font headerFont = new Font(baseFont, 14, Font.BOLD);
+					Font underlineFont = new Font(baseFont, 13, Font.BOLD | Font.UNDERLINE);
+
+					// Создаем таблицу с 2 колонками
+					PdfPTable table = new PdfPTable(2);
+					table.WidthPercentage = 100;
+					table.SetWidths(new float[] { 1, 1 });
+
+					// Правая ячейка (Column 1) - Код формы по ОКУД
+					PdfPCell codesCell = new PdfPCell(new Phrase("Код формы по ОКУД _______________", regularFont));
+					codesCell.HorizontalAlignment = Element.ALIGN_RIGHT;
+					codesCell.Border = PdfPCell.NO_BORDER;
+					codesCell.Colspan = 2;
+					codesCell.PaddingLeft = 200;
+					codesCell.PaddingRight = 30;
+					table.AddCell(codesCell);
+
+					// Вторая строка таблицы (Row 1)
+					// Левая ячейка (Column 0) - пустая
+					table.AddCell(new PdfPCell() { Border = PdfPCell.NO_BORDER });
+
+					// Правая ячейка (Column 1) - Код учреждения по ОКПО
+					codesCell = new PdfPCell(new Phrase("Код учреж. по ОКПО _______________", regularFont));
+					codesCell.HorizontalAlignment = Element.ALIGN_RIGHT;
+					codesCell.Border = PdfPCell.NO_BORDER;
+					codesCell.Colspan = 2;
+					codesCell.PaddingLeft = 50;
+					codesCell.PaddingRight = 30;
+					table.AddCell(codesCell);
+
+					table.AddCell(new PdfPCell(new Phrase("")) { Border = PdfPCell.NO_BORDER });
+
+					// Вторая строка - Правый столбец
+					PdfPCell rightCell = new PdfPCell(new Phrase("Медицинская документация", regularFont));
+					rightCell.HorizontalAlignment = Element.ALIGN_RIGHT;
+					rightCell.Border = PdfPCell.NO_BORDER;
+					rightCell.PaddingRight = 30;
+					table.AddCell(rightCell);
+
+					// Вторая строка - Левый столбец
+					PdfPCell leftCell = new PdfPCell(new Phrase("Министерство здравоохранения РФ", regularFont));
+					leftCell.HorizontalAlignment = Element.ALIGN_LEFT;
+					leftCell.Border = PdfPCell.NO_BORDER;
+					leftCell.PaddingLeft = 30;
+					table.AddCell(leftCell);
+
+					// Третья строка - Правый столбец
+					rightCell = new PdfPCell(new Phrase("Форма № 095/у", regularFont));
+					rightCell.HorizontalAlignment = Element.ALIGN_RIGHT;
+					rightCell.Border = PdfPCell.NO_BORDER;
+					rightCell.PaddingRight = 60;
+					table.AddCell(rightCell);
+
+					// Четвертая строка - Левый столбец (пустой)
+					table.AddCell(new PdfPCell() { Border = PdfPCell.NO_BORDER });
+
+					// Четвертая строка - Правый столбец
+					rightCell = new PdfPCell(new Phrase("Утверждена Минздравом СССР", regularFont));
+					rightCell.HorizontalAlignment = Element.ALIGN_RIGHT;
+					rightCell.Border = PdfPCell.NO_BORDER;
+					rightCell.PaddingRight = 20;
+					table.AddCell(rightCell);
+
+					// Пятая строка - Левый столбец (пустой)
+					table.AddCell(new PdfPCell() { Border = PdfPCell.NO_BORDER });
+
+					// Пятая строка - Правый столбец
+					rightCell = new PdfPCell(new Phrase("04.10.80 г. № 1030", regularFont));
+					rightCell.HorizontalAlignment = Element.ALIGN_RIGHT;
+					rightCell.Border = PdfPCell.NO_BORDER;
+					rightCell.PaddingRight = 50;
+					table.AddCell(rightCell);
+
+					// Добавляем таблицу в документ
+					document.Add(table);
+
+					// Заголовок "СПРАВКА" (Row 6)
+					iTextSharp.text.Paragraph header = new iTextSharp.text.Paragraph("СПРАВКА", headerFont);
+					header.Alignment = Element.ALIGN_CENTER;
+					header.SpacingAfter = 20;
+					document.Add(header);
+					// Основной текст справки
+					iTextSharp.text.Paragraph mainText = new iTextSharp.text.Paragraph();
+					mainText.Add(new Phrase("О временной нетрудоспособности студента, учащегося техникума,\n", boldFont));
+					mainText.Add(new Phrase("профессионально-технического училища, о болезни, карантине и прочих\n", boldFont));
+					mainText.Add(new Phrase("причинах отсутствия ребенка, посещающего школу, детское дошкольное\n", boldFont));
+					mainText.Add(new Phrase("учреждение.\n", boldFont));
+					mainText.Add(new Phrase("(нужное подчеркнуть)\n\n", regularFont));
+					mainText.Alignment = Element.ALIGN_CENTER;
+					document.Add(mainText);
+					// Дата выдачи
+					iTextSharp.text.Paragraph dateParagraph = new iTextSharp.text.Paragraph();
+					dateParagraph.Add(new Phrase("Дата выдачи ", regularFont));
+
+					// Получаем дату из поля DateCpNaprTB и добавляем как подчеркнутый текст
+					if (!string.IsNullOrEmpty(DateCpNaprTB.Text))
+					{
+						// Создаем подчеркнутый шрифт с поддержкой кириллицы
+						Font underlinedFont = new Font(baseFont, 9, Font.UNDERLINE);
+						dateParagraph.Add(new Phrase(DateCpNaprTB.Text, underlinedFont));
+					}
+					else
+					{
+						// Если дата не указана, добавляем подчеркнутое подчеркивание
+						dateParagraph.Add(new Chunk("_________________", FontFactory.GetFont(FontFactory.HELVETICA, 12, Font.UNDERLINE)));
+					}
+					dateParagraph.Alignment = Element.ALIGN_CENTER;
+					document.Add(dateParagraph);
+
+					// Создаем параграф для подчеркнутой строки
+					iTextSharp.text.Paragraph underlinedParagraph = new iTextSharp.text.Paragraph();
+
+					// Получаем выбранное значение или "не указано"
+					string recipientType = RecipientTypeComboBox.SelectedItem != null
+						? ((ComboBoxItem)RecipientTypeComboBox.SelectedItem).Content.ToString()
+						: "не указано";
+
+					// Создаем текст с подчеркиванием
+					string fullText = "Тип получателя: " + recipientType;
+
+					// Создаем подчеркнутый шрифт
+					Font underlinedFontы = new Font(baseFont, 9, Font.UNDERLINE);
+
+					// Добавляем весь текст с подчеркиванием
+					underlinedParagraph.Add(new Phrase(fullText, underlinedFontы));
+
+					// Настройки форматирования
+					underlinedParagraph.Alignment = Element.ALIGN_LEFT;
+					underlinedParagraph.IndentationLeft = 30; // Отступ слева 30 пунктов
+					underlinedParagraph.SpacingAfter = 10;    // Отступ после строки
+
+					// Добавляем в документ
+					document.Add(underlinedParagraph);
+
+					// Первая строка - подчеркнутая на всю ширину
+					iTextSharp.text.Paragraph nameinstitutionParagraph = new iTextSharp.text.Paragraph();
+
+					// Создаем подчеркнутый шрифт
+					Font nameinstitutionFontы = new Font(baseFont, 9, Font.UNDERLINE);
+
+					// Получаем выбранное значение или "не указано"
+					string nameinstitutionType = InstitutionTextBox.Text != null && InstitutionTextBox.Text != ""
+						? InstitutionTextBox.Text
+						: "не указано";
+
+					// Создаем фразу с подчеркиванием на всю строку
+					Phrase nameinstitutionPhrase = new Phrase(nameinstitutionType, nameinstitutionFontы);
+					nameinstitutionParagraph.Add(nameinstitutionPhrase);
+
+					// Выравниваем по левому краю с отступом
+					nameinstitutionParagraph.Alignment = Element.ALIGN_LEFT;
+					nameinstitutionParagraph.IndentationLeft = 30;
+					nameinstitutionParagraph.SpacingAfter = 5;
+					document.Add(nameinstitutionParagraph);
+
+					// Добавление информации о ФИО
+					iTextSharp.text.Paragraph FullNameParagraph = new iTextSharp.text.Paragraph();
+					string FullNameType = "не указано";
+					if (FullNameTextBox.Text != null && FullNameTextBox.Text != "")
+					{
+						FullNameType = FullNameTextBox.Text;
+					}
+					FullNameParagraph.Add(new Phrase("Фамилия, имя, отчество: ", regularFont));
+					Font FullNameFont = new Font(baseFont, 9, Font.UNDERLINE);
+					FullNameParagraph.Add(new Phrase(FullNameType, FullNameFont));
+					FullNameParagraph.Alignment = Element.ALIGN_LEFT;
+					FullNameParagraph.IndentationLeft = 30;
+					FullNameParagraph.SpacingAfter = 10;
+					document.Add(FullNameParagraph);
+
+					// Добавление информации о дате рождения (год, месяц, для детей до 1-го года – день)
+					iTextSharp.text.Paragraph BirthDateParagraph = new iTextSharp.text.Paragraph();
+					string BirthDateType = "не указано";
+					if (BirthDatePicker.Text != null && BirthDatePicker.Text != "")
+					{
+						BirthDateType = BirthDatePicker.Text;
+					}
+					BirthDateParagraph.Add(new Phrase("Дата рождения (год, месяц, для детей до 1-го года – день): ", regularFont));
+					Font BirthDateFont = new Font(baseFont, 9, Font.UNDERLINE);
+					BirthDateParagraph.Add(new Phrase(BirthDateType, BirthDateFont));
+					BirthDateParagraph.Alignment = Element.ALIGN_LEFT;
+					BirthDateParagraph.IndentationLeft = 30;
+					BirthDateParagraph.SpacingAfter = 10;
+					document.Add(BirthDateParagraph);
+
+					// Добавление информации о диагнозе заболевания (прочие причины отсутствия)
+					iTextSharp.text.Paragraph DiagnosisParagraph = new iTextSharp.text.Paragraph();
+					string DiagnosisType = "не указано";
+					if (DiagnosisTextBox.Text != null && DiagnosisTextBox.Text != "")
+					{
+						DiagnosisType = DiagnosisTextBox.Text;
+					}
+					DiagnosisParagraph.Add(new Phrase("Диагноз заболевания (прочие причины отсутствия): ", regularFont));
+					Font DiagnosisFont = new Font(baseFont, 9, Font.UNDERLINE);
+					DiagnosisParagraph.Add(new Phrase(DiagnosisType, DiagnosisFont));
+					DiagnosisParagraph.Alignment = Element.ALIGN_LEFT;
+					DiagnosisParagraph.IndentationLeft = 30;
+					DiagnosisParagraph.SpacingAfter = 10;
+					document.Add(DiagnosisParagraph);
+
+					// Добавление информации об освобождении от занятий, посещений детского дошкольного учреждения
+					iTextSharp.text.Paragraph LiberationParagraph = new iTextSharp.text.Paragraph();
+					LiberationParagraph.Add(new Phrase("Освобожден от занятий, посещений детского дошкольного учреждения", regularFont));
+					LiberationParagraph.Alignment = Element.ALIGN_LEFT;
+					LiberationParagraph.IndentationLeft = 30;
+					LiberationParagraph.SpacingAfter = 10;
+					document.Add(LiberationParagraph);
+
+					// Закрываем документ
+					document.Close();
+				}
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show($"Ошибка при создании PDF: {ex.Message}", "Ошибка",
+							  MessageBoxButton.OK, MessageBoxImage.Error);
+			}
+		}
 
 		private void CompleteCaseButton_Click(object sender, RoutedEventArgs e)
 		{
@@ -721,5 +992,5 @@ namespace ЭМК
 							  MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 		}
-    }
+	}
 }
