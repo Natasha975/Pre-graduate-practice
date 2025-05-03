@@ -586,7 +586,7 @@
                         <!-- Панель инструментов -->
                         <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="5">
                             <Button Content="Создать направление" Margin="5" />
-                            <Button Content="Печать" Margin="5"/>
+                            <Button Content="Печать" x:Name="PrintDirection" Margin="5" Click="PrintDirection_Click"/>
                         </StackPanel>
                     </Grid>
                 </ScrollViewer>

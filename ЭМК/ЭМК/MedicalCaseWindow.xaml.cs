@@ -1,4 +1,5 @@
-﻿using System;
+﻿using iTextSharp.text;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.Entity;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using ЭМК.Model;
@@ -63,6 +65,10 @@ namespace ЭМК
 
 			// Инициализация ComboBox
 			ComplaintsComboBox.ItemsSource = AvailableComplaints;
+
+			PatientNameTextBox.Text = medicalCase.PatientName;
+			PatientBirthDatePicker.Text = medicalCase.PatientBirthDate;
+			DateNaprTB.Text = DateTime.Now.ToString("dd.MM.yyyy");
 		}
 
 		public async Task NumberVoidAsync()
@@ -114,6 +120,7 @@ namespace ЭМК
 					// Устанавливаем текст в Label
 					txtDoctorInfo.Text = doctorInfo;
 					txtDoctorInfoTwo.Text = doctorInfo;
+					txtDoctorInfoFree.Text = doctorInfo;
 				}
 			}
 			catch (Exception ex)
@@ -228,6 +235,7 @@ namespace ЭМК
 
 			cbPreliminaryDiagnosis.ItemsSource = _diagnoses;
 			cbMainDiagnosis.ItemsSource = _diagnoses;
+			cbNDiagnosis.ItemsSource = _diagnoses;
 		}
 
 		// Обработчик поиска для обоих ComboBox
@@ -487,6 +495,107 @@ namespace ЭМК
 			}
 		}
 
+		private void PrintDirection_Click(object sender, RoutedEventArgs e)
+		{
+			try
+			{
+				// Создаем диалог печати
+				PrintDialog printDialog = new PrintDialog();
+				if (printDialog.ShowDialog() == true)
+				{
+					// Создаем документ для печати
+					FlowDocument document = CreatePrintableDocument();
+
+					// Настройка документа
+					document.PageHeight = printDialog.PrintableAreaHeight;
+					document.PageWidth = printDialog.PrintableAreaWidth;
+					document.PagePadding = new Thickness(50);
+					document.ColumnGap = 0;
+					document.ColumnWidth = printDialog.PrintableAreaWidth;
+
+					// Печать
+					printDialog.PrintDocument(
+						((IDocumentPaginatorSource)document).DocumentPaginator,
+						"Направление на консультацию");
+				}
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show($"Ошибка при печати: {ex.Message}", "Ошибка",
+					MessageBoxButton.OK, MessageBoxImage.Error);
+			}
+		}
+
+		private FlowDocument CreatePrintableDocument()
+		{
+			// Создаем документ с содержимым для печати
+			FlowDocument document = new FlowDocument();
+
+			// Добавляем заголовок
+			System.Windows.Documents.Paragraph header = new System.Windows.Documents.Paragraph(new Run("НАПРАВЛЕНИЕ"))
+			{
+				FontSize = 16,
+				FontWeight = FontWeights.Bold,
+				TextAlignment = TextAlignment.Center
+			};
+			document.Blocks.Add(header);
+
+			// Добавляем номер и дату
+			document.Blocks.Add(new System.Windows.Documents.Paragraph(new Run($"№ ______ от «{DateTime.Now:dd}» {GetMonthName(DateTime.Now.Month)} {DateTime.Now:yyyy} г."))
+			{
+				TextAlignment = TextAlignment.Center
+			});
+
+			// Добавляем данные пациента
+			AddFieldToDocument(document, "Пациент:", PatientNameTextBox.Text);
+			AddFieldToDocument(document, "Дата рождения:", PatientBirthDatePicker.Text);
+			AddFieldToDocument(document, "Направлен в:", ((ComboBoxItem)DirectionComboBox.SelectedItem)?.Content.ToString());
+			AddFieldToDocument(document, "Диагноз:", cbNDiagnosis.Text);
+			AddFieldToDocument(document, "Примечания:", NotesTextBox.Text);
+
+			// Добавляем подпись
+			document.Blocks.Add(new System.Windows.Documents.Paragraph(new Run("\nВрач: _________________________")));
+			document.Blocks.Add(new System.Windows.Documents.Paragraph(new Run("Подпись: _______________________")));
+
+			return document;
+		}
+
+		private void AddFieldToDocument(FlowDocument document, string fieldName, string fieldValue)
+		{
+			System.Windows.Documents.Paragraph paragraph = new System.Windows.Documents.Paragraph();
+			paragraph.Inlines.Add(new Run(fieldName) { FontWeight = FontWeights.Bold });
+			paragraph.Inlines.Add(new Run($" {fieldValue}"));
+			document.Blocks.Add(paragraph);
+		}
+
+		private string GetMonthName(int month)
+		{
+			string[] months = { "января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря" };
+			return months[month - 1];
+		}
+
+		private void SaveToWord_Click(object sender, RoutedEventArgs e)
+		{
+			DirectionComboBox.SelectedIndex = -1;
+			cbNDiagnosis.Text = string.Empty;
+			NotesTextBox.Text = string.Empty;
+		}
+
+		private void AddFieldToPdf(Document document, string fieldName, string fieldValue, Font font)
+		{
+			if (string.IsNullOrWhiteSpace(fieldValue))
+				fieldValue = "не указано";
+
+			iTextSharp.text.Paragraph paragraph = new iTextSharp.text.Paragraph
+			{
+				new Chunk(fieldName + " ", new Font(font.BaseFont, 12, Font.BOLD)),
+				new Chunk(fieldValue, font)
+			};
+			paragraph.SpacingAfter = 10;
+			document.Add(paragraph);
+		}
+
+
 		private void CompleteCaseButton_Click(object sender, RoutedEventArgs e)
 		{
 			try
@@ -612,5 +721,5 @@ namespace ЭМК
 							  MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 		}
-	}
+    }
 }
