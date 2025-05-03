@@ -158,3 +158,4 @@ C:\Users\Наталья\Documents\Pre-graduate-practice\ЭМК\ЭМК\obj\Debug\
 C:\Users\Наталья\Documents\Pre-graduate-practice\ЭМК\ЭМК\obj\Debug\ЭМК.csproj.Up2Date
 C:\Users\Наталья\Documents\Pre-graduate-practice\ЭМК\ЭМК\obj\Debug\ЭМК.exe
 C:\Users\Наталья\Documents\Pre-graduate-practice\ЭМК\ЭМК\obj\Debug\ЭМК.pdb
+C:\Users\Наталья\Documents\Pre-graduate-practice\ЭМК\ЭМК\obj\Debug\PrintTemplate.baml

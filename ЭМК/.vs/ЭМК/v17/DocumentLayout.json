@@ -3,16 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\\u041D\u0430\u0442\u0430\u043B\u044C\u044F\\Documents\\Pre-graduate-practice\\\u042D\u041C\u041A\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{AE6838CC-A767-41AD-863C-9B927298FBD7}|\u042D\u041C\u041A\\\u042D\u041C\u041A.csproj|c:\\users\\\u043D\u0430\u0442\u0430\u043B\u044C\u044F\\documents\\pre-graduate-practice\\\u044D\u043C\u043A\\\u044D\u043C\u043A\\printtemplate.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{AE6838CC-A767-41AD-863C-9B927298FBD7}|\u042D\u041C\u041A\\\u042D\u041C\u041A.csproj|solutionrelative:\u044D\u043C\u043A\\printtemplate.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{AE6838CC-A767-41AD-863C-9B927298FBD7}|\u042D\u041C\u041A\\\u042D\u041C\u041A.csproj|c:\\users\\\u043D\u0430\u0442\u0430\u043B\u044C\u044F\\documents\\pre-graduate-practice\\\u044D\u043C\u043A\\\u044D\u043C\u043A\\medicalcasewindowreg.xaml.cs||{8B382828-6202-11D1-8870-0000F87579D2}|",
+      "RelativeMoniker": "D:0:0:{AE6838CC-A767-41AD-863C-9B927298FBD7}|\u042D\u041C\u041A\\\u042D\u041C\u041A.csproj|solutionrelative:\u044D\u043C\u043A\\medicalcasewindowreg.xaml.cs||{8B382828-6202-11D1-8870-0000F87579D2}|"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{AE6838CC-A767-41AD-863C-9B927298FBD7}|\u042D\u041C\u041A\\\u042D\u041C\u041A.csproj|c:\\users\\\u043D\u0430\u0442\u0430\u043B\u044C\u044F\\documents\\pre-graduate-practice\\\u044D\u043C\u043A\\\u044D\u043C\u043A\\medicalcasewindowreg.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "AbsoluteMoniker": "D:0:0:{AE6838CC-A767-41AD-863C-9B927298FBD7}|\u042D\u041C\u041A\\\u042D\u041C\u041A.csproj|C:\\Users\\\u041D\u0430\u0442\u0430\u043B\u044C\u044F\\Documents\\Pre-graduate-practice\\\u042D\u041C\u041A\\\u044D\u043C\u043A\\medicalcasewindowreg.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{AE6838CC-A767-41AD-863C-9B927298FBD7}|\u042D\u041C\u041A\\\u042D\u041C\u041A.csproj|solutionrelative:\u044D\u043C\u043A\\medicalcasewindowreg.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{AE6838CC-A767-41AD-863C-9B927298FBD7}|\u042D\u041C\u041A\\\u042D\u041C\u041A.csproj|C:\\Users\\\u041D\u0430\u0442\u0430\u043B\u044C\u044F\\Documents\\Pre-graduate-practice\\\u042D\u041C\u041A\\\u044D\u043C\u043A\\medicalcasewindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{AE6838CC-A767-41AD-863C-9B927298FBD7}|\u042D\u041C\u041A\\\u042D\u041C\u041A.csproj|solutionrelative:\u044D\u043C\u043A\\medicalcasewindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     }
   ],
   "DocumentGroupContainers": [
@@ -27,25 +23,15 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "PrintTemplate.xaml",
-              "DocumentMoniker": "C:\\Users\\\u041D\u0430\u0442\u0430\u043B\u044C\u044F\\Documents\\Pre-graduate-practice\\\u042D\u041C\u041A\\\u042D\u041C\u041A\\PrintTemplate.xaml",
-              "RelativeDocumentMoniker": "\u042D\u041C\u041A\\PrintTemplate.xaml",
-              "ToolTip": "C:\\Users\\\u041D\u0430\u0442\u0430\u043B\u044C\u044F\\Documents\\Pre-graduate-practice\\\u042D\u041C\u041A\\\u042D\u041C\u041A\\PrintTemplate.xaml",
-              "RelativeToolTip": "\u042D\u041C\u041A\\PrintTemplate.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-05-03T21:20:15.379Z",
+              "Title": "MedicalCaseWindowReg.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\\u041D\u0430\u0442\u0430\u043B\u044C\u044F\\Documents\\Pre-graduate-practice\\\u042D\u041C\u041A\\\u042D\u041C\u041A\\MedicalCaseWindowReg.xaml.cs",
+              "RelativeDocumentMoniker": "\u042D\u041C\u041A\\MedicalCaseWindowReg.xaml.cs",
+              "ToolTip": "C:\\Users\\\u041D\u0430\u0442\u0430\u043B\u044C\u044F\\Documents\\Pre-graduate-practice\\\u042D\u041C\u041A\\\u042D\u041C\u041A\\MedicalCaseWindowReg.xaml.cs",
+              "RelativeToolTip": "\u042D\u041C\u041A\\MedicalCaseWindowReg.xaml.cs",
+              "ViewState": "AQIAAJAAAAAAAAAAAAAAANYAAAADAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-03T21:28:59.054Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "MedicalCaseWindow.xaml",
-              "DocumentMoniker": "C:\\Users\\\u041D\u0430\u0442\u0430\u043B\u044C\u044F\\Documents\\Pre-graduate-practice\\\u042D\u041C\u041A\\\u042D\u041C\u041A\\MedicalCaseWindow.xaml",
-              "RelativeDocumentMoniker": "\u042D\u041C\u041A\\MedicalCaseWindow.xaml",
-              "ToolTip": "C:\\Users\\\u041D\u0430\u0442\u0430\u043B\u044C\u044F\\Documents\\Pre-graduate-practice\\\u042D\u041C\u041A\\\u042D\u041C\u041A\\MedicalCaseWindow.xaml",
-              "RelativeToolTip": "\u042D\u041C\u041A\\MedicalCaseWindow.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-05-03T21:11:17.13Z"
             },
             {
               "$type": "Document",
