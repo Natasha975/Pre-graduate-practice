@@ -867,6 +867,38 @@ namespace ЭМК
 			}
 		}
 
+
+		private void GenerateFormBt_Click(object sender, RoutedEventArgs e)
+		{
+			if (PrescriptionFormComboBox.SelectedItem == null)
+			{
+				MessageBox.Show("Выберите форму рецептурного бланка", "Ошибка",
+							  MessageBoxButton.OK, MessageBoxImage.Warning);
+				return;
+			}
+
+			string selectedForm = ((ComboBoxItem)PrescriptionFormComboBox.SelectedItem).Content.ToString();
+
+			switch (selectedForm)
+			{
+				case "ФОРМА РЕЦЕПТУРНОГО БЛАНКА N 107/у-НП":
+					PrescriptionFrame.Navigate(new Uri("PrescriptionForms/PrescriptionForm107_HP.xaml", UriKind.Relative));
+					break;
+
+				case "ФОРМА РЕЦЕПТУРНОГО БЛАНКА N 107-1/у":
+					PrescriptionFrame.Navigate(new Uri("PrescriptionForms/PrescriptionForm107.xaml", UriKind.Relative));
+					break;
+
+				case "ФОРМА РЕЦЕПТУРНОГО БЛАНКА N 148-1/у-88":
+					PrescriptionFrame.Navigate(new Uri("PrescriptionForms/PrescriptionForm148_88.xaml", UriKind.Relative));
+					break;
+
+				case "ФОРМА РЕЦЕПТУРНОГО БЛАНКА N 148-1/у-04(л)":
+					PrescriptionFrame.Navigate(new Uri("PrescriptionForms/PrescriptionForm148_04.xaml", UriKind.Relative));
+					break;
+			}
+		}
+
 		private void CompleteCaseButton_Click(object sender, RoutedEventArgs e)
 		{
 			try

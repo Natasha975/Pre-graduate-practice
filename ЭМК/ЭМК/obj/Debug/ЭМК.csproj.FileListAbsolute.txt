@@ -159,3 +159,5 @@ C:\Users\Наталья\Documents\Pre-graduate-practice\ЭМК\ЭМК\obj\Debug\
 C:\Users\Наталья\Documents\Pre-graduate-practice\ЭМК\ЭМК\obj\Debug\ЭМК.exe
 C:\Users\Наталья\Documents\Pre-graduate-practice\ЭМК\ЭМК\obj\Debug\ЭМК.pdb
 C:\Users\Наталья\Documents\Pre-graduate-practice\ЭМК\ЭМК\obj\Debug\PrintTemplate.baml
+C:\Users\Наталья\Documents\Pre-graduate-practice\ЭМК\ЭМК\obj\Debug\PrescriptionForms\PrescriptionForm107.g.cs
+C:\Users\Наталья\Documents\Pre-graduate-practice\ЭМК\ЭМК\obj\Debug\PrescriptionForms\PrescriptionForm107.baml
