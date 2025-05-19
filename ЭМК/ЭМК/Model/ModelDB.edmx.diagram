@@ -4,25 +4,29 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="bfac639934ac4b0db29009be42c69112" Name="Diagram1">
-        <EntityTypeShape EntityType="diplomModel.attachment" Width="1.5" PointX="3" PointY="7.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="diplomModel.doctor" Width="1.5" PointX="3.75" PointY="11.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="diplomModel.history_the_disease" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="diplomModel.hospital" Width="1.5" PointX="0.75" PointY="3.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="diplomModel.inspection" Width="1.5" PointX="6" PointY="5" IsExpanded="true" />
-        <EntityTypeShape EntityType="diplomModel.medical_care_profile" Width="1.5" PointX="1.5" PointY="11.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="diplomModel.patient" Width="1.5" PointX="0.75" PointY="6" IsExpanded="true" />
-        <EntityTypeShape EntityType="diplomModel.representative_patient" Width="1.5" PointX="3" PointY="16" IsExpanded="true" />
-        <EntityTypeShape EntityType="diplomModel.specialization" Width="1.5" PointX="1.5" PointY="13.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="diplomModel.surveillance_journal" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="diplomModel.sysdiagrams" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
-        <AssociationConnector Association="diplomModel.FK_attachment_hospital" ManuallyRouted="false" />
-        <AssociationConnector Association="diplomModel.FK_attachment_patient" ManuallyRouted="false" />
-        <AssociationConnector Association="diplomModel.FK_doctor_medical_care_profile" ManuallyRouted="false" />
-        <AssociationConnector Association="diplomModel.FK_doctor_specialization" ManuallyRouted="false" />
-        <AssociationConnector Association="diplomModel.FK_inspection_doctor" ManuallyRouted="false" />
-        <AssociationConnector Association="diplomModel.FK_inspection_patient" ManuallyRouted="false" />
-        <AssociationConnector Association="diplomModel.FK_representative_patient_patient" ManuallyRouted="false" />
+      <Diagram DiagramId="a5ce70991fd941a2b7920fb69b67a3c4" Name="Diagram1">
+        <EntityTypeShape EntityType="MedCardDBModel.attachment" Width="1.5" PointX="3" PointY="9.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedCardDBModel.disability_certificate" Width="1.5" PointX="8.25" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedCardDBModel.doctor" Width="1.5" PointX="3.75" PointY="14.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedCardDBModel.hospital" Width="1.5" PointX="0.75" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedCardDBModel.inspection" Width="1.5" PointX="6" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedCardDBModel.patient" Width="1.5" PointX="0.75" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedCardDBModel.period" Width="1.5" PointX="10.5" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedCardDBModel.prescription_form_107у" Width="1.5" PointX="8.25" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedCardDBModel.referral" Width="1.5" PointX="8.25" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedCardDBModel.representative_patient" Width="1.5" PointX="3" PointY="23" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedCardDBModel.specialization" Width="1.5" PointX="1.5" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MedCardDBModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="MedCardDBModel.FK_attachment_hospital" ManuallyRouted="false" />
+        <AssociationConnector Association="MedCardDBModel.FK_attachment_patient" ManuallyRouted="false" />
+        <AssociationConnector Association="MedCardDBModel.FK_disability_certificate_inspection" ManuallyRouted="false" />
+        <AssociationConnector Association="MedCardDBModel.FK_period_disability_certificate" ManuallyRouted="false" />
+        <AssociationConnector Association="MedCardDBModel.FK_doctor_specialization" ManuallyRouted="false" />
+        <AssociationConnector Association="MedCardDBModel.FK_inspection_doctor" ManuallyRouted="false" />
+        <AssociationConnector Association="MedCardDBModel.FK_inspection_patient" ManuallyRouted="false" />
+        <AssociationConnector Association="MedCardDBModel.FK_prescription_form_107у_inspection" ManuallyRouted="false" />
+        <AssociationConnector Association="MedCardDBModel.FK_referral_inspection" ManuallyRouted="false" />
+        <AssociationConnector Association="MedCardDBModel.FK_representative_patient_patient" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

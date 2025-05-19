@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\Наталья\Documents\Pre-graduate-practice\ЭМК\ЭМК\App.xaml
-81232238689
+151838430053
 2-1372435529
-32-954914473
-133-671207777
-LoginWindow.xaml;MainWindow.xaml;MedicalCaseWindow.xaml;MedicalCaseWindowReg.xaml;PrescriptionForms\PrescriptionForm107.xaml;PrintTemplate.xaml;Window1.xaml;Window2.xaml;
+43-346327196
+134-2032729658
+DirectionFormPage.xaml;LoginWindow.xaml;MainWindow.xaml;MedicalCaseWindow.xaml;MedicalCaseWindowReg.xaml;PatientPage.xaml;PatientsListWindow.xaml;PrescriptionForms\PrescriptionForm107.xaml;PrescriptionForms\PrescriptionForm14888.xaml;PrintTemplate.xaml;ProceduresWindow.xaml;RecordedPatientsWindow.xaml;SickLeaveFormPage.xaml;Window1.xaml;Window2.xaml;
 
-True
+False
 

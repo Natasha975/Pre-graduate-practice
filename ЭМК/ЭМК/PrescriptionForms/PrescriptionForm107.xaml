@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:ЭМК.PrescriptionForms"
       mc:Ignorable="d" 
-      d:DesignHeight="850" d:DesignWidth="800"
+      d:DesignHeight="650" d:DesignWidth="800"
       Title="Рецептурный бланк 107-1/У"
       Background="White">
 
@@ -20,135 +20,151 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
 
-            <!-- Шапка документа -->
-            <TextBlock Grid.Row="0" Text="ФОРМА РЕЦЕПТУРНОГО БЛАНКА N 107-1/У" 
-                      FontWeight="Bold" FontSize="16" HorizontalAlignment="Center" Margin="0,0,0,20"/>
 
-            <!-- Министерство здравоохранения и коды -->
-            <Grid Grid.Row="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-
-                <StackPanel Grid.Column="0">
-                    <TextBlock Text="Министерство здравоохранения"/>
-                    <TextBlock Text="Российской Федерации"/>
-                </StackPanel>
-
-                <StackPanel Grid.Column="1" HorizontalAlignment="Right">
-                    <TextBlock Text="Код формы по ОКУД"/>
-                    <TextBlock Text="Код учреждения по ОКПО"/>
-                </StackPanel>
-            </Grid>
-
-            <!-- Медицинская документация -->
-            <TextBlock Grid.Row="2" Text="Медицинская документация" 
-                      HorizontalAlignment="Center" Margin="0,20,0,20"/>
-
-            <!-- Наименование организации и форма -->
-            <Grid Grid.Row="3">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-
-                <TextBox Grid.Column="0" Text="Наименование (штамп) медицинской организации" 
-                        BorderThickness="0" FontStyle="Italic" Margin="0,0,20,0"/>
-
-                <StackPanel Grid.Column="1" HorizontalAlignment="Right">
-                    <TextBlock Text="Форма N 107-1/у"/>
-                    <TextBlock Text="Утверждена приказом"/>
-                    <TextBlock Text="Министерства здравоохранения"/>
-                    <TextBlock Text="Российской Федерации"/>
-                    <TextBlock Text="от 24 ноября 2021 г. N 1094н"/>
-                </StackPanel>
-            </Grid>
-
-            <!-- Разделительная линия -->
-            <Path Grid.Row="4" Margin="0,20" Stretch="Fill" Stroke="Black" StrokeThickness="1" StrokeDashArray="2,2" Height="1"/>
-
-            <!-- Заголовок "РЕЦЕПТ" -->
-            <TextBlock Grid.Row="5" Text="РЕЦЕПТ" FontWeight="Bold" FontSize="14" 
-                      HorizontalAlignment="Center" Margin="0,20,0,10"/>
-
-            <!-- Взрослый/детский -->
-            <StackPanel Grid.Row="6" Orientation="Horizontal" HorizontalAlignment="Center">
-                <RadioButton x:Name="AdultRadio" Content="взрослый" GroupName="PatientType" Margin="0,0,20,0"/>
-                <RadioButton x:Name="ChildRadio" Content="детский" GroupName="PatientType"/>
-                <TextBlock Text="(нужное подчеркнуть)" Margin="10,0,0,0" FontStyle="Italic"/>
-            </StackPanel>
-
-            <!-- Дата -->
-            <StackPanel Grid.Row="7" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,20">
-                <DatePicker x:Name="PrescriptionDate" SelectedDateFormat="Long"/>
-            </StackPanel>
-
-            <!-- Данные пациента -->
-            <StackPanel Grid.Row="8" Margin="20,0,20,20">
-                <TextBlock Text="Фамилия, инициалы имени и отчества (последнее - при наличии) пациента"/>
-                <TextBox x:Name="PatientNameTextBox" BorderBrush="Black" BorderThickness="0,0,0,1" Margin="0,5,0,0"/>
-
-                <TextBlock Text="Дата рождения" Margin="0,20,0,0"/>
-                <DatePicker x:Name="PatientBirthDate" SelectedDateFormat="Short" Margin="0,5,0,0"/>
-
-                <TextBlock Text="Фамилия, инициалы имени и отчества (последнее - при наличии) лечащего врача (фельдшера, акушерки)" Margin="0,20,0,0"/>
-                <TextBox x:Name="DoctorNameTextBox" BorderBrush="Black" BorderThickness="0,0,0,1" Margin="0,5,0,0"/>
-            </StackPanel>
-
-            <!-- Поле для рецепта -->
-            <!--<ItemsControl Grid.Row="9" Margin="20,0,20,20" x:Name="PrescriptionItems">
-                <ItemsControl.ItemTemplate>
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="Наименования препарата*" Margin="10,5,0,5"/>
+            <ComboBox x:Name="DrugNameComboBox" Grid.Row="1" Grid.Column="1" Margin="0,0,0,5"
+                      IsEditable="True" Width="400" HorizontalAlignment="Center"
+                      TextSearch.TextPath="DisplayName" StaysOpenOnEdit="True" VerticalAlignment="Bottom">
+                <ComboBox.ItemTemplate>
                     <DataTemplate>
-                        <TextBox Text="{Binding}" BorderThickness="0,0,0,1" Margin="0,0,0,10"/>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding DisplayName}" FontWeight="Bold"/>
+                            <TextBlock Text=" ("/>
+                            <TextBlock Text="{Binding Type}" FontStyle="Italic"/>
+                            <TextBlock Text=")"/>
+                        </StackPanel>
                     </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>-->
+                </ComboBox.ItemTemplate>
+            </ComboBox>
 
-            <!-- Подпись и печать -->
-            <Grid Grid.Row="10" Margin="20,0,20,20">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="Дозировка" Margin="10,5,0,5"/>
+            <StackPanel Grid.Row="2" Grid.Column="1">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
 
-                <StackPanel Grid.Column="0" Grid.Row="0">
-                    <TextBlock Text="Подпись и печать лечащего врача"/>
-                    <TextBlock Text="(подпись фельдшера, акушерки)" FontStyle="Italic"/>
-                </StackPanel>
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Количество*:" Margin="10"/>
+                    <ComboBox x:Name="AmountComboBox" Grid.Row="0" Grid.Column="1" Margin="5"
+                              IsEditable="True" Width="150" HorizontalAlignment="Left"/>
 
-                <TextBlock Grid.Column="1" Grid.Row="0" Text="М. П." FontStyle="Italic" VerticalAlignment="Top" Margin="20,0,180,0"/>
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Единица измерения*:" Margin="10"/>
+                    <ComboBox x:Name="UnitComboBox" Grid.Row="1" Grid.Column="1" Margin="5"
+                              IsEditable="True" Width="150" HorizontalAlignment="Left"/>
 
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Частота приема*:" Margin="10"/>
+                    <ComboBox x:Name="FrequencyComboBox" Grid.Row="2" Grid.Column="1" Margin="5"
+                              IsEditable="True" Width="150" HorizontalAlignment="Left"/>
 
-                    <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="0">
-                        <TextBlock Text="Рецепт действителен в течение 60 дней, до 1 года" Margin="0,5,0,0"/>
-                        <TextBlock Text="(нужное подчеркнуть)" FontStyle="Italic"  Margin="80,5,0,0"/>
-                    </StackPanel>
-                <StackPanel Orientation="Vertical" Margin="0,0,0,0" Grid.Row="1" Grid.Column="1">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="(" Margin="0,5,0,0"/>
-                        <TextBox Width="170"/>
-                        <TextBlock Text=")" Margin="0,5,0,0"/>
-                    </StackPanel>
-                    <TextBlock Text="(указать количество дней)" FontStyle="Italic"  Margin="15,5,0,0"/>
-                </StackPanel>
-            </Grid>
+                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Путь введения*:" Margin="10"/>
+                    <ComboBox x:Name="RouteComboBox" Grid.Row="3" Grid.Column="1" Margin="10"
+                              IsEditable="True" Width="150" HorizontalAlignment="Left"/>
+
+                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Выбранная дозировка:" Margin="10"/>
+                    <TextBlock x:Name="DosageTextBlock" Grid.Row="4" Grid.Column="1" Margin="10"
+                               TextWrapping="Wrap" Text="Дозировка не выбрана"/>
+                </Grid>
+            </StackPanel>
+
+            <TextBlock Grid.Row="3" Grid.Column="0" Text="Способ введения и применения" Margin="10,5,0,5"/>
+            <StackPanel Grid.Row="3" Grid.Column="1">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Способ*:" Margin="10"/>
+                    <ComboBox x:Name="AdministrationMethodComboBox" Grid.Row="0" Grid.Column="1" Margin="5,0,0,6" IsEditable="True"
+                                Width="150" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Детали:" Margin="10"/>
+                    <TextBox x:Name="AdministrationDetailsTextBox" Grid.Row="1" Grid.Column="1" Margin="5"
+                                TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"/>
+                </Grid>
+            </StackPanel>
+
+            <TextBlock Grid.Row="4" Grid.Column="0" Text="Режим дозирования" Margin="10,5,0,5"/>
+            <StackPanel Grid.Row="4" Grid.Column="1">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Режим*:" Margin="10"/>
+                    <ComboBox x:Name="DosageRegimenComboBox" Grid.Row="0" Grid.Column="1" Margin="5" IsEditable="True"
+                              Width="150" HorizontalAlignment="Left"/>
+
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Дополнительно:" Margin="10"/>
+                    <TextBox x:Name="DosageRegimenDetailsTextBox" Grid.Row="1" Grid.Column="1" Margin="5"
+                             TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"/>
+                </Grid>
+            </StackPanel>
+
+            <TextBlock Grid.Row="5" Grid.Column="0" Text="Продолжительность лечения" Margin="10,5,0,5"/>
+            <StackPanel Grid.Row="5" Grid.Column="1">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <!-- Для единицы измерения -->
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Длительность*:" Margin="10"/>
+                    <TextBox x:Name="TreatmentDurationTextBox" Grid.Row="0" Grid.Column="1" Margin="5"
+                                Width="80" HorizontalAlignment="Left" />
+
+                    <ComboBox x:Name="TreatmentDurationUnitComboBox" Grid.Row="0" Grid.Column="2" Margin="5" IsEditable="True"
+                              Width="80" HorizontalAlignment="Left">
+                        <ComboBoxItem>Дни</ComboBoxItem>
+                        <ComboBoxItem>Недели</ComboBoxItem>
+                        <ComboBoxItem>Месяцы</ComboBoxItem>
+                        <ComboBoxItem>Годы</ComboBoxItem>
+                    </ComboBox>
+
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Комментарии:" Margin="10"/>
+                    <TextBox x:Name="TreatmentDurationCommentsTextBox" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Margin="5"
+                             TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"/>
+                </Grid>
+            </StackPanel>
+
+            <TextBlock Grid.Row="6" Grid.Column="0" Text="Обоснование назначения" Margin="10,5,0,5"/>
+            <TextBox x:Name="JustificationTextBox" Grid.Row="6" Grid.Column="1" Margin="5"
+                     TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"
+                     AcceptsReturn="True"/>
 
             <!-- Кнопки -->
-            <StackPanel Grid.Row="12" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
-                <Button Content="Сохранить" Width="120" Margin="0,0,20,0"/>
+            <StackPanel Grid.Row="7" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
+                <Button Content="Сохранить" x:Name="SaveBt" Click="SaveBt_Click" Width="120" Margin="0,0,20,0"/>
+                <Button Content="Отмена" Margin="5" Click="CancelDirection_Click"/>
             </StackPanel>
         </Grid>
     </ScrollViewer>

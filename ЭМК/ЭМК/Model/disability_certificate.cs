@@ -12,18 +12,22 @@ namespace ЭМК.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class medical_care_profile
+    public partial class disability_certificate
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public medical_care_profile()
+        public disability_certificate()
         {
-            this.doctor = new HashSet<doctor>();
+            this.period1 = new HashSet<period>();
         }
     
-        public int id_medical_care_profile { get; set; }
-        public string name_medical_care_profile { get; set; }
+        public int id_disability_certificate { get; set; }
+        public int id_inspection { get; set; }
+        public string type_of_certificate { get; set; }
+        public string cause_of_illness { get; set; }
+        public int period { get; set; }
     
+        public virtual inspection inspection { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<doctor> doctor { get; set; }
+        public virtual ICollection<period> period1 { get; set; }
     }
 }

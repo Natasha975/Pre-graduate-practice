@@ -21,16 +21,14 @@ namespace ЭМК.Model
         }
     
         public int id_doctor { get; set; }
-        public string lastname { get; set; }
         public string name { get; set; }
+        public string lastname { get; set; }
         public string surname { get; set; }
-        public int specialization { get; set; }
-        public int medical_care_profile { get; set; }
+        public int id_specialization { get; set; }
         public string login { get; set; }
         public string password { get; set; }
     
-        public virtual medical_care_profile medical_care_profile1 { get; set; }
-        public virtual specialization specialization1 { get; set; }
+        public virtual specialization specialization { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<inspection> inspection { get; set; }
     }

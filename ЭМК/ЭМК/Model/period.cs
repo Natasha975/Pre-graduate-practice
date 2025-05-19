@@ -12,15 +12,13 @@ namespace ЭМК.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class history_the_disease
+    public partial class period
     {
-        public int id_history { get; set; }
-        public int id_patient { get; set; }
-        public int id_doctor { get; set; }
-        public string place_of_education { get; set; }
-        public System.DateTime periody_hospitalization { get; set; }
-        public System.DateTime clinic_diagnosis { get; set; }
-        public System.DateTime results_examinationn { get; set; }
-        public System.DateTime recommendations { get; set; }
+        public int id_period { get; set; }
+        public int id_disability_certificate { get; set; }
+        public System.DateTime date_start { get; set; }
+        public System.DateTime date_end { get; set; }
+    
+        public virtual disability_certificate disability_certificate { get; set; }
     }
 }

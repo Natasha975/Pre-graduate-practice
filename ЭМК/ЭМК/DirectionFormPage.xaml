@@ -1,0 +1,184 @@
+﻿<Page x:Class="ЭМК.DirectionFormPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ЭМК"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="DirectionFormPage" Background="White">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Форма направления -->
+            <Grid Margin="10" x:Name="PrintContent">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Шапка направления -->
+                <StackPanel Grid.Row="0" Grid.ColumnSpan="2" Orientation="Horizontal">
+                    <TextBlock Text="НАПРАВЛЕНИЕ" FontWeight="Bold" FontSize="16" Margin="0,0,10,10"/>
+                    <TextBlock Text="№" FontSize="16" Margin="0,0,0,10"/>
+                    <TextBlock x:Name="NumberTextBlock" FontSize="16" Margin="10,0,0,10"/>
+                    <TextBlock Text="от " FontSize="16" Margin="10,0,0,10"/>
+                    <TextBlock FontSize="16" x:Name="DateNaprTB"/>
+                </StackPanel>
+
+                <!-- Данные пациента -->
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Пациент:" Margin="5"/>
+                <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+                    <Label x:Name="PatientNameTextBox" Margin="5"/>
+                    <Label Content="(" Margin="5"/>
+                    <Label Grid.Row="2" Grid.Column="1" x:Name="PatientBirthDatePicker" Margin="5"/>
+                    <Label Content=")" Margin="5"/>
+                </StackPanel>
+
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="Тип направления*:" Margin="5"/>
+                <ComboBox Grid.Row="2" Grid.Column="1" x:Name="DirectionComboBox" Margin="5"
+                          TextSearch.TextPath="Content"
+                          IsEditable="True"
+                          IsTextSearchEnabled="True"
+                          StaysOpenOnEdit="True"
+                          ToolTip="Выберите или введите вид направления">
+                    <!-- Консультации специалистов -->
+                    <ComboBoxItem Content="Консультация кардиолога"/>
+                    <ComboBoxItem Content="Консультация невролога"/>
+                    <ComboBoxItem Content="Консультация эндокринолога"/>
+                    <ComboBoxItem Content="Консультация гастроэнтеролога"/>
+                    <ComboBoxItem Content="Консультация пульмонолога"/>
+                    <ComboBoxItem Content="Консультация ревматолога"/>
+                    <ComboBoxItem Content="Консультация нефролога"/>
+                    <ComboBoxItem Content="Консультация гематолога"/>
+                    <ComboBoxItem Content="Консультация аллерголога-иммунолога"/>
+                    <ComboBoxItem Content="Консультация инфекциониста"/>
+
+                    <!-- Инструментальные исследования -->
+                    <ComboBoxItem Content="Рентгенография"/>
+                    <ComboBoxItem Content="Флюорография"/>
+                    <ComboBoxItem Content="Компьютерная томография (КТ)"/>
+                    <ComboBoxItem Content="Магнитно-резонансная томография (МРТ)"/>
+                    <ComboBoxItem Content="Ультразвуковое исследование (УЗИ)"/>
+                    <ComboBoxItem Content="Эхокардиография (ЭхоКГ)"/>
+                    <ComboBoxItem Content="Электроэнцефалография (ЭЭГ)"/>
+                    <ComboBoxItem Content="Электрокардиография (ЭКГ)"/>
+                    <ComboBoxItem Content="Суточное мониторирование ЭКГ (Холтер)"/>
+                    <ComboBoxItem Content="Спирометрия"/>
+
+                    <!-- Лабораторные исследования -->
+                    <ComboBoxItem Content="Общий анализ крови"/>
+                    <ComboBoxItem Content="Биохимический анализ крови"/>
+                    <ComboBoxItem Content="Коагулограмма"/>
+                    <ComboBoxItem Content="Гормональные исследования"/>
+                    <ComboBoxItem Content="Общий анализ мочи"/>
+                    <ComboBoxItem Content="Анализ мочи по Нечипоренко"/>
+                    <ComboBoxItem Content="Анализ кала (копрограмма)"/>
+                    <ComboBoxItem Content="Микробиологические исследования"/>
+
+                    <!-- Процедуры и манипуляции -->
+                    <ComboBoxItem Content="Физиотерапия"/>
+                    <ComboBoxItem Content="Массаж"/>
+                    <ComboBoxItem Content="Лечебная физкультура (ЛФК)"/>
+                    <ComboBoxItem Content="Иглорефлексотерапия"/>
+                    <ComboBoxItem Content="Перевязка"/>
+                    <ComboBoxItem Content="Капельница"/>
+
+                    <!-- Специализированные исследования -->
+                    <ComboBoxItem Content="Колоноскопия"/>
+                    <ComboBoxItem Content="Гастроскопия (ФГДС)"/>
+                    <ComboBoxItem Content="Бронхоскопия"/>
+                    <ComboBoxItem Content="Цистоскопия"/>
+                </ComboBox>
+
+                <TextBlock Grid.Row="3" Grid.Column="0" Text="Источник оплаты*:" Margin="5"/>
+                <ComboBox Grid.Row="3" Grid.Column="1" x:Name="PaymentSourcecComboBox" Margin="5"
+                               TextSearch.TextPath="Content"
+                               IsEditable="True"
+                               IsTextSearchEnabled="True"
+                               StaysOpenOnEdit="True"
+                               SelectedIndex="0"
+                               ToolTip="Выберите или введите источник оплаты">
+                    <ComboBoxItem Content="ОМС"/>
+                    <ComboBoxItem Content="ДМС"/>
+                    <ComboBoxItem Content="Средства пациента"/>
+                    <ComboBoxItem Content="Третье лицо (физическое)"/>
+                    <ComboBoxItem Content="Третье лицо (юридическое)"/>
+                    <ComboBoxItem Content="Бюджет федеральный"/>
+                    <ComboBoxItem Content="Бюджет региональный"/>
+                    <ComboBoxItem Content="ФСС"/>
+                    <ComboBoxItem Content="Бюджет медицинской организации"/>
+                    <ComboBoxItem Content="Бюджет федеральный и региональный"/>
+                    <ComboBoxItem Content="Средства неподведомственных организаций"/>
+                </ComboBox>
+
+                <TextBlock Grid.Row="4" Grid.Column="0" Text="Услуга*:" Margin="5"/>
+                <StackPanel Grid.Row="4" Grid.Column="1" Orientation="Horizontal" Margin="5">
+                    <Button x:Name="SelectProcedureButton" 
+                                Content="Добавить услугу" 
+                                Width="150"
+                                Click="SelectProcedureButton_Click"/>
+                    <TextBlock x:Name="SelectedProcedureText" 
+                                   Margin="10,0,0,0"
+                                   VerticalAlignment="Center"
+                                   Text="(не выбрано)"/>
+                </StackPanel>
+
+                <TextBlock Grid.Row="5" Grid.Column="0" Text="Диагноз:" Margin="5"/>
+                <Label Grid.Row="5" Grid.Column="1" Margin="5,0,5,0" x:Name="LblNDiagnosis"
+                           Content="{Binding DiagnosisText}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+
+                <TextBlock Grid.Row="6" Grid.Column="0" Text="Организация*:" Margin="5"/>
+                <ComboBox x:Name="cbOrganization" 
+                              Grid.Row="6" Grid.Column="1"
+                              Margin="5,5,5,10"
+                              IsEditable="True"
+                              IsTextSearchEnabled="True"
+                              StaysOpenOnEdit="True"
+                              ToolTip="Выберите медицинскую организацию"/>
+
+
+                <TextBlock Grid.Row="7" Grid.Column="0" Text="Врач:" Margin="5"/>
+                <ComboBox x:Name="cbDoctors" 
+                              Grid.Row="7" Grid.Column="1"
+                              Margin="5,5,5,10"
+                              IsEditable="True"
+                              IsTextSearchEnabled="True"
+                              StaysOpenOnEdit="True"
+                              ToolTip="Выберите врача"/>
+
+
+                <TextBlock Grid.Row="8" Grid.Column="0" Text="Дата приема*:" Margin="5"/>
+                <DatePicker Grid.Row="8" x:Name="AppointmentDatePicker" Grid.Column="1" Width="200" HorizontalAlignment="Left" Margin="5"/>
+
+                <TextBlock Grid.Row="9" Grid.Column="0" Text="Основание:" Margin="5"/>
+                <TextBox Grid.Row="9" Grid.Column="1" x:Name="NotesTextBox" Margin="5" TextWrapping="Wrap" AcceptsReturn="True"/>
+            </Grid>
+
+            <!-- Кнопки сохранения/отмены -->
+            <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="5" HorizontalAlignment="Right">
+                <Button Content="Сохранить" Margin="5" Click="SaveDirection_Click"/>
+                <Button Content="Отмена" Margin="5" Click="CancelDirection_Click"/>
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
+</Page>

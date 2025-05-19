@@ -24,29 +24,221 @@ namespace ЭМК
 	/// </summary>
 	public partial class Window2 : Window
 	{
-		private diplomEntities dbContext;
-		private Patient currentPatient;
+		private MedCardDBEntities dbContext;
+		private Patients currentPatient;
 		private List<InspectionView> allInspections; // Храним все осмотры
 		private List<InspectionView> filteredInspections; // Храним отфильтрованные осмотры
-		//private List<InspectionView> inspections;
 
-		public Window2(Patient patient)
+		public Window2(Patients patient)
 		{
 			InitializeComponent();
 
-			dbContext = new diplomEntities();
+			dbContext = new MedCardDBEntities();
 			currentPatient = patient;
 
 			// Устанавливаем сегодняшнюю дату по умолчанию
 			FilterDatePicker.SelectedDate = DateTime.Today;
 			FilterDatePicker.DisplayDateEnd = DateTime.Today;
 
-			//// Инициализация DatePicker
-			//// FilterDatePicker.SelectedDate = DateTime.Today;
-			//// Нельзя выбрать дату в будущем
-			//FilterDatePicker.DisplayDateEnd = DateTime.Today; 
-
 			LoadDoctorInfo();
+
+			// Устанавливаем сегодняшнюю дату по умолчанию
+			FilterDatePicker.SelectedDate = DateTime.Today;
+			FilterDatePicker.DisplayDateEnd = DateTime.Today;
+
+			InitializeReportDates(); // Добавьте эту строку
+		}
+
+		private void InitializeReportDates()
+		{
+			// Устанавливаем даты для отчета: текущий месяц
+			ReportStartDate.SelectedDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
+			ReportEndDate.SelectedDate = DateTime.Today;
+			ReportEndDate.DisplayDateEnd = DateTime.Today;
+		}
+
+		private async void GenerateReport_Click(object sender, RoutedEventArgs e)
+		{
+			if (!ReportStartDate.SelectedDate.HasValue || !ReportEndDate.SelectedDate.HasValue)
+			{
+				MessageBox.Show("Выберите период для отчета", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+				return;
+			}
+
+			var startDate = ReportStartDate.SelectedDate.Value;
+			var endDate = ReportEndDate.SelectedDate.Value;
+
+			if (startDate > endDate)
+			{
+				MessageBox.Show("Дата начала не может быть позже даты окончания", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+				return;
+			}
+
+			await GenerateAttendanceReport(startDate, endDate);
+		}
+
+		private async Task GenerateAttendanceReport(DateTime startDate, DateTime endDate)
+		{
+			try
+			{
+				var visits = await dbContext.inspection
+					.Where(i => i.id_patient == currentPatient.Id &&
+								i.date_inspection >= startDate &&
+								i.date_inspection <= endDate)
+					.GroupBy(i => DbFunctions.TruncateTime(i.date_inspection))
+					.Select(g => new { Date = g.Key, Count = g.Count() })
+					.OrderBy(x => x.Date)
+					.ToListAsync();
+
+				// Подготовка данных для диаграммы
+				var dates = new List<DateTime>();
+				var counts = new List<int>();
+
+				// Заполняем все даты в диапазоне (даже если посещений не было)
+				for (var date = startDate; date <= endDate; date = date.AddDays(1))
+				{
+					dates.Add(date);
+					var visit = visits.FirstOrDefault(v => v.Date == date);
+					counts.Add(visit?.Count ?? 0);
+				}
+
+				// Обновляем статистику
+				UpdateReportStats(visits, startDate, endDate);
+
+				// Рисуем диаграмму
+				DrawAttendanceChart(dates, counts);
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show($"Ошибка при формировании отчета: {ex.Message}",
+							   "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+			}
+		}
+
+		private void UpdateReportStats(IEnumerable<dynamic> visits, DateTime startDate, DateTime endDate)
+		{
+			int totalVisits = visits.Sum(v => (int)v.Count);
+			int daysWithVisits = visits.Count();
+			int totalDays = (endDate - startDate).Days + 1;
+
+			string stats = $"Период: {startDate:dd.MM.yyyy} - {endDate:dd.MM.yyyy}\n" +
+						   $"Всего посещений: {totalVisits}\n" +
+						   $"Дней с посещениями: {daysWithVisits} из {totalDays}\n" +
+						   $"Среднее посещений в день: {(daysWithVisits > 0 ? (double)totalVisits / daysWithVisits : 0):F1}";
+
+			ReportStatsText.Text = stats;
+		}
+
+		private void DrawAttendanceChart(List<DateTime> dates, List<int> counts)
+		{
+			AttendanceChartCanvas.Children.Clear();
+
+			if (dates == null || dates.Count == 0) return;
+
+			const int margin = 30;
+			const int columnWidth = 20;
+			const int spacing = 5;
+			double maxCount = counts.Max() > 0 ? counts.Max() : 1;
+			// Фиксированная высота (можно взять из XAML или задать здесь)
+			double canvasHeight = 300 - 2 * margin;
+
+			// Ширина рассчитывается исходя из количества данных
+			double canvasWidth = dates.Count * (columnWidth + spacing) + 2 * margin;
+
+			// Устанавливаем ширину Canvas, чтобы ScrollViewer мог прокручивать
+			AttendanceChartCanvas.Width = canvasWidth + 2 * margin;
+			AttendanceChartCanvas.Height = canvasHeight + 2 * margin;
+
+			// Оси
+			var xAxis = new Line
+			{
+				X1 = margin,
+				Y1 = margin + canvasHeight,
+				X2 = margin + canvasWidth,
+				Y2 = margin + canvasHeight,
+				Stroke = Brushes.Black,
+				StrokeThickness = 1
+			};
+
+			var yAxis = new Line
+			{
+				X1 = margin,
+				Y1 = margin,
+				X2 = margin,
+				Y2 = margin + canvasHeight,
+				Stroke = Brushes.Black,
+				StrokeThickness = 1
+			};
+
+			AttendanceChartCanvas.Children.Add(xAxis);
+			AttendanceChartCanvas.Children.Add(yAxis);
+
+			// Подписи оси Y
+			for (int i = 0; i <= maxCount; i++)
+			{
+				double y = margin + canvasHeight - (i / maxCount * canvasHeight);
+
+				var label = new TextBlock
+				{
+					Text = i.ToString(),
+					FontSize = 10,
+					Foreground = Brushes.Black,
+					TextAlignment = TextAlignment.Right,
+					Width = 20
+				};
+
+				Canvas.SetLeft(label, margin - 25);
+				Canvas.SetTop(label, y - 8);
+				AttendanceChartCanvas.Children.Add(label);
+			}
+
+			// Столбцы диаграммы
+			for (int i = 0; i < dates.Count; i++)
+			{
+				if (i * (columnWidth + spacing) > canvasWidth) break;
+
+				double columnHeight = counts[i] / maxCount * canvasHeight;
+				double left = margin + 5 + i * (columnWidth + spacing);
+				double top = margin + canvasHeight - columnHeight;
+
+				var column = new Rectangle
+				{
+					Width = columnWidth,
+					Height = columnHeight,
+					Fill = Brushes.SteelBlue,
+					Stroke = Brushes.DarkSlateBlue,
+					StrokeThickness = 1
+				};
+
+				Canvas.SetLeft(column, left);
+				Canvas.SetTop(column, top);
+				AttendanceChartCanvas.Children.Add(column);
+
+				// Подпись количества
+				var countLabel = new TextBlock
+				{
+					Text = counts[i].ToString(),
+					FontSize = 10,
+					Foreground = Brushes.Black
+				};
+
+				Canvas.SetLeft(countLabel, left + columnWidth / 2 - 5);
+				Canvas.SetTop(countLabel, top - 20);
+				AttendanceChartCanvas.Children.Add(countLabel);
+
+				// Подпись даты
+				var dateLabel = new TextBlock
+				{
+					Text = dates[i].ToString("dd.MM"),
+					FontSize = 9,
+					Foreground = Brushes.Black,
+					LayoutTransform = new RotateTransform(-45)
+				};
+
+				Canvas.SetLeft(dateLabel, left - 5);
+				Canvas.SetTop(dateLabel, margin + canvasHeight + 5);
+				AttendanceChartCanvas.Children.Add(dateLabel);
+			}
 		}
 
 		private async Task LoadPatientDetails()
@@ -98,28 +290,6 @@ namespace ЭМК
 				DocumentsListBox.ItemsSource = allInspections;
 				UpdateStatusText();
 			}
-			//try
-			//{
-			//	var inspectionsData = await dbContext.inspection
-			//						.Where(i => i.id_patient == currentPatient.Id)
-			//						.Include(i => i.doctor)
-			//						.OrderByDescending(i => i.date_inspection)
-			//						.ThenByDescending(i => i.time_inspection)
-			//						.ToListAsync();
-
-			//	allInspections = inspectionsData.Select(i => new InspectionView
-			//	{
-			//		Id = i.id_inspection,
-			//		Date = i.date_inspection.ToString("dd.MM.yyyy"),
-			//		Time = i.time_inspection.ToString(@"hh\:mm"),
-			//		DoctorName = $"{i.doctor.lastname} {i.doctor.name[0]}.{i.doctor.surname?[0]}.",
-			//		Diagnosis = i.the_main_diagnosis ?? "Диагноз не указан",
-			//		Inspection = i
-			//	}).ToList();
-
-			//	// Применяем фильтр по умолчанию (сегодняшняя дата)
-			//	ApplyDateFilter();
-			//}
 			catch (Exception ex)
 			{
 				MessageBox.Show($"Ошибка при загрузке осмотров: {ex.Message}",
@@ -148,16 +318,6 @@ namespace ЭМК
 			}
 
 			UpdateStatusText();
-			//if (FilterDatePicker.SelectedDate.HasValue && allInspections != null)
-			//{
-			//	var selectedDate = FilterDatePicker.SelectedDate.Value;
-			//	filteredInspections = allInspections
-			//		.Where(i => DateTime.ParseExact(i.Date, "dd.MM.yyyy", null) == selectedDate)
-			//		.ToList();
-
-			//	DocumentsListBox.ItemsSource = filteredInspections;
-			//	UpdateStatusText();
-			//}
 		}
 
 		private void UpdateStatusText()
@@ -174,11 +334,6 @@ namespace ЭМК
 				// Если отображаются все записи (по умолчанию или после сброса)
 				StatusText.Text = $"Всего записей: {allInspections.Count}";
 			}
-
-			//if (filteredInspections != null)
-			//{
-			//	StatusText.Text = $"Найдено записей: {filteredInspections.Count}";
-			//}
 		}
 
 		private void FilterDatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
@@ -192,49 +347,7 @@ namespace ЭМК
 			FilterDatePicker.SelectedDate = DateTime.Today;
 			DocumentsListBox.ItemsSource = allInspections;
 			UpdateStatusText();
-			//	// Сбрасываем фильтр и показываем все записи
-			//	FilterDatePicker.SelectedDate = null;
-			//	DocumentsListBox.ItemsSource = allInspections;
-			//	StatusText.Text = $"Всего записей: {allInspections?.Count ?? 0}";
 		}
-
-		//private async Task LoadInspections()
-		//{
-		//	try
-		//	{
-		//		var inspectionsData = await dbContext.inspection
-		//							.Where(i => i.id_patient == currentPatient.Id)
-		//							.Include(i => i.doctor)
-		//							.OrderByDescending(i => i.date_inspection)
-		//							.ThenByDescending(i => i.time_inspection)
-		//							.ToListAsync();
-
-		//		// Отладочный вывод (проверьте в Output -> Debug)
-		//		Debug.WriteLine($"Найдено осмотров: {inspectionsData.Count}");
-
-		//		if (inspectionsData.Count == 0)
-		//		{
-		//			MessageBox.Show("Осмотры не найдены для этого пациента.");
-		//			return;
-		//		}
-
-		//		var inspections = inspectionsData.Select(i => new InspectionView
-		//		{
-		//			Date = i.date_inspection.ToString("dd.MM.yyyy"),
-		//			Time = i.time_inspection.ToString(@"hh\:mm"),
-		//			DoctorName = $"{i.doctor.lastname} {i.doctor.name[0]}.{i.doctor.surname?[0]}.",
-		//			Diagnosis = i.the_main_diagnosis ?? "Диагноз не указан",
-		//			Inspection = i
-		//		}).ToList();
-
-		//		DocumentsListBox.ItemsSource = inspections;
-		//	}
-		//	catch (Exception ex)
-		//	{
-		//		MessageBox.Show($"Ошибка при загрузке осмотров: {ex.Message}",
-		//					  "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-		//	}
-		//}
 
 		private async void AddBt_Click(object sender, RoutedEventArgs e)
 		{
@@ -248,11 +361,6 @@ namespace ЭМК
 				PatientSnils = txtSnils.Text,
 				PatientAge = txtAge.Text,
 			};
-
-			// Открываем окно медицинского случая
-			//var medicalCaseWindow = new MedicalCaseWindow(medicalCase);
-			//medicalCaseWindow.Owner = this; // Устанавливаем владельца, чтобы окна были связаны
-											//medicalCaseWindow.ShowDialog(); // ShowDialog для модального окна
 
 			var medicalCaseWindow = new MedicalCaseWindow(medicalCase);
 			medicalCaseWindow.Owner = this;
@@ -334,10 +442,10 @@ namespace ЭМК
 					}
 
 					// Загружаем специальность
-					if (App.CurrentDoctor.specialization > 0)
+					if (App.CurrentDoctor.id_specialization > 0)
 					{
 						var specialization = await dbContext.specialization
-							.Where(s => s.id_specialization == App.CurrentDoctor.specialization)
+							.Where(s => s.id_specialization == App.CurrentDoctor.id_specialization)
 							.FirstOrDefaultAsync();
 
 						if (specialization != null)

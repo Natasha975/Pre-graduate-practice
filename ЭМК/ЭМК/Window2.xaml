@@ -100,15 +100,126 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <!-- Top Row: Опции -->
+            <TabControl Grid.Row="1" Margin="0,0,0,10">
+                <TabItem Header="Записи">
+                    <!-- Существующий код с ListBox -->
+                    <Border BorderBrush="LightGray" BorderThickness="1">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,0,0,10" Grid.Row="0">
+                                <Button Content="Добавить" Click="AddBt_Click" x:Name="AddBt" Width="110" Height="30" Margin="0,0,5,0" Background="#FF3F51B5" Foreground="White" />
+                                <!--<Button Content="Отчет по посещаемости" Click="GenerateAttendanceReport_Click" Width="220" Height="30" Margin="0,0,5,0" Background="#FF3F51B5" Foreground="White"/>-->
+                                <!--<Button Content="Удалить" Width="90" Height="30" Margin="0,0,5,0" Background="#FF3F51B5" Foreground="White"/>-->
+                                <!--<Button Content="Сохранить" Width="110" Height="30" Margin="0,0,5,0" Background="#FF3F51B5" Foreground="White"/>-->
+                            </StackPanel>
+
+                            <!--<StackPanel Grid.Row="1" Orientation="Horizontal">
+                                        <TextBlock Text="Фильтр: "/>
+                                        <ComboBox Width="120"/>
+                                        <TextBlock Text="Тип ЭПМЗ: "/>
+                                        <TextBox Width="100"/>
+                                        <TextBlock Text="c:" Margin="5 0 5 0"/>
+                                        <DatePicker Width="100"/>
+                                        <TextBlock Text="по:" Margin="5 0 5 0"/>
+                                        <DatePicker Width="100"/>
+                                        <CheckBox Content="Мои записи"/>
+                            </StackPanel>-->
+                            <ScrollViewer Grid.Row="1">
+                                <ListBox x:Name="DocumentsListBox" MouseDoubleClick="DocumentsListBox_MouseDoubleClick">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <Expander Header="{Binding DateAndDescription}" IsExpanded="False">
+                                                <StackPanel Margin="10,0,0,0">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock Text="Врач - " TextWrapping="Wrap"/>
+                                                        <TextBlock Text="{Binding DoctorName}" TextWrapping="Wrap"/>
+                                                    </StackPanel>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock Text="Диагноз - " TextWrapping="Wrap"/>
+                                                        <TextBlock Text="{Binding Diagnosis}" FontStyle="Italic"/>
+                                                    </StackPanel>
+                                                </StackPanel>
+                                            </Expander>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                            </ScrollViewer>
+                           
+                        </Grid>
+                    </Border>
+                </TabItem>
+                <TabItem Header="Отчет по посещаемости">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <StackPanel Orientation="Horizontal" Margin="0,10,0,10">
+                            <DatePicker x:Name="ReportStartDate" Width="120" Margin="5,0,0,0"/>
+                            <TextBlock Text="по" VerticalAlignment="Center" Margin="10,0,10,0"/>
+                            <DatePicker x:Name="ReportEndDate" Width="120" Margin="0,0,5,0"/>
+                            <Button Content="Сформировать" Click="GenerateReport_Click" 
+                                    Width="135" Height="30" Margin="10,0,0,0" 
+                                    Background="#FF3F51B5" Foreground="White"/>
+                        </StackPanel>
+
+                        <!-- Диаграмма посещаемости с возможностью прокрутки -->
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <ScrollViewer Grid.Column="0" 
+                         HorizontalScrollBarVisibility="Auto"
+                         VerticalScrollBarVisibility="Disabled"
+                         Margin="10">
+                                <Canvas x:Name="AttendanceChartCanvas" 
+                        Background="White"
+                        Width="{Binding ActualWidth, ElementName=AttendanceChartCanvas, Mode=OneWay}"
+                        Height="300">
+                                    <!-- 
+                    Установите фиксированную высоту (Height) для Canvas, 
+                    а ширину (Width) будет определять код при рисовании графика
+                    -->
+                                </Canvas>
+                            </ScrollViewer>
+
+                            <StackPanel Grid.Column="1" Orientation="Vertical" Margin="10,0,0,0">
+                                <TextBlock Text="Статистика:" FontWeight="Bold" Margin="0,0,0,5"/>
+                                <TextBlock x:Name="ReportStatsText" TextWrapping="Wrap" Width="200"/>
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+                </TabItem>
+            </TabControl>
+
+            <!-- Существующий Expander "Дополнительно" -->
+            <Expander Grid.Row="2" Header="Дополнительно">
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                        <TextBlock Text="Фильтр по дате:" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                        <DatePicker x:Name="FilterDatePicker" Width="120" SelectedDateChanged="FilterDatePicker_SelectedDateChanged"/>
+                        <Button x:Name="ResetFilterButton" Background="#FF3F51B5" Content="Сброс" Margin="10,0,0,0" Width="80" Click="ResetFilterButton_Click"/>
+                    </StackPanel>
+                    <TextBlock x:Name="StatusText" Margin="10,8,0,0" FontStyle="Italic"/>
+                </StackPanel>
+            </Expander>
+
+
+            <!-- Top Row: Опции --><!--
             <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,0,0,10">
-                <!--<Button Content="Информация" Width="130" Height="30" Margin="0,0,5,0" TextBlock.Foreground="Black" Background="White"/>-->
+                --><!--<Button Content="Информация" Width="130" Height="30" Margin="0,0,5,0" TextBlock.Foreground="Black" Background="White"/>-->
                 <!--<Button Content="Диаграмма" Width="100" Height="30" Margin="0,0,5,0" Background="White"/>
                 <Button Content="Зубы" Width="80" Height="30" Margin="0,0,5,0" Background="White"/>
-                <Button Content="Сердце" Width="80" Height="30" Margin="0,0,5,0" Background="White"/>-->
+                <Button Content="Сердце" Width="80" Height="30" Margin="0,0,5,0" Background="White"/>--><!--
             </StackPanel>
 
-            <!-- Записи пациента -->
+            --><!-- Записи пациента --><!--
             <Border Grid.Row="1" BorderBrush="LightGray" BorderThickness="1" Margin="0,0,0,10">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -119,10 +230,11 @@
                    
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,0,0,10" Grid.Row="0">
                         <Button Content="Добавить" Click="AddBt_Click" x:Name="AddBt" Width="110" Height="30" Margin="0,0,5,0" Background="#FF3F51B5" Foreground="White"/>
+                        --><!--<Button Content="Отчет по посещаемости" Click="GenerateAttendanceReport_Click" Width="220" Height="30" Margin="0,0,5,0" Background="#FF3F51B5" Foreground="White"/>-->
                         <!--<Button Content="Удалить" Width="90" Height="30" Margin="0,0,5,0" Background="#FF3F51B5" Foreground="White"/>-->
-                        <!--<Button Content="Сохранить" Width="110" Height="30" Margin="0,0,5,0" Background="#FF3F51B5" Foreground="White"/>-->
+                        <!--<Button Content="Сохранить" Width="110" Height="30" Margin="0,0,5,0" Background="#FF3F51B5" Foreground="White"/>--><!--
                     </StackPanel>
-                    <!--<StackPanel Grid.Row="1" Orientation="Horizontal">
+                    --><!--<StackPanel Grid.Row="1" Orientation="Horizontal">
                         <TextBlock Text="Фильтр: "/>
                         <ComboBox Width="120"/>
                         <TextBlock Text="Тип ЭПМЗ: "/>
@@ -132,7 +244,7 @@
                         <TextBlock Text="по:" Margin="5 0 5 0"/>
                         <DatePicker Width="100"/>
                         <CheckBox Content="Мои записи"/>
-                    </StackPanel>-->
+                    </StackPanel>--><!--
 
 
                     <ListBox Grid.Row="2" x:Name="DocumentsListBox" MouseDoubleClick="DocumentsListBox_MouseDoubleClick">
@@ -165,13 +277,13 @@
                         <Button x:Name="ResetFilterButton" Background="#FF3F51B5" Content="Сброс" Margin="10,0,0,0" Width="80" Click="ResetFilterButton_Click"/>
                     </StackPanel>
                     <TextBlock x:Name="StatusText" Margin="10,8,0,0" FontStyle="Italic"/>
-                    <!--<TextBlock Text="Дата:"/>
+                    --><!--<TextBlock Text="Дата:"/>
                     <DatePicker Width="100"/>-->
-                    <!--<TextBlock Text="Список записанных" Margin="5,0,0,0" Foreground="Blue"/>-->
+                    <!--<TextBlock Text="Список записанных" Margin="5,0,0,0" Foreground="Blue"/>--><!--
                 </StackPanel>
-            </Expander>
+            </Expander>-->
         </Grid>
-        
+
         <TextBlock x:Name="txtDoctorInfo" Grid.Row="2" FontSize="12" HorizontalAlignment="Left" Margin="0,0,10,0" FontWeight="Bold"/>
     </Grid>
 </Window>

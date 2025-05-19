@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:ЭМК"       
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="ЭМК" Height="1300" Width="1200" WindowStartupLocation="CenterScreen" WindowState="Maximized" Icon="Image/medical_monitor_icon.ico">
+        Title="ЭМК" MinHeight="700" MinWidth="1200" WindowStartupLocation="CenterScreen" WindowState="Maximized" Icon="Image/medical_monitor_icon.ico">
 
     <Grid Margin="10">
         <Grid.RowDefinitions>
@@ -46,65 +46,69 @@
                         <TextBlock x:Name="txtPatientSnils" FontWeight="Bold" Margin="0,5,0,0"/>
                     </StackPanel>
 
-                    <Grid Margin="0,10,0,5">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
+                    <Expander Header="Данные приема" Margin="0,0,0,10">
+                        <StackPanel>
+                            <Grid Margin="0,10,0,5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
 
-                        <TextBlock Text="Дата приема" FontWeight="Bold"/>
-                        <TextBlock Text="Время" Grid.Column="1" FontWeight="Bold"/>
-                        <TextBlock Text="Место обслуживания" Grid.Column="2" FontWeight="Bold"/>
-                        <TextBlock Text="Врач" Grid.Column="3" FontWeight="Bold"/>
+                                <TextBlock Text="Дата приема" FontWeight="Bold"/>
+                                <TextBlock Text="Время" Grid.Column="1" FontWeight="Bold"/>
+                                <TextBlock Text="Место обслуживания" Grid.Column="2" FontWeight="Bold"/>
+                                <TextBlock Text="Врач" Grid.Column="3" FontWeight="Bold"/>
 
-                        <DatePicker Text="12.04.2021" Width="150" HorizontalAlignment="Left" x:Name="dateTextBlock" Grid.Row="1" Margin="0,5,0,0"/>
+                                <DatePicker Text="12.04.2021" Width="150" HorizontalAlignment="Left" x:Name="dateTextBlock" Grid.Row="1" Margin="0,5,0,0"/>
 
-                        <materialDesign:TimePicker x:Name="timePicker" 
-                                                   Grid.Row="1" Grid.Column="1" 
-                                                   Margin="0,5,0,0"
-                                                   Width="150" 
-                                                   HorizontalAlignment="Left"
-                                                   SelectedTime="{Binding SelectedTime, Mode=TwoWay}"
-                                                   Is24Hours="True"
-                                                   materialDesign:HintAssist.Hint="Время приема">         
-                        </materialDesign:TimePicker>
+                                <materialDesign:TimePicker x:Name="timePicker" 
+                               Grid.Row="1" Grid.Column="1" 
+                               Margin="0,5,0,0"
+                               Width="150" 
+                               HorizontalAlignment="Left"
+                               SelectedTime="{Binding SelectedTime, Mode=TwoWay}"
+                               Is24Hours="True"
+                               materialDesign:HintAssist.Hint="Время приема">
+                                </materialDesign:TimePicker>
 
-                        <TextBlock Grid.Row="1" Grid.Column="2" x:Name="txtPlaceOfService" Margin="0,5,0,0"/>
-                        <TextBlock Grid.Row="1" x:Name="txtDoctorInfo" Grid.Column="3" Margin="0,5,0,0"/>
-                    </Grid>
+                                <TextBlock Grid.Row="1" Grid.Column="2" x:Name="txtPlaceOfService" Margin="0,5,0,0"/>
+                                <TextBlock Grid.Row="1" x:Name="txtDoctorInfo" Grid.Column="3" Margin="0,5,0,0"/>
+                            </Grid>
 
-                    <Grid Margin="0, 5, 0, 0">
-                        <!-- Определение строк и столбцов сетки -->
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
+                            <Grid Margin="0, 5, 0, 0">
+                                <!-- Определение строк и столбцов сетки -->
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
 
-                        <!-- ЗАГОЛОВКИ ПОЛЕЙ -->
-                        <TextBlock Text="Тип случая обслуживания" FontWeight="Bold" ToolTip="Выберите тип обращения пациента"/>
-                        <TextBlock Text="Вид оплаты" Grid.Column="1" FontWeight="Bold" ToolTip="Выберите источник финансирования услуги"/>
-                        <TextBlock Text="Цель обслуживания" Grid.Column="2" FontWeight="Bold" ToolTip="Укажите цель визита пациента"/>
+                                <!-- ЗАГОЛОВКИ ПОЛЕЙ -->
+                                <TextBlock Text="Тип случая обслуживания" FontWeight="Bold" ToolTip="Выберите тип обращения пациента"/>
+                                <TextBlock Text="Вид оплаты" Grid.Column="1" FontWeight="Bold" ToolTip="Выберите источник финансирования услуги"/>
+                                <TextBlock Text="Цель обслуживания" Grid.Column="2" FontWeight="Bold" ToolTip="Укажите цель визита пациента"/>
 
-                        <!-- 1. Тип случая обслуживания -->
-                        <TextBlock Grid.Row="1" Grid.Column="0" x:Name="txtCaseTypeService" Margin="0,5,0,0"/>
+                                <!-- 1. Тип случая обслуживания -->
+                                <TextBlock Grid.Row="1" Grid.Column="0" x:Name="txtCaseTypeService" Margin="0,5,0,0"/>
 
-                        <!-- 2. Вид оплаты -->
-                        <TextBlock Grid.Row="1" Grid.Column="1" x:Name="txtTypeOfPayment" Margin="0,5,0,0"/>
+                                <!-- 2. Вид оплаты -->
+                                <TextBlock Grid.Row="1" Grid.Column="1" x:Name="txtTypeOfPayment" Margin="0,5,0,0"/>
 
-                        <!-- 3. Цель обслуживания -->
-                        <TextBlock Grid.Row="1" Grid.Column="2" x:Name="txtPurposeOfTheService" Margin="0,5,0,0"/>
-                    </Grid>
+                                <!-- 3. Цель обслуживания -->
+                                <TextBlock Grid.Row="1" Grid.Column="2" x:Name="txtPurposeOfTheService" Margin="0,5,0,0"/>
+                            </Grid>
+                        </StackPanel>
+                    </Expander>
                 </StackPanel>
                 <StackPanel/>
             </StackPanel>
@@ -182,10 +186,10 @@
 
                                                 <TextBox x:Name="txtHeight" Text="0" VerticalContentAlignment="Center"/>
 
-                                                <StackPanel Grid.Column="1" Orientation="Vertical">
+                                                <!--<StackPanel Grid.Column="1" Orientation="Vertical">
                                                     <Button Content="▲" Background="White" Height="15" />
                                                     <Button Content="▼" Height="15" />
-                                                </StackPanel>
+                                                </StackPanel>-->
                                             </Grid>
 
                                             <TextBlock Text="Вес (кг):" Grid.Column="2" Margin="20,5,0,0"/>
@@ -197,14 +201,14 @@
 
                                                 <TextBox x:Name="txtWeight" Text="0" VerticalContentAlignment="Center"/>
 
-                                                <StackPanel Grid.Column="1" Orientation="Vertical">
+                                                <!--<StackPanel Grid.Column="1" Orientation="Vertical">
                                                     <Button Content="▲" Background="White" Height="15" />
                                                     <Button Content="▼" Height="15" />
-                                                </StackPanel>
+                                                </StackPanel>-->
                                             </Grid>
 
                                             <TextBlock Text="АД:" Grid.Column="4"  Margin="20,5,0,0"/>
-                                            <Grid Grid.Column="5" Margin="20,0,10,0" Width="80" x:Name="BloodPressureUpperGrid">
+                                            <Grid Grid.Column="5" Margin="20,0,0,0" Width="80" x:Name="BloodPressureUpperGrid">
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="*"/>
                                                     <ColumnDefinition Width="20"/>
@@ -212,14 +216,14 @@
 
                                                 <TextBox x:Name="txtBloodPressureUpper" Text="10" VerticalContentAlignment="Center"/>
 
-                                                <StackPanel Grid.Column="1" Orientation="Vertical">
+                                                <!--<StackPanel Grid.Column="1" Orientation="Vertical">
                                                     <Button Content="▲" Background="White" Height="15" />
                                                     <Button Content="▼" Height="15" />
-                                                </StackPanel>
+                                                </StackPanel>-->
                                             </Grid>
 
-                                            <TextBlock Text="/" Grid.Column="6"  Margin="5,5,0,0"/>
-                                            <Grid Grid.Column="7" Margin="10,0,10,0" Width="80">
+                                            <TextBlock Text="/" Grid.Column="6"  Margin="0,5,0,0"/>
+                                            <Grid Grid.Column="7" Margin="10,0,0,0" Width="80">
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="*"/>
                                                     <ColumnDefinition Width="20"/>
@@ -227,10 +231,10 @@
 
                                                 <TextBox x:Name="txtBloodPressureLower" Text="0" VerticalContentAlignment="Center"/>
 
-                                                <StackPanel Grid.Column="1" Orientation="Vertical">
+                                                <!--<StackPanel Grid.Column="1" Orientation="Vertical">
                                                     <Button Content="▲" Background="White" Height="15" />
                                                     <Button Content="▼" Height="15"/>
-                                                </StackPanel>
+                                                </StackPanel>-->
                                             </Grid>
 
                                             <TextBlock Text="Температура (°C)" Grid.Column="8"  Margin="5,5,0,0"/>
@@ -242,10 +246,10 @@
 
                                                 <TextBox x:Name="txtTemperature" Text="0" VerticalContentAlignment="Center"/>
 
-                                                <StackPanel Grid.Column="1" Orientation="Vertical">
+                                                <!--<StackPanel Grid.Column="1" Orientation="Vertical">
                                                     <Button Content="▲" Background="White" Height="15" />
                                                     <Button Content="▼" Height="15" />
-                                                </StackPanel>
+                                                </StackPanel>-->
                                             </Grid>
                                         </Grid>
 
@@ -269,10 +273,10 @@
 
                                                 <TextBox x:Name="txtHeartRate" Text="0" VerticalContentAlignment="Center"/>
 
-                                                <StackPanel Grid.Column="1" Orientation="Vertical">
+                                                <!--<StackPanel Grid.Column="1" Orientation="Vertical">
                                                     <Button Content="▲" Background="White" Height="15" />
                                                     <Button Content="▼" Height="15" />
-                                                </StackPanel>
+                                                </StackPanel>-->
                                             </Grid>
 
                                             <TextBlock Text="ЧДД: (в мин):" Grid.Column="2" Margin="0,5,0,0"/>
@@ -284,10 +288,10 @@
 
                                                 <TextBox x:Name="txtRespiratoryRate" Text="0" VerticalContentAlignment="Center"/>
 
-                                                <StackPanel Grid.Column="1" Orientation="Vertical">
+                                                <!--<StackPanel Grid.Column="1" Orientation="Vertical">
                                                     <Button Content="▲" Background="White" Height="15" />
                                                     <Button Content="▼" Height="15" />
-                                                </StackPanel>
+                                                </StackPanel>-->
                                             </Grid>
 
                                             <TextBlock Text="SpO2: (%):" Grid.Column="4" Margin="0,5,0,0"/>
@@ -299,17 +303,50 @@
 
                                                 <TextBox x:Name="txtOxygenSaturation" Text="0" VerticalContentAlignment="Center"/>
 
-                                                <StackPanel Grid.Column="1" Orientation="Vertical">
+                                                <!--<StackPanel Grid.Column="1" Orientation="Vertical">
                                                     <Button Content="▲" Background="White" Height="15" />
                                                     <Button Content="▼" Height="15" />
-                                                </StackPanel>
+                                                </StackPanel>-->
                                             </Grid>
                                         </Grid>
                                     </Grid>
                                 </Border>
                             </StackPanel>
 
-                            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Grid.Column="0" Grid.Row="0" Text="Подозрение на ЗНО:" FontWeight="Bold" Margin="0,5,10,5"/>
+                                <TextBlock Grid.Column="1" Grid.Row="0" x:Name="txtSuspicionOfHeat" Margin="0,5,0,0"/>
+
+                                <TextBlock Grid.Column="0" Grid.Row="1" Text="Состояние пациента:" FontWeight="Bold" Margin="0,5,10,5"/>
+                                <TextBlock Grid.Column="1" Grid.Row="1" x:Name="txtPatientCondition" Margin="0,5,0,0"/>
+
+                                <TextBlock Grid.Column="0" Grid.Row="2" Text="Предварительный диагноз:" FontWeight="Bold" Margin="0,5,10,5"/>
+                                <TextBlock Grid.Column="1" Grid.Row="2" x:Name="txtPreliminaryDiagnosis" Margin="0,5,0,5"/>
+
+                                <TextBlock Grid.Column="0" Grid.Row="3" Text="Основной диагноз:" FontWeight="Bold" Margin="0,5,10,5"/>
+                                <TextBlock Grid.Column="1" Grid.Row="3" x:Name="txtTheMainDiagnosis" Margin="0,5,0,5"/>
+
+                                <TextBlock Grid.Column="0" Grid.Row="4" Text="Лечение:" FontWeight="Bold" Margin="0,5,10,5"/>
+                                <TextBlock Grid.Column="1" Grid.Row="4" x:Name="txtTreatment" Margin="0,0,0,5"/>
+                                <TextBlock Grid.Column="0" Grid.Row="5" Text="Рекомендации:" FontWeight="Bold" Margin="0,5,10,5"/>
+                                <TextBlock Grid.Column="1" Grid.Row="5" x:Name="txtRecommendations" Margin="0,0,0,10"/>
+                            </Grid>
+                            
+                           
+                            <!--<StackPanel Orientation="Horizontal" Margin="0,10,0,0">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="Подозрение на ЗНО:" FontWeight="Bold" Margin="0,5,10,5"/>
                                     <TextBlock x:Name="txtSuspicionOfHeat" Margin="0,5,0,0"/>
@@ -317,39 +354,62 @@
 
                                 <TextBlock Text="Состояние пациента:" FontWeight="Bold" Margin="50,5,10,5"/>
                                 <TextBlock x:Name="txtPatientCondition" Margin="0,5,0,0"/>
-                            </StackPanel>
+                            </StackPanel>-->
 
                             <!-- Предварительный диагноз -->
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Предварительный диагноз:" FontWeight="Bold" Margin="0,5,0,5"/>
-                                <TextBlock x:Name="txtPreliminaryDiagnosis" Margin="20,5,0,5"/>
-                            </StackPanel>
+                            <!--<StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Предварительный диагноз:" FontWeight="Bold" Margin="0,5,10,5"/>
+                                <TextBlock x:Name="txtPreliminaryDiagnosis" Margin="0,5,0,5"/>
+                            </StackPanel>-->
                            
                             <!-- Основной диагноз -->
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Основной диагноз:" FontWeight="Bold" Margin="0,5,0,5"/>
-                                <TextBlock x:Name="txtTheMainDiagnosis" Margin="20,5,0,5"/>
-                            </StackPanel>
+                            <!--<StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Основной диагноз:" FontWeight="Bold" Margin="0,5,10,5"/>
+                                <TextBlock x:Name="txtTheMainDiagnosis" Margin="0,5,0,5"/>
+                            </StackPanel>-->
 
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Лечение:" FontWeight="Bold" Margin="0,0,0,5"/>
+                            <!--<StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Лечение:" FontWeight="Bold" Margin="0,0,10,5"/>
                                 <TextBlock x:Name="txtTreatment" Margin="0,0,0,5"/>
                             </StackPanel>
 
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Рекомендации:" FontWeight="Bold" Margin="0,0,0,5"/>
+                                <TextBlock Text="Рекомендации:" FontWeight="Bold" Margin="0,0,10,5"/>
                                 <TextBlock x:Name="txtRecommendations" Margin="0,0,0,10"/>
-                            </StackPanel>
+                            </StackPanel>-->
                         </StackPanel>
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
 
-            <TabItem Header="Услуги"/>
-            <TabItem Header="Анализы"/>
-            <TabItem Header="Диагностика"/>
+            <TabItem Header="Направления">
+                <ScrollViewer VerticalScrollBarVisibility="Auto"
+                              x:Name="DirectionsListScrollViewer"
+                              Padding="5">
+                    <ScrollViewer.Resources>
+                        <Style TargetType="Button">
+                            <Setter Property="Padding" Value="5 2"/>
+                            <Setter Property="MinWidth" Value="80"/>
+                        </Style>
+                    </ScrollViewer.Resources>
+                </ScrollViewer>
+            </TabItem>
+
+            <!--<TabItem Header="Услуги"/>
+            <TabItem Header="Анализы"/>-->
+            <TabItem Header="Выписанные рецепты">
+                <ScrollViewer VerticalScrollBarVisibility="Auto"
+                  x:Name="PrescriptionsListScrollViewer"
+                  Padding="5">
+                    <ScrollViewer.Resources>
+                        <Style TargetType="Button">
+                            <Setter Property="Padding" Value="5 2"/>
+                            <Setter Property="MinWidth" Value="80"/>
+                        </Style>
+                    </ScrollViewer.Resources>
+                </ScrollViewer>
+            </TabItem>
             <TabItem Header="Листки нетрудоспособности"/>
-            <TabItem Header="Направления"/>
         </TabControl>
 
         <StackPanel Grid.Row="3" Orientation="Horizontal">

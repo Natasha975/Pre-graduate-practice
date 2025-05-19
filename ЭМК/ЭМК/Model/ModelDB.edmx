@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Хранилище diplomModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="Хранилище MedCardDBModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="attachment">
           <Key>
             <PropertyRef Name="id_attachment" />
@@ -13,31 +13,27 @@
           <Property Name="id_hospital" Type="int" Nullable="false" />
           <Property Name="id_patient" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="disability_certificate">
+          <Key>
+            <PropertyRef Name="id_disability_certificate" />
+          </Key>
+          <Property Name="id_disability_certificate" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_inspection" Type="int" Nullable="false" />
+          <Property Name="type_of_certificate" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="cause_of_illness" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="period" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="doctor">
           <Key>
             <PropertyRef Name="id_doctor" />
           </Key>
           <Property Name="id_doctor" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="lastname" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="surname" Type="nvarchar(max)" />
-          <Property Name="specialization" Type="int" Nullable="false" />
-          <Property Name="medical_care_profile" Type="int" Nullable="false" />
+          <Property Name="lastname" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="surname" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="id_specialization" Type="int" Nullable="false" />
           <Property Name="login" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="password" Type="nvarchar" MaxLength="50" Nullable="false" />
-        </EntityType>
-        <EntityType Name="history_the_disease">
-          <Key>
-            <PropertyRef Name="id_history" />
-          </Key>
-          <Property Name="id_history" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="id_patient" Type="int" Nullable="false" />
-          <Property Name="id_doctor" Type="int" Nullable="false" />
-          <Property Name="place_of_education" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="periody_hospitalization" Type="date" Nullable="false" />
-          <Property Name="clinic_diagnosis" Type="date" Nullable="false" />
-          <Property Name="results_examinationn" Type="date" Nullable="false" />
-          <Property Name="recommendations" Type="date" Nullable="false" />
         </EntityType>
         <EntityType Name="hospital">
           <Key>
@@ -78,13 +74,6 @@
           <Property Name="treatment" Type="nvarchar(max)" Nullable="false" />
           <Property Name="recommendations" Type="nvarchar(max)" />
         </EntityType>
-        <EntityType Name="medical_care_profile">
-          <Key>
-            <PropertyRef Name="id_medical_care_profile" />
-          </Key>
-          <Property Name="id_medical_care_profile" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="name_medical_care_profile" Type="nvarchar" MaxLength="225" Nullable="false" />
-        </EntityType>
         <EntityType Name="patient">
           <Key>
             <PropertyRef Name="id_patient" />
@@ -97,11 +86,59 @@
           <Property Name="birthday" Type="date" Nullable="false" />
           <Property Name="age" Type="tinyint" Nullable="false" />
           <Property Name="gender" Type="nvarchar" MaxLength="15" Nullable="false" />
-          <Property Name="name_insurance_company" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="number_policy_OMS" Type="nvarchar" MaxLength="16" Nullable="false" />
           <Property Name="address" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="email" Type="nvarchar" MaxLength="225" />
           <Property Name="phone" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="passport_number_and_series" Type="nvarchar" MaxLength="50" />
+          <Property Name="place_of_work" Type="nvarchar(max)" />
+          <Property Name="number_med_card" Type="nvarchar" MaxLength="20" />
+          <Property Name="date_out_med_card" Type="date" />
+          <Property Name="photo" Type="varbinary(max)" />
+          <Property Name="name_insurance_company" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="number_policy_OMS" Type="nvarchar" MaxLength="16" Nullable="false" />
+          <Property Name="date_and_insur_policy" Type="date" />
+        </EntityType>
+        <EntityType Name="period">
+          <Key>
+            <PropertyRef Name="id_period" />
+          </Key>
+          <Property Name="id_period" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_disability_certificate" Type="int" Nullable="false" />
+          <Property Name="date_start" Type="date" Nullable="false" />
+          <Property Name="date_end" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="prescription_form_107у">
+          <Key>
+            <PropertyRef Name="number" />
+          </Key>
+          <Property Name="number" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_inspection" Type="int" Nullable="false" />
+          <Property Name="date" Type="date" Nullable="false" />
+          <Property Name="name_of_the_drug" Type="nvarchar(max)" />
+          <Property Name="dosage" Type="nvarchar(max)" />
+          <Property Name="method_of_administration" Type="nvarchar(max)" />
+          <Property Name="method_of_administration_details" Type="nvarchar(max)" />
+          <Property Name="dosage_regimen" Type="nvarchar(max)" />
+          <Property Name="dosage_regimen_optional" Type="nvarchar(max)" />
+          <Property Name="duration_of_treatment_number" Type="nvarchar(max)" />
+          <Property Name="duration_of_treatment_duration" Type="nvarchar(max)" />
+          <Property Name="duration_of_treatment_comments" Type="nvarchar(max)" />
+          <Property Name="justification_of_appointment" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="referral">
+          <Key>
+            <PropertyRef Name="id_referral" />
+          </Key>
+          <Property Name="id_referral" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_inspection" Type="int" Nullable="false" />
+          <Property Name="type_of_direction" Type="nvarchar(max)" />
+          <Property Name="date_of_creation" Type="date" />
+          <Property Name="payment_source" Type="nvarchar(max)" />
+          <Property Name="service" Type="nvarchar(max)" />
+          <Property Name="organization" Type="nvarchar(max)" />
+          <Property Name="doctor" Type="nvarchar(max)" />
+          <Property Name="date_of_admission" Type="date" />
+          <Property Name="justification" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="representative_patient">
           <Key>
@@ -126,17 +163,6 @@
           </Key>
           <Property Name="id_specialization" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="nvarchar" MaxLength="100" Nullable="false" />
-        </EntityType>
-        <EntityType Name="surveillance_journal">
-          <Key>
-            <PropertyRef Name="record_number" />
-          </Key>
-          <Property Name="record_number" Type="int" Nullable="false" />
-          <Property Name="date_recording" Type="int" Nullable="false" />
-          <Property Name="history_number" Type="int" Nullable="false" />
-          <Property Name="temperature" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="complaints" Type="date" Nullable="false" />
-          <Property Name="general_condition_the_patient" Type="date" Nullable="false" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -172,15 +198,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_doctor_medical_care_profile">
-          <End Role="medical_care_profile" Type="Self.medical_care_profile" Multiplicity="1" />
-          <End Role="doctor" Type="Self.doctor" Multiplicity="*" />
+        <Association Name="FK_disability_certificate_inspection">
+          <End Role="inspection" Type="Self.inspection" Multiplicity="1" />
+          <End Role="disability_certificate" Type="Self.disability_certificate" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="medical_care_profile">
-              <PropertyRef Name="id_medical_care_profile" />
+            <Principal Role="inspection">
+              <PropertyRef Name="id_inspection" />
             </Principal>
-            <Dependent Role="doctor">
-              <PropertyRef Name="medical_care_profile" />
+            <Dependent Role="disability_certificate">
+              <PropertyRef Name="id_inspection" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -192,7 +218,7 @@
               <PropertyRef Name="id_specialization" />
             </Principal>
             <Dependent Role="doctor">
-              <PropertyRef Name="specialization" />
+              <PropertyRef Name="id_specialization" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -220,6 +246,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_period_disability_certificate">
+          <End Role="disability_certificate" Type="Self.disability_certificate" Multiplicity="1" />
+          <End Role="period" Type="Self.period" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="disability_certificate">
+              <PropertyRef Name="id_disability_certificate" />
+            </Principal>
+            <Dependent Role="period">
+              <PropertyRef Name="id_disability_certificate" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_prescription_form_107у_inspection">
+          <End Role="inspection" Type="Self.inspection" Multiplicity="1" />
+          <End Role="prescription_form_107у" Type="Self.prescription_form_107у" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="inspection">
+              <PropertyRef Name="id_inspection" />
+            </Principal>
+            <Dependent Role="prescription_form_107у">
+              <PropertyRef Name="id_inspection" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_referral_inspection">
+          <End Role="inspection" Type="Self.inspection" Multiplicity="1" />
+          <End Role="referral" Type="Self.referral" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="inspection">
+              <PropertyRef Name="id_inspection" />
+            </Principal>
+            <Dependent Role="referral">
+              <PropertyRef Name="id_inspection" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_representative_patient_patient">
           <End Role="patient" Type="Self.patient" Multiplicity="1" />
           <End Role="representative_patient" Type="Self.representative_patient" Multiplicity="*" />
@@ -232,17 +294,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="Хранилище diplomModelContainer">
+        <EntityContainer Name="Хранилище MedCardDBModelContainer">
           <EntitySet Name="attachment" EntityType="Self.attachment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="disability_certificate" EntityType="Self.disability_certificate" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="doctor" EntityType="Self.doctor" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="history_the_disease" EntityType="Self.history_the_disease" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="hospital" EntityType="Self.hospital" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="inspection" EntityType="Self.inspection" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="medical_care_profile" EntityType="Self.medical_care_profile" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="patient" EntityType="Self.patient" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="period" EntityType="Self.period" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="prescription_form_107у" EntityType="Self.prescription_form_107у" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="referral" EntityType="Self.referral" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="representative_patient" EntityType="Self.representative_patient" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="specialization" EntityType="Self.specialization" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="surveillance_journal" EntityType="Self.surveillance_journal" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_attachment_hospital" Association="Self.FK_attachment_hospital">
             <End Role="hospital" EntitySet="hospital" />
@@ -252,9 +315,9 @@
             <End Role="patient" EntitySet="patient" />
             <End Role="attachment" EntitySet="attachment" />
           </AssociationSet>
-          <AssociationSet Name="FK_doctor_medical_care_profile" Association="Self.FK_doctor_medical_care_profile">
-            <End Role="medical_care_profile" EntitySet="medical_care_profile" />
-            <End Role="doctor" EntitySet="doctor" />
+          <AssociationSet Name="FK_disability_certificate_inspection" Association="Self.FK_disability_certificate_inspection">
+            <End Role="inspection" EntitySet="inspection" />
+            <End Role="disability_certificate" EntitySet="disability_certificate" />
           </AssociationSet>
           <AssociationSet Name="FK_doctor_specialization" Association="Self.FK_doctor_specialization">
             <End Role="specialization" EntitySet="specialization" />
@@ -268,6 +331,18 @@
             <End Role="patient" EntitySet="patient" />
             <End Role="inspection" EntitySet="inspection" />
           </AssociationSet>
+          <AssociationSet Name="FK_period_disability_certificate" Association="Self.FK_period_disability_certificate">
+            <End Role="disability_certificate" EntitySet="disability_certificate" />
+            <End Role="period" EntitySet="period" />
+          </AssociationSet>
+          <AssociationSet Name="FK_prescription_form_107у_inspection" Association="Self.FK_prescription_form_107у_inspection">
+            <End Role="inspection" EntitySet="inspection" />
+            <End Role="prescription_form_107у" EntitySet="prescription_form_107у" />
+          </AssociationSet>
+          <AssociationSet Name="FK_referral_inspection" Association="Self.FK_referral_inspection">
+            <End Role="inspection" EntitySet="inspection" />
+            <End Role="referral" EntitySet="referral" />
+          </AssociationSet>
           <AssociationSet Name="FK_representative_patient_patient" Association="Self.FK_representative_patient_patient">
             <End Role="patient" EntitySet="patient" />
             <End Role="representative_patient" EntitySet="representative_patient" />
@@ -277,7 +352,7 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="diplomModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="MedCardDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="attachment">
           <Key>
             <PropertyRef Name="id_attachment" />
@@ -288,34 +363,31 @@
           <NavigationProperty Name="hospital" Relationship="Self.FK_attachment_hospital" FromRole="attachment" ToRole="hospital" />
           <NavigationProperty Name="patient" Relationship="Self.FK_attachment_patient" FromRole="attachment" ToRole="patient" />
         </EntityType>
+        <EntityType Name="disability_certificate">
+          <Key>
+            <PropertyRef Name="id_disability_certificate" />
+          </Key>
+          <Property Name="id_disability_certificate" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_inspection" Type="Int32" Nullable="false" />
+          <Property Name="type_of_certificate" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="cause_of_illness" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="period" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="inspection" Relationship="Self.FK_disability_certificate_inspection" FromRole="disability_certificate" ToRole="inspection" />
+          <NavigationProperty Name="period1" Relationship="Self.FK_period_disability_certificate" FromRole="disability_certificate" ToRole="period" />
+        </EntityType>
         <EntityType Name="doctor">
           <Key>
             <PropertyRef Name="id_doctor" />
           </Key>
           <Property Name="id_doctor" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="lastname" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="surname" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="specialization" Type="Int32" Nullable="false" />
-          <Property Name="medical_care_profile" Type="Int32" Nullable="false" />
+          <Property Name="lastname" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="surname" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="id_specialization" Type="Int32" Nullable="false" />
           <Property Name="login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="medical_care_profile1" Relationship="Self.FK_doctor_medical_care_profile" FromRole="doctor" ToRole="medical_care_profile" />
-          <NavigationProperty Name="specialization1" Relationship="Self.FK_doctor_specialization" FromRole="doctor" ToRole="specialization" />
+          <NavigationProperty Name="specialization" Relationship="Self.FK_doctor_specialization" FromRole="doctor" ToRole="specialization" />
           <NavigationProperty Name="inspection" Relationship="Self.FK_inspection_doctor" FromRole="doctor" ToRole="inspection" />
-        </EntityType>
-        <EntityType Name="history_the_disease">
-          <Key>
-            <PropertyRef Name="id_history" />
-          </Key>
-          <Property Name="id_history" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="id_patient" Type="Int32" Nullable="false" />
-          <Property Name="id_doctor" Type="Int32" Nullable="false" />
-          <Property Name="place_of_education" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="periody_hospitalization" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="clinic_diagnosis" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="results_examinationn" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="recommendations" Type="DateTime" Nullable="false" Precision="0" />
         </EntityType>
         <EntityType Name="hospital">
           <Key>
@@ -356,16 +428,11 @@
           <Property Name="suspicion_of_heat" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="treatment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="recommendations" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="disability_certificate" Relationship="Self.FK_disability_certificate_inspection" FromRole="inspection" ToRole="disability_certificate" />
           <NavigationProperty Name="doctor" Relationship="Self.FK_inspection_doctor" FromRole="inspection" ToRole="doctor" />
           <NavigationProperty Name="patient" Relationship="Self.FK_inspection_patient" FromRole="inspection" ToRole="patient" />
-        </EntityType>
-        <EntityType Name="medical_care_profile">
-          <Key>
-            <PropertyRef Name="id_medical_care_profile" />
-          </Key>
-          <Property Name="id_medical_care_profile" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name_medical_care_profile" Type="String" MaxLength="225" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="doctor" Relationship="Self.FK_doctor_medical_care_profile" FromRole="medical_care_profile" ToRole="doctor" />
+          <NavigationProperty Name="prescription_form_107у" Relationship="Self.FK_prescription_form_107у_inspection" FromRole="inspection" ToRole="prescription_form_107у" />
+          <NavigationProperty Name="referral" Relationship="Self.FK_referral_inspection" FromRole="inspection" ToRole="referral" />
         </EntityType>
         <EntityType Name="patient">
           <Key>
@@ -379,14 +446,65 @@
           <Property Name="birthday" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="age" Type="Byte" Nullable="false" />
           <Property Name="gender" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="name_insurance_company" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="number_policy_OMS" Type="String" MaxLength="16" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="address" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="email" Type="String" MaxLength="225" FixedLength="false" Unicode="true" />
           <Property Name="phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="passport_number_and_series" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="place_of_work" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="number_med_card" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="date_out_med_card" Type="DateTime" Precision="0" />
+          <Property Name="photo" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="name_insurance_company" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="number_policy_OMS" Type="String" MaxLength="16" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="date_and_insur_policy" Type="DateTime" Precision="0" />
           <NavigationProperty Name="attachment" Relationship="Self.FK_attachment_patient" FromRole="patient" ToRole="attachment" />
           <NavigationProperty Name="inspection" Relationship="Self.FK_inspection_patient" FromRole="patient" ToRole="inspection" />
           <NavigationProperty Name="representative_patient" Relationship="Self.FK_representative_patient_patient" FromRole="patient" ToRole="representative_patient" />
+        </EntityType>
+        <EntityType Name="period">
+          <Key>
+            <PropertyRef Name="id_period" />
+          </Key>
+          <Property Name="id_period" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_disability_certificate" Type="Int32" Nullable="false" />
+          <Property Name="date_start" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="date_end" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="disability_certificate" Relationship="Self.FK_period_disability_certificate" FromRole="period" ToRole="disability_certificate" />
+        </EntityType>
+        <EntityType Name="prescription_form_107у">
+          <Key>
+            <PropertyRef Name="number" />
+          </Key>
+          <Property Name="number" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_inspection" Type="Int32" Nullable="false" />
+          <Property Name="date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="name_of_the_drug" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="dosage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="method_of_administration" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="method_of_administration_details" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="dosage_regimen" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="dosage_regimen_optional" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="duration_of_treatment_number" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="duration_of_treatment_duration" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="duration_of_treatment_comments" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="justification_of_appointment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="inspection" Relationship="Self.FK_prescription_form_107у_inspection" FromRole="prescription_form_107у" ToRole="inspection" />
+        </EntityType>
+        <EntityType Name="referral">
+          <Key>
+            <PropertyRef Name="id_referral" />
+          </Key>
+          <Property Name="id_referral" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_inspection" Type="Int32" Nullable="false" />
+          <Property Name="type_of_direction" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="date_of_creation" Type="DateTime" Precision="0" />
+          <Property Name="payment_source" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="service" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="organization" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="doctor" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="date_of_admission" Type="DateTime" Precision="0" />
+          <Property Name="justification" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="inspection" Relationship="Self.FK_referral_inspection" FromRole="referral" ToRole="inspection" />
         </EntityType>
         <EntityType Name="representative_patient">
           <Key>
@@ -413,17 +531,6 @@
           <Property Name="id_specialization" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="doctor" Relationship="Self.FK_doctor_specialization" FromRole="specialization" ToRole="doctor" />
-        </EntityType>
-        <EntityType Name="surveillance_journal">
-          <Key>
-            <PropertyRef Name="record_number" />
-          </Key>
-          <Property Name="record_number" Type="Int32" Nullable="false" />
-          <Property Name="date_recording" Type="Int32" Nullable="false" />
-          <Property Name="history_number" Type="Int32" Nullable="false" />
-          <Property Name="temperature" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="complaints" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="general_condition_the_patient" Type="DateTime" Nullable="false" Precision="0" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -459,15 +566,27 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_doctor_medical_care_profile">
-          <End Role="medical_care_profile" Type="Self.medical_care_profile" Multiplicity="1" />
-          <End Role="doctor" Type="Self.doctor" Multiplicity="*" />
+        <Association Name="FK_disability_certificate_inspection">
+          <End Role="inspection" Type="Self.inspection" Multiplicity="1" />
+          <End Role="disability_certificate" Type="Self.disability_certificate" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="medical_care_profile">
-              <PropertyRef Name="id_medical_care_profile" />
+            <Principal Role="inspection">
+              <PropertyRef Name="id_inspection" />
             </Principal>
-            <Dependent Role="doctor">
-              <PropertyRef Name="medical_care_profile" />
+            <Dependent Role="disability_certificate">
+              <PropertyRef Name="id_inspection" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_period_disability_certificate">
+          <End Role="disability_certificate" Type="Self.disability_certificate" Multiplicity="1" />
+          <End Role="period" Type="Self.period" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="disability_certificate">
+              <PropertyRef Name="id_disability_certificate" />
+            </Principal>
+            <Dependent Role="period">
+              <PropertyRef Name="id_disability_certificate" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -479,7 +598,7 @@
               <PropertyRef Name="id_specialization" />
             </Principal>
             <Dependent Role="doctor">
-              <PropertyRef Name="specialization" />
+              <PropertyRef Name="id_specialization" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -507,6 +626,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_prescription_form_107у_inspection">
+          <End Role="inspection" Type="Self.inspection" Multiplicity="1" />
+          <End Role="prescription_form_107у" Type="Self.prescription_form_107у" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="inspection">
+              <PropertyRef Name="id_inspection" />
+            </Principal>
+            <Dependent Role="prescription_form_107у">
+              <PropertyRef Name="id_inspection" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_referral_inspection">
+          <End Role="inspection" Type="Self.inspection" Multiplicity="1" />
+          <End Role="referral" Type="Self.referral" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="inspection">
+              <PropertyRef Name="id_inspection" />
+            </Principal>
+            <Dependent Role="referral">
+              <PropertyRef Name="id_inspection" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_representative_patient_patient">
           <End Role="patient" Type="Self.patient" Multiplicity="1" />
           <End Role="representative_patient" Type="Self.representative_patient" Multiplicity="*" />
@@ -519,17 +662,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="diplomEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="MedCardDBEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="attachment" EntityType="Self.attachment" />
+          <EntitySet Name="disability_certificate" EntityType="Self.disability_certificate" />
           <EntitySet Name="doctor" EntityType="Self.doctor" />
-          <EntitySet Name="history_the_disease" EntityType="Self.history_the_disease" />
           <EntitySet Name="hospital" EntityType="Self.hospital" />
           <EntitySet Name="inspection" EntityType="Self.inspection" />
-          <EntitySet Name="medical_care_profile" EntityType="Self.medical_care_profile" />
           <EntitySet Name="patient" EntityType="Self.patient" />
+          <EntitySet Name="period" EntityType="Self.period" />
+          <EntitySet Name="prescription_form_107у" EntityType="Self.prescription_form_107у" />
+          <EntitySet Name="referral" EntityType="Self.referral" />
           <EntitySet Name="representative_patient" EntityType="Self.representative_patient" />
           <EntitySet Name="specialization" EntityType="Self.specialization" />
-          <EntitySet Name="surveillance_journal" EntityType="Self.surveillance_journal" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <AssociationSet Name="FK_attachment_hospital" Association="Self.FK_attachment_hospital">
             <End Role="hospital" EntitySet="hospital" />
@@ -539,9 +683,13 @@
             <End Role="patient" EntitySet="patient" />
             <End Role="attachment" EntitySet="attachment" />
           </AssociationSet>
-          <AssociationSet Name="FK_doctor_medical_care_profile" Association="Self.FK_doctor_medical_care_profile">
-            <End Role="medical_care_profile" EntitySet="medical_care_profile" />
-            <End Role="doctor" EntitySet="doctor" />
+          <AssociationSet Name="FK_disability_certificate_inspection" Association="Self.FK_disability_certificate_inspection">
+            <End Role="inspection" EntitySet="inspection" />
+            <End Role="disability_certificate" EntitySet="disability_certificate" />
+          </AssociationSet>
+          <AssociationSet Name="FK_period_disability_certificate" Association="Self.FK_period_disability_certificate">
+            <End Role="disability_certificate" EntitySet="disability_certificate" />
+            <End Role="period" EntitySet="period" />
           </AssociationSet>
           <AssociationSet Name="FK_doctor_specialization" Association="Self.FK_doctor_specialization">
             <End Role="specialization" EntitySet="specialization" />
@@ -555,6 +703,14 @@
             <End Role="patient" EntitySet="patient" />
             <End Role="inspection" EntitySet="inspection" />
           </AssociationSet>
+          <AssociationSet Name="FK_prescription_form_107у_inspection" Association="Self.FK_prescription_form_107у_inspection">
+            <End Role="inspection" EntitySet="inspection" />
+            <End Role="prescription_form_107у" EntitySet="prescription_form_107у" />
+          </AssociationSet>
+          <AssociationSet Name="FK_referral_inspection" Association="Self.FK_referral_inspection">
+            <End Role="inspection" EntitySet="inspection" />
+            <End Role="referral" EntitySet="referral" />
+          </AssociationSet>
           <AssociationSet Name="FK_representative_patient_patient" Association="Self.FK_representative_patient_patient">
             <End Role="patient" EntitySet="patient" />
             <End Role="representative_patient" EntitySet="representative_patient" />
@@ -565,9 +721,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="Хранилище diplomModelContainer" CdmEntityContainer="diplomEntities">
+        <EntityContainerMapping StorageEntityContainer="Хранилище MedCardDBModelContainer" CdmEntityContainer="MedCardDBEntities">
           <EntitySetMapping Name="attachment">
-            <EntityTypeMapping TypeName="diplomModel.attachment">
+            <EntityTypeMapping TypeName="MedCardDBModel.attachment">
               <MappingFragment StoreEntitySet="attachment">
                 <ScalarProperty Name="id_attachment" ColumnName="id_attachment" />
                 <ScalarProperty Name="id_hospital" ColumnName="id_hospital" />
@@ -575,36 +731,32 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="disability_certificate">
+            <EntityTypeMapping TypeName="MedCardDBModel.disability_certificate">
+              <MappingFragment StoreEntitySet="disability_certificate">
+                <ScalarProperty Name="id_disability_certificate" ColumnName="id_disability_certificate" />
+                <ScalarProperty Name="id_inspection" ColumnName="id_inspection" />
+                <ScalarProperty Name="type_of_certificate" ColumnName="type_of_certificate" />
+                <ScalarProperty Name="cause_of_illness" ColumnName="cause_of_illness" />
+                <ScalarProperty Name="period" ColumnName="period" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="doctor">
-            <EntityTypeMapping TypeName="diplomModel.doctor">
+            <EntityTypeMapping TypeName="MedCardDBModel.doctor">
               <MappingFragment StoreEntitySet="doctor">
                 <ScalarProperty Name="id_doctor" ColumnName="id_doctor" />
-                <ScalarProperty Name="lastname" ColumnName="lastname" />
                 <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="lastname" ColumnName="lastname" />
                 <ScalarProperty Name="surname" ColumnName="surname" />
-                <ScalarProperty Name="specialization" ColumnName="specialization" />
-                <ScalarProperty Name="medical_care_profile" ColumnName="medical_care_profile" />
+                <ScalarProperty Name="id_specialization" ColumnName="id_specialization" />
                 <ScalarProperty Name="login" ColumnName="login" />
                 <ScalarProperty Name="password" ColumnName="password" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="history_the_disease">
-            <EntityTypeMapping TypeName="diplomModel.history_the_disease">
-              <MappingFragment StoreEntitySet="history_the_disease">
-                <ScalarProperty Name="id_history" ColumnName="id_history" />
-                <ScalarProperty Name="id_patient" ColumnName="id_patient" />
-                <ScalarProperty Name="id_doctor" ColumnName="id_doctor" />
-                <ScalarProperty Name="place_of_education" ColumnName="place_of_education" />
-                <ScalarProperty Name="periody_hospitalization" ColumnName="periody_hospitalization" />
-                <ScalarProperty Name="clinic_diagnosis" ColumnName="clinic_diagnosis" />
-                <ScalarProperty Name="results_examinationn" ColumnName="results_examinationn" />
-                <ScalarProperty Name="recommendations" ColumnName="recommendations" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="hospital">
-            <EntityTypeMapping TypeName="diplomModel.hospital">
+            <EntityTypeMapping TypeName="MedCardDBModel.hospital">
               <MappingFragment StoreEntitySet="hospital">
                 <ScalarProperty Name="id_hospital" ColumnName="id_hospital" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -614,7 +766,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="inspection">
-            <EntityTypeMapping TypeName="diplomModel.inspection">
+            <EntityTypeMapping TypeName="MedCardDBModel.inspection">
               <MappingFragment StoreEntitySet="inspection">
                 <ScalarProperty Name="id_inspection" ColumnName="id_inspection" />
                 <ScalarProperty Name="id_patient" ColumnName="id_patient" />
@@ -644,16 +796,8 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="medical_care_profile">
-            <EntityTypeMapping TypeName="diplomModel.medical_care_profile">
-              <MappingFragment StoreEntitySet="medical_care_profile">
-                <ScalarProperty Name="id_medical_care_profile" ColumnName="id_medical_care_profile" />
-                <ScalarProperty Name="name_medical_care_profile" ColumnName="name_medical_care_profile" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="patient">
-            <EntityTypeMapping TypeName="diplomModel.patient">
+            <EntityTypeMapping TypeName="MedCardDBModel.patient">
               <MappingFragment StoreEntitySet="patient">
                 <ScalarProperty Name="id_patient" ColumnName="id_patient" />
                 <ScalarProperty Name="snils" ColumnName="snils" />
@@ -663,16 +807,67 @@
                 <ScalarProperty Name="birthday" ColumnName="birthday" />
                 <ScalarProperty Name="age" ColumnName="age" />
                 <ScalarProperty Name="gender" ColumnName="gender" />
-                <ScalarProperty Name="name_insurance_company" ColumnName="name_insurance_company" />
-                <ScalarProperty Name="number_policy_OMS" ColumnName="number_policy_OMS" />
                 <ScalarProperty Name="address" ColumnName="address" />
                 <ScalarProperty Name="email" ColumnName="email" />
                 <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="passport_number_and_series" ColumnName="passport_number_and_series" />
+                <ScalarProperty Name="place_of_work" ColumnName="place_of_work" />
+                <ScalarProperty Name="number_med_card" ColumnName="number_med_card" />
+                <ScalarProperty Name="date_out_med_card" ColumnName="date_out_med_card" />
+                <ScalarProperty Name="photo" ColumnName="photo" />
+                <ScalarProperty Name="name_insurance_company" ColumnName="name_insurance_company" />
+                <ScalarProperty Name="number_policy_OMS" ColumnName="number_policy_OMS" />
+                <ScalarProperty Name="date_and_insur_policy" ColumnName="date_and_insur_policy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="period">
+            <EntityTypeMapping TypeName="MedCardDBModel.period">
+              <MappingFragment StoreEntitySet="period">
+                <ScalarProperty Name="id_period" ColumnName="id_period" />
+                <ScalarProperty Name="id_disability_certificate" ColumnName="id_disability_certificate" />
+                <ScalarProperty Name="date_start" ColumnName="date_start" />
+                <ScalarProperty Name="date_end" ColumnName="date_end" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="prescription_form_107у">
+            <EntityTypeMapping TypeName="MedCardDBModel.prescription_form_107у">
+              <MappingFragment StoreEntitySet="prescription_form_107у">
+                <ScalarProperty Name="number" ColumnName="number" />
+                <ScalarProperty Name="id_inspection" ColumnName="id_inspection" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="name_of_the_drug" ColumnName="name_of_the_drug" />
+                <ScalarProperty Name="dosage" ColumnName="dosage" />
+                <ScalarProperty Name="method_of_administration" ColumnName="method_of_administration" />
+                <ScalarProperty Name="method_of_administration_details" ColumnName="method_of_administration_details" />
+                <ScalarProperty Name="dosage_regimen" ColumnName="dosage_regimen" />
+                <ScalarProperty Name="dosage_regimen_optional" ColumnName="dosage_regimen_optional" />
+                <ScalarProperty Name="duration_of_treatment_number" ColumnName="duration_of_treatment_number" />
+                <ScalarProperty Name="duration_of_treatment_duration" ColumnName="duration_of_treatment_duration" />
+                <ScalarProperty Name="duration_of_treatment_comments" ColumnName="duration_of_treatment_comments" />
+                <ScalarProperty Name="justification_of_appointment" ColumnName="justification_of_appointment" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="referral">
+            <EntityTypeMapping TypeName="MedCardDBModel.referral">
+              <MappingFragment StoreEntitySet="referral">
+                <ScalarProperty Name="id_referral" ColumnName="id_referral" />
+                <ScalarProperty Name="id_inspection" ColumnName="id_inspection" />
+                <ScalarProperty Name="type_of_direction" ColumnName="type_of_direction" />
+                <ScalarProperty Name="date_of_creation" ColumnName="date_of_creation" />
+                <ScalarProperty Name="payment_source" ColumnName="payment_source" />
+                <ScalarProperty Name="service" ColumnName="service" />
+                <ScalarProperty Name="organization" ColumnName="organization" />
+                <ScalarProperty Name="doctor" ColumnName="doctor" />
+                <ScalarProperty Name="date_of_admission" ColumnName="date_of_admission" />
+                <ScalarProperty Name="justification" ColumnName="justification" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="representative_patient">
-            <EntityTypeMapping TypeName="diplomModel.representative_patient">
+            <EntityTypeMapping TypeName="MedCardDBModel.representative_patient">
               <MappingFragment StoreEntitySet="representative_patient">
                 <ScalarProperty Name="number_representative" ColumnName="number_representative" />
                 <ScalarProperty Name="name_representative" ColumnName="name_representative" />
@@ -690,27 +885,15 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="specialization">
-            <EntityTypeMapping TypeName="diplomModel.specialization">
+            <EntityTypeMapping TypeName="MedCardDBModel.specialization">
               <MappingFragment StoreEntitySet="specialization">
                 <ScalarProperty Name="id_specialization" ColumnName="id_specialization" />
                 <ScalarProperty Name="name" ColumnName="name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="surveillance_journal">
-            <EntityTypeMapping TypeName="diplomModel.surveillance_journal">
-              <MappingFragment StoreEntitySet="surveillance_journal">
-                <ScalarProperty Name="record_number" ColumnName="record_number" />
-                <ScalarProperty Name="date_recording" ColumnName="date_recording" />
-                <ScalarProperty Name="history_number" ColumnName="history_number" />
-                <ScalarProperty Name="temperature" ColumnName="temperature" />
-                <ScalarProperty Name="complaints" ColumnName="complaints" />
-                <ScalarProperty Name="general_condition_the_patient" ColumnName="general_condition_the_patient" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="diplomModel.sysdiagrams">
+            <EntityTypeMapping TypeName="MedCardDBModel.sysdiagrams">
               <MappingFragment StoreEntitySet="sysdiagrams">
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="principal_id" ColumnName="principal_id" />

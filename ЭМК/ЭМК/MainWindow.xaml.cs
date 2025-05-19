@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ЭМК.Model;
 
 namespace ЭМК
 {
@@ -22,29 +24,38 @@ namespace ЭМК
 	{
 		public MainWindow()
 		{
-			InitializeComponent();
-			LoadDoctorInfo();
+			InitializeComponent();			
 		}
 
-		private void LoadDoctorInfo()
+		// Обработчик кнопки "Список пациентов"
+		private void PatientsList_Click(object sender, RoutedEventArgs e)
 		{
-			if (App.CurrentDoctor != null)
-			{
-				txtDoctorInfo.Text = $"Добро пожаловать, {App.CurrentDoctor.lastname} {App.CurrentDoctor.name}";
-
-				// Если есть отчество, можно добавить и его
-				if (!string.IsNullOrEmpty(App.CurrentDoctor.surname))
-				{
-					txtDoctorInfo.Text += $" {App.CurrentDoctor.surname}";
-				}
-			}
-		}
-
-		private void Next_Click(object sender, RoutedEventArgs e)
-		{
-			Window1 window1 = new Window1();
-			window1.Show();
+			// Создаем и показываем окно со списком пациентов
+			PatientsListWindow patientsListWindow = new PatientsListWindow();
+			patientsListWindow.Show();
 			this.Close();
 		}
-    }
+
+		// Обработчик кнопки "Прием пациентов"
+		private void PatientAppointment_Click(object sender, RoutedEventArgs e)
+		{
+			// Создаем и показываем окно приема пациентов
+			RecordedPatientsWindow patientsWindow = new RecordedPatientsWindow();
+			patientsWindow.Show();
+			this.Close();
+		}
+
+		// Обработчик кнопки "Выход"
+		private void Exit_Click(object sender, RoutedEventArgs e)
+		{
+			// Запрашиваем подтверждение перед выходом
+			MessageBoxResult result = MessageBox.Show("Вы уверены, что хотите выйти из системы?", "Подтверждение выхода", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+			if (result == MessageBoxResult.Yes)
+			{
+				// Закрываем приложение
+				Application.Current.Shutdown();
+			}
+		}
+	}
 }

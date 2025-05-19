@@ -48,5 +48,7 @@ namespace ЭМК
 		public string SuspicionOfHeat { get; set; }
 		public string Treatment { get; set; }
 		public string Recommendations { get; set; }
+
+		public List<Direction> Directions { get; set; } = new List<Direction>();
 	}
 }

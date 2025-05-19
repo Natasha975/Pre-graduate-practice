@@ -5,76 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ЭМК"
         mc:Ignorable="d"
-        Title="ЭМК" MinHeight="450" MinWidth="800" Icon="Image/medical_monitor_icon.ico" WindowStartupLocation="CenterScreen">
+        Title="ЭМК: Городская больница №24" MinHeight="450" MinWidth="800" Icon="Image/medical_monitor_icon.ico" WindowState="Maximized" WindowStartupLocation="CenterScreen">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-
-        <!-- Doctor Info -->
-        <Border Grid.Row="0" Background="#FF3F51B5" Padding="10">
-            <TextBlock x:Name="txtDoctorInfo" Foreground="White" FontSize="16" 
-                      Text="Добро пожаловать, " HorizontalAlignment="Left"/>
-        </Border>
-
-        <!-- Title Bar -->
-        <Grid Grid.Row="1" Background="#FFF">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="111*"/>
-                <ColumnDefinition Width="289*"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-            <TextBlock Text="Поиск пациента" FontSize="20" FontWeight="Bold" 
-                      Margin="10,0,0,0" VerticalAlignment="Center" Grid.ColumnSpan="2"/>
-        </Grid>
-
-        <!-- Search and Filter -->
-        <Grid Grid.Row="2" Margin="10">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-
-            <StackPanel Orientation="Horizontal" Margin="0,0,5,0"/>
-
-            <TextBox Grid.Column="1" Margin="5,0,5,0" Text="Поиск физ. лица"/>
-            <Button Grid.Column="2" Content="Поиск" x:Name="Next" Click="Next_Click" Width="100" Height="30" Margin="5,0,5,0" Background="#FF3F51B5" Foreground="White"/>
-        </Grid>
-
-        <!-- Data Grid -->
-        <Border Grid.Row="3" BorderBrush="Gray" BorderThickness="1" Margin="10">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-
-                <Grid Grid.Row="0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-
-                    <TextBlock Grid.Column="0" Text="Время" Margin="5" FontWeight="Bold"/>
-                    <TextBlock Grid.Column="1" Text="Тип приема" Margin="5" FontWeight="Bold"/>
-                    <TextBlock Grid.Column="2" Text="Физическое лицо" Margin="5" FontWeight="Bold"/>
-                </Grid>
-
-                <TextBlock Grid.Row="1" Text="Нет записанных пациентов" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Foreground="Gray" Margin="10"/>
-                <!-- You can later add a DataGrid here to show the patients -->
-            </Grid>
-        </Border>
-
-
-        <!-- Bottom Button -->
-        <!--<Button Grid.Row="3" Content="ВЫБРАТЬ" HorizontalAlignment="Right" Margin="0,10,10,10" Width="100" Height="30"/>-->
+        <StackPanel Margin="20" Orientation="Vertical" HorizontalAlignment="Left">
+            <Button Margin="20" Content="Список пациентов" Width="300" Click="PatientsList_Click"/>
+            <Button Margin="20" Content="Прием пациентов" Width="300" Click="PatientAppointment_Click"/>
+            <Button Margin="20" Content="Выход" Width="300" Click="Exit_Click"/>
+        </StackPanel>
     </Grid>
 </Window>

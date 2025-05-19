@@ -12,12 +12,12 @@ namespace ЭМК
 	/// </summary>
 	public partial class LoginWindow : Window
 	{
-		private diplomEntities dbContext;
+		private MedCardDBEntities dbContext;
 
 		public LoginWindow()
 		{
 			InitializeComponent();
-			dbContext = new diplomEntities();
+			dbContext = new MedCardDBEntities();
 
 			// Установка фокуса на поле логина при загрузке
 			Loaded += (s, e) => txtUsername.Focus();

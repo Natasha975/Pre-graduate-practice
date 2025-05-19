@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace ЭМК
 {
-	public class Patient
+	public class Patients
 	{
 		public int Id { get; set; }
 		public string FullName => $"{lastname} {name} {surname ?? ""}";
@@ -20,20 +24,22 @@ namespace ЭМК
 		public string name { get; set; }
 		public string surname { get; set; }
 		public DateTime birthday { get; set; }
+		public string MiddleName { get; set; }
+		public DateTime BirthDateValue { get; set; }
 		public int age { get; set; }
 		public string gender { get; set; }
 		public string number_policy_OMS { get; set; }
 
 		public string Address { get; set; }
 		public string HospitalName { get; set; }
-		
-		// ID больницы
-		public int? HospitalId { get; set; } 
 
+		//private int CalculateAge(DateTime birthDate)
+		//{
+		//	var today = DateTime.Today;
+		//	var age = today.Year - birthDate.Year;
+		//	if (birthDate.Date > today.AddYears(-age)) age--;
+		//	return age;
+		//}
 
-		public DateTime? BirthDateForSearch => birthday;
-		public string SnilsForSearch => Snils;
-		public string PolicyForSearch => Policy;
-		public string PhoneForSearch => Phone;
 	}
 }

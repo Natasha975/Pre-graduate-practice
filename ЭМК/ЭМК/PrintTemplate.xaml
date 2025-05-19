@@ -119,12 +119,12 @@
         <Run x:Name="doctorNameRun"/>
     </Paragraph>
 
-    <Paragraph>
-        <Bold>М. П.</Bold>
+    <Paragraph TextAlignment="Right">
+        <Bold>Подпись врача _______________________</Bold>
     </Paragraph>
 
     <Paragraph TextAlignment="Right">
-        <Bold>Подпись врача _______________________</Bold>
+        <Bold>М. П.</Bold>
     </Paragraph>
 
     <Paragraph FontSize="12" TextAlignment="Right">---</Paragraph>

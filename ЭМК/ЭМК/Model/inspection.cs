@@ -14,6 +14,14 @@ namespace ЭМК.Model
     
     public partial class inspection
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public inspection()
+        {
+            this.disability_certificate = new HashSet<disability_certificate>();
+            this.prescription_form_107у = new HashSet<prescription_form_107у>();
+            this.referral = new HashSet<referral>();
+        }
+    
         public int id_inspection { get; set; }
         public int id_patient { get; set; }
         public int id_doctor { get; set; }
@@ -40,7 +48,13 @@ namespace ЭМК.Model
         public string treatment { get; set; }
         public string recommendations { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<disability_certificate> disability_certificate { get; set; }
         public virtual doctor doctor { get; set; }
         public virtual patient patient { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<prescription_form_107у> prescription_form_107у { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<referral> referral { get; set; }
     }
 }

@@ -77,6 +77,9 @@
     <Reference Include="Microsoft.Xaml.Behaviors, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Xaml.Behaviors.Wpf.1.1.39\lib\net45\Microsoft.Xaml.Behaviors.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
@@ -103,6 +106,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Direction.cs" />
+    <Compile Include="DirectionFormPage.xaml.cs">
+      <DependentUpon>DirectionFormPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
@@ -117,19 +124,17 @@
       <DependentUpon>ModelDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\DateRange.cs" />
-    <Compile Include="Model\doctor.cs">
+    <Compile Include="Model\DirectionViewerHelper.cs" />
+    <Compile Include="Model\disability_certificate.cs">
       <DependentUpon>ModelDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\history_the_disease.cs">
+    <Compile Include="Model\doctor.cs">
       <DependentUpon>ModelDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\hospital.cs">
       <DependentUpon>ModelDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\inspection.cs">
-      <DependentUpon>ModelDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\medical_care_profile.cs">
       <DependentUpon>ModelDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\MkbDiagnosis.cs" />
@@ -152,6 +157,15 @@
     <Compile Include="Model\patient.cs">
       <DependentUpon>ModelDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\period.cs">
+      <DependentUpon>ModelDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\prescription_form_107у.cs">
+      <DependentUpon>ModelDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\referral.cs">
+      <DependentUpon>ModelDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\representative_patient.cs">
       <DependentUpon>ModelDB.tt</DependentUpon>
     </Compile>
@@ -159,15 +173,31 @@
     <Compile Include="Model\specialization.cs">
       <DependentUpon>ModelDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\surveillance_journal.cs">
-      <DependentUpon>ModelDB.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\sysdiagrams.cs">
       <DependentUpon>ModelDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Patient.cs" />
+    <Compile Include="PatientPage.xaml.cs">
+      <DependentUpon>PatientPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Patients.cs" />
+    <Compile Include="PatientsListWindow.xaml.cs">
+      <DependentUpon>PatientsListWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Prescription.cs" />
     <Compile Include="PrescriptionForms\PrescriptionForm107.xaml.cs">
       <DependentUpon>PrescriptionForm107.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PrescriptionForms\PrescriptionForm14888.xaml.cs">
+      <DependentUpon>PrescriptionForm14888.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ProceduresWindow.xaml.cs">
+      <DependentUpon>ProceduresWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="RecordedPatientsWindow.xaml.cs">
+      <DependentUpon>RecordedPatientsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SickLeaveFormPage.xaml.cs">
+      <DependentUpon>SickLeaveFormPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Window1.xaml.cs">
       <DependentUpon>Window1.xaml</DependentUpon>
@@ -175,6 +205,10 @@
     <Compile Include="Window2.xaml.cs">
       <DependentUpon>Window2.xaml</DependentUpon>
     </Compile>
+    <Page Include="DirectionFormPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="LoginWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -199,11 +233,35 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="PatientPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PatientsListWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="PrescriptionForms\PrescriptionForm107.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="PrescriptionForms\PrescriptionForm14888.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="PrintTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ProceduresWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="RecordedPatientsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SickLeaveFormPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -256,7 +314,6 @@
   <ItemGroup>
     <Resource Include="Image\medical_monitor_icon.ico" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>

@@ -30,11 +30,17 @@ namespace ЭМК.Model
         public System.DateTime birthday { get; set; }
         public byte age { get; set; }
         public string gender { get; set; }
-        public string name_insurance_company { get; set; }
-        public string number_policy_OMS { get; set; }
         public string address { get; set; }
         public string email { get; set; }
         public string phone { get; set; }
+        public string passport_number_and_series { get; set; }
+        public string place_of_work { get; set; }
+        public string number_med_card { get; set; }
+        public Nullable<System.DateTime> date_out_med_card { get; set; }
+        public byte[] photo { get; set; }
+        public string name_insurance_company { get; set; }
+        public string number_policy_OMS { get; set; }
+        public Nullable<System.DateTime> date_and_insur_policy { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<attachment> attachment { get; set; }

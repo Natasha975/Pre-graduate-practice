@@ -29,8 +29,6 @@
 
                     <TextBlock Text="Пароль" Margin="0,10,0,5"/>
                     <PasswordBox x:Name="txtPassword" Password="Ivanov2024" Height="30" Padding="5"/>
-
-                    <CheckBox x:Name="chkRemember" Content="Запомнить меня" Margin="0,10,0,0"/>
                 </StackPanel>
             </Border>
         </StackPanel>

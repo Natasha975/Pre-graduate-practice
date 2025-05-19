@@ -13,10 +13,10 @@ namespace ЭМК.Model
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class diplomEntities : DbContext
+    public partial class MedCardDBEntities : DbContext
     {
-        public diplomEntities()
-            : base("name=diplomEntities")
+        public MedCardDBEntities()
+            : base("name=MedCardDBEntities")
         {
         }
     
@@ -26,15 +26,16 @@ namespace ЭМК.Model
         }
     
         public virtual DbSet<attachment> attachment { get; set; }
+        public virtual DbSet<disability_certificate> disability_certificate { get; set; }
         public virtual DbSet<doctor> doctor { get; set; }
-        public virtual DbSet<history_the_disease> history_the_disease { get; set; }
         public virtual DbSet<hospital> hospital { get; set; }
         public virtual DbSet<inspection> inspection { get; set; }
-        public virtual DbSet<medical_care_profile> medical_care_profile { get; set; }
         public virtual DbSet<patient> patient { get; set; }
+        public virtual DbSet<period> period { get; set; }
+        public virtual DbSet<prescription_form_107у> prescription_form_107у { get; set; }
+        public virtual DbSet<referral> referral { get; set; }
         public virtual DbSet<representative_patient> representative_patient { get; set; }
         public virtual DbSet<specialization> specialization { get; set; }
-        public virtual DbSet<surveillance_journal> surveillance_journal { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
     }
 }

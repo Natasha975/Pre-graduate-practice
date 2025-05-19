@@ -1,0 +1,174 @@
+﻿<Page x:Class="ЭМК.SickLeaveFormPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ЭМК"
+      mc:Ignorable="d" 
+      d:DesignHeight="700" d:DesignWidth="800"
+      Title="SickLeaveFormPage" Background="White">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="Тип листка:" Margin="5"/>
+            <ComboBox Grid.Row="2" Grid.Column="1" x:Name="SickLeaveTypeComboBox" Margin="5" SelectedIndex="0">
+                <ComboBoxItem Content="ЭЛН (Электронный листок нетрудоспособности)"/>
+            </ComboBox>
+
+            <TextBlock Grid.Row="3" Grid.Column="0" Text="Код причины нетрудоспособности:" Margin="5"/>
+            <ComboBox Grid.Row="3" Grid.Column="1" x:Name="ReasonCodeComboBox" Margin="5" SelectedIndex="0">
+                <ComboBoxItem Content="01 - Заболевание"/>
+                <ComboBoxItem Content="02 - Травма"/>
+                <ComboBoxItem Content="03 - Карантин"/>
+                <ComboBoxItem Content="04 - Несчастный случай на производстве"/>
+                <ComboBoxItem Content="05 - Долечивание в санатории"/>
+                <ComboBoxItem Content="06 - Уход за больным членом семьи"/>
+                <ComboBoxItem Content="07 - Иное состояние (отравление и т.д)"/>
+                <ComboBoxItem Content="08 - Ребенок-инвалид"/>
+                <ComboBoxItem Content="09 - ВИЧ-инфицированный ребенок"/>
+            </ComboBox>
+
+            <!-- Периоды нетрудоспособности -->
+            <StackPanel Grid.Row="4" Grid.ColumnSpan="2" Orientation="Horizontal">
+                <TextBlock Text="Периоды нетрудоспособности" FontWeight="Bold" Margin="0,10,0,10"/>
+                <Button x:Name="AddPeriodButton" Content="+" Margin="10,0,0,0" Width="60" 
+                        Click="AddPeriodButton_Click" ToolTip="Добавить период"/>
+            </StackPanel>
+
+            <DataGrid Grid.Row="5" Grid.ColumnSpan="2" x:Name="PeriodsDataGrid" AutoGenerateColumns="False" Margin="5">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="№" Width="Auto" Binding="{Binding Number}"/>
+                    <DataGridTemplateColumn Header="Дата начала">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <DatePicker SelectedDate="{Binding StartDate}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Дата окончания">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <DatePicker SelectedDate="{Binding EndDate}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Header="Врач" Binding="{Binding Doctor}"/>
+                    <DataGridTemplateColumn Header="Действия">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="Удалить" Click="DeletePeriodButton_Click"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <!-- Кнопки действий -->
+            <StackPanel Grid.Row="6" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
+                <Button Content="Сохранить" Width="120" Margin="5" Click="SaveSickLeave_Click"/>
+                <Button Content="Отмена" Width="100" Margin="5" Click="CancelSickLeave_Click"/>
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
+
+    <!--<ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            --><!-- Информация о пациенте -->
+            <!--<TextBlock Grid.Row="0" Grid.Column="0" Text="Информация о физ. лице" FontWeight="Bold" Margin="0,0,0,10"/>
+            <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1">
+                <TextBlock x:Name="PatientNameTextBlock" FontWeight="Bold" Margin="5"/>
+                <TextBlock x:Name="PatientBirthDateTextBlock" Margin="10,5,5,5"/>
+            </StackPanel>-->
+
+            <!-- Основные данные листка нетрудоспособности -->
+            <!--<TextBlock Grid.Row="1" Grid.ColumnSpan="2" Text="Листок нетрудоспособности" FontWeight="Bold" Margin="0,10,0,10"/>--><!--
+
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="Тип листка:" Margin="5"/>
+            <ComboBox Grid.Row="2" Grid.Column="1" x:Name="SickLeaveTypeComboBox" Margin="5" SelectedIndex="0">
+                <ComboBoxItem Content="ЭЛН (Электронный листок нетрудоспособности)"/>
+            </ComboBox>
+
+            <TextBlock Grid.Row="3" Grid.Column="0" Text="Код причины нетрудоспособности:" Margin="5"/>
+            <ComboBox Grid.Row="3" Grid.Column="1" x:Name="ReasonCodeComboBox" Margin="5" SelectedIndex="0">
+                <ComboBoxItem Content="01 - Заболевание"/>
+                <ComboBoxItem Content="02 - Травма"/>
+                <ComboBoxItem Content="03 - Карантин"/>
+                <ComboBoxItem Content="04 - Несчастный случай на производстве"/>
+                <ComboBoxItem Content="05 - Долечивание в санатории"/>
+                <ComboBoxItem Content="06 - Уход за больным членом семьи"/>
+                <ComboBoxItem Content="07 - Иное состояние (отравление и т.д)"/>
+                <ComboBoxItem Content="08 - Ребенок-инвалид"/>
+                <ComboBoxItem Content="09 - ВИЧ-инфицированный ребенок"/>
+            </ComboBox>
+
+            --><!-- Периоды нетрудоспособности --><!--
+            <TextBlock Grid.Row="4" Grid.ColumnSpan="2" Text="Периоды нетрудоспособности" FontWeight="Bold" Margin="0,10,0,10"/>
+
+            <DataGrid Grid.Row="5" Grid.ColumnSpan="2" x:Name="PeriodsDataGrid" AutoGenerateColumns="False" Margin="5">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="№" Width="Auto" Binding="{Binding Number}"/>
+                    <DataGridTemplateColumn Header="Дата начала">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <DatePicker SelectedDate="{Binding StartDate}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Дата окончания">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <DatePicker SelectedDate="{Binding EndDate}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Header="Врач" Binding="{Binding Doctor}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            --><!-- Кнопки действий --><!--
+            <StackPanel Grid.Row="6" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
+                <Button Content="Сохранить" Width="120" Margin="5" Click="SaveSickLeave_Click"/>
+                --><!--<Button Content="Печать" Width="100" Margin="5" Click="PrintSickLeave_Click"/>--><!--
+                <Button Content="Отмена" Width="100" Margin="5" Click="CancelSickLeave_Click"/>
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>-->
+</Page>

@@ -1,0 +1,194 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Хранилище diplomModelContainer" CdmEntityContainer="diplomEntities">
+    <EntitySetMapping Name="attachment">
+      <EntityTypeMapping TypeName="diplomModel.attachment">
+        <MappingFragment StoreEntitySet="attachment">
+          <ScalarProperty Name="id_attachment" ColumnName="id_attachment" />
+          <ScalarProperty Name="id_hospital" ColumnName="id_hospital" />
+          <ScalarProperty Name="id_patient" ColumnName="id_patient" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="doctor">
+      <EntityTypeMapping TypeName="diplomModel.doctor">
+        <MappingFragment StoreEntitySet="doctor">
+          <ScalarProperty Name="id_doctor" ColumnName="id_doctor" />
+          <ScalarProperty Name="lastname" ColumnName="lastname" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="surname" ColumnName="surname" />
+          <ScalarProperty Name="specialization" ColumnName="specialization" />
+          <ScalarProperty Name="medical_care_profile" ColumnName="medical_care_profile" />
+          <ScalarProperty Name="login" ColumnName="login" />
+          <ScalarProperty Name="password" ColumnName="password" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="history_the_disease">
+      <EntityTypeMapping TypeName="diplomModel.history_the_disease">
+        <MappingFragment StoreEntitySet="history_the_disease">
+          <ScalarProperty Name="id_history" ColumnName="id_history" />
+          <ScalarProperty Name="id_patient" ColumnName="id_patient" />
+          <ScalarProperty Name="id_doctor" ColumnName="id_doctor" />
+          <ScalarProperty Name="place_of_education" ColumnName="place_of_education" />
+          <ScalarProperty Name="periody_hospitalization" ColumnName="periody_hospitalization" />
+          <ScalarProperty Name="clinic_diagnosis" ColumnName="clinic_diagnosis" />
+          <ScalarProperty Name="results_examinationn" ColumnName="results_examinationn" />
+          <ScalarProperty Name="recommendations" ColumnName="recommendations" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="hospital">
+      <EntityTypeMapping TypeName="diplomModel.hospital">
+        <MappingFragment StoreEntitySet="hospital">
+          <ScalarProperty Name="id_hospital" ColumnName="id_hospital" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="region" ColumnName="region" />
+          <ScalarProperty Name="address" ColumnName="address" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="inspection">
+      <EntityTypeMapping TypeName="diplomModel.inspection">
+        <MappingFragment StoreEntitySet="inspection">
+          <ScalarProperty Name="id_inspection" ColumnName="id_inspection" />
+          <ScalarProperty Name="id_patient" ColumnName="id_patient" />
+          <ScalarProperty Name="id_doctor" ColumnName="id_doctor" />
+          <ScalarProperty Name="date_inspection" ColumnName="date_inspection" />
+          <ScalarProperty Name="time_inspection" ColumnName="time_inspection" />
+          <ScalarProperty Name="place_of_service" ColumnName="place_of_service" />
+          <ScalarProperty Name="type_of_service_case" ColumnName="type_of_service_case" />
+          <ScalarProperty Name="type_of_payment" ColumnName="type_of_payment" />
+          <ScalarProperty Name="purpose_of_the_service" ColumnName="purpose_of_the_service" />
+          <ScalarProperty Name="complaints" ColumnName="complaints" />
+          <ScalarProperty Name="medical_history" ColumnName="medical_history" />
+          <ScalarProperty Name="height" ColumnName="height" />
+          <ScalarProperty Name="weight" ColumnName="weight" />
+          <ScalarProperty Name="blood_pressure_upper" ColumnName="blood_pressure_upper" />
+          <ScalarProperty Name="blood_pressure_lower" ColumnName="blood_pressure_lower" />
+          <ScalarProperty Name="temperature" ColumnName="temperature" />
+          <ScalarProperty Name="heart_rate" ColumnName="heart_rate" />
+          <ScalarProperty Name="respiratory_rate" ColumnName="respiratory_rate" />
+          <ScalarProperty Name="oxygen_saturation" ColumnName="oxygen_saturation" />
+          <ScalarProperty Name="preliminary_diagnosis" ColumnName="preliminary_diagnosis" />
+          <ScalarProperty Name="the_main_diagnosis" ColumnName="the_main_diagnosis" />
+          <ScalarProperty Name="patient_condition" ColumnName="patient_condition" />
+          <ScalarProperty Name="suspicion_of_heat" ColumnName="suspicion_of_heat" />
+          <ScalarProperty Name="treatment" ColumnName="treatment" />
+          <ScalarProperty Name="recommendations" ColumnName="recommendations" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="medical_care_profile">
+      <EntityTypeMapping TypeName="diplomModel.medical_care_profile">
+        <MappingFragment StoreEntitySet="medical_care_profile">
+          <ScalarProperty Name="id_medical_care_profile" ColumnName="id_medical_care_profile" />
+          <ScalarProperty Name="name_medical_care_profile" ColumnName="name_medical_care_profile" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="patient">
+      <EntityTypeMapping TypeName="diplomModel.patient">
+        <MappingFragment StoreEntitySet="patient">
+          <ScalarProperty Name="id_patient" ColumnName="id_patient" />
+          <ScalarProperty Name="snils" ColumnName="snils" />
+          <ScalarProperty Name="lastname" ColumnName="lastname" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="surname" ColumnName="surname" />
+          <ScalarProperty Name="birthday" ColumnName="birthday" />
+          <ScalarProperty Name="age" ColumnName="age" />
+          <ScalarProperty Name="gender" ColumnName="gender" />
+          <ScalarProperty Name="name_insurance_company" ColumnName="name_insurance_company" />
+          <ScalarProperty Name="number_policy_OMS" ColumnName="number_policy_OMS" />
+          <ScalarProperty Name="address" ColumnName="address" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="phone" ColumnName="phone" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="prescription_form_107у">
+      <EntityTypeMapping TypeName="diplomModel.prescription_form_107у">
+        <MappingFragment StoreEntitySet="prescription_form_107у">
+          <ScalarProperty Name="number" ColumnName="number" />
+          <ScalarProperty Name="id_inspection" ColumnName="id_inspection" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="name_of_the_drug" ColumnName="name_of_the_drug" />
+          <ScalarProperty Name="dosage" ColumnName="dosage" />
+          <ScalarProperty Name="method_of_administration" ColumnName="method_of_administration" />
+          <ScalarProperty Name="method_of_administration_details" ColumnName="method_of_administration_details" />
+          <ScalarProperty Name="dosage_regimen" ColumnName="dosage_regimen" />
+          <ScalarProperty Name="dosage_regimen_optional" ColumnName="dosage_regimen_optional" />
+          <ScalarProperty Name="duration_of_treatment_number" ColumnName="duration_of_treatment_number" />
+          <ScalarProperty Name="duration_of_treatment_duration" ColumnName="duration_of_treatment_duration" />
+          <ScalarProperty Name="duration_of_treatment_comments" ColumnName="duration_of_treatment_comments" />
+          <ScalarProperty Name="justification_of_appointment" ColumnName="justification_of_appointment" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="referral">
+      <EntityTypeMapping TypeName="diplomModel.referral">
+        <MappingFragment StoreEntitySet="referral">
+          <ScalarProperty Name="id_referral" ColumnName="id_referral" />
+          <ScalarProperty Name="id_inspection" ColumnName="id_inspection" />
+          <ScalarProperty Name="type_of_direction" ColumnName="type_of_direction" />
+          <ScalarProperty Name="date_of_creation" ColumnName="date_of_creation" />
+          <ScalarProperty Name="payment_source" ColumnName="payment_source" />
+          <ScalarProperty Name="service" ColumnName="service" />
+          <ScalarProperty Name="organization" ColumnName="organization" />
+          <ScalarProperty Name="doctor" ColumnName="doctor" />
+          <ScalarProperty Name="date_of_admission" ColumnName="date_of_admission" />
+          <ScalarProperty Name="justification" ColumnName="justification" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="representative_patient">
+      <EntityTypeMapping TypeName="diplomModel.representative_patient">
+        <MappingFragment StoreEntitySet="representative_patient">
+          <ScalarProperty Name="number_representative" ColumnName="number_representative" />
+          <ScalarProperty Name="name_representative" ColumnName="name_representative" />
+          <ScalarProperty Name="lastname" ColumnName="lastname" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="surname" ColumnName="surname" />
+          <ScalarProperty Name="document" ColumnName="document" />
+          <ScalarProperty Name="series" ColumnName="series" />
+          <ScalarProperty Name="number" ColumnName="number" />
+          <ScalarProperty Name="issued_by_whom" ColumnName="issued_by_whom" />
+          <ScalarProperty Name="release_datet_the_document" ColumnName="release_datet_the_document" />
+          <ScalarProperty Name="phone" ColumnName="phone" />
+          <ScalarProperty Name="id_patient" ColumnName="id_patient" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="specialization">
+      <EntityTypeMapping TypeName="diplomModel.specialization">
+        <MappingFragment StoreEntitySet="specialization">
+          <ScalarProperty Name="id_specialization" ColumnName="id_specialization" />
+          <ScalarProperty Name="name" ColumnName="name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="surveillance_journal">
+      <EntityTypeMapping TypeName="diplomModel.surveillance_journal">
+        <MappingFragment StoreEntitySet="surveillance_journal">
+          <ScalarProperty Name="record_number" ColumnName="record_number" />
+          <ScalarProperty Name="date_recording" ColumnName="date_recording" />
+          <ScalarProperty Name="history_number" ColumnName="history_number" />
+          <ScalarProperty Name="temperature" ColumnName="temperature" />
+          <ScalarProperty Name="complaints" ColumnName="complaints" />
+          <ScalarProperty Name="general_condition_the_patient" ColumnName="general_condition_the_patient" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="diplomModel.sysdiagrams">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

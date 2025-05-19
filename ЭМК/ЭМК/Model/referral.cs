@@ -12,13 +12,19 @@ namespace ЭМК.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class surveillance_journal
+    public partial class referral
     {
-        public int record_number { get; set; }
-        public int date_recording { get; set; }
-        public int history_number { get; set; }
-        public string temperature { get; set; }
-        public System.DateTime complaints { get; set; }
-        public System.DateTime general_condition_the_patient { get; set; }
+        public int id_referral { get; set; }
+        public int id_inspection { get; set; }
+        public string type_of_direction { get; set; }
+        public Nullable<System.DateTime> date_of_creation { get; set; }
+        public string payment_source { get; set; }
+        public string service { get; set; }
+        public string organization { get; set; }
+        public string doctor { get; set; }
+        public Nullable<System.DateTime> date_of_admission { get; set; }
+        public string justification { get; set; }
+    
+        public virtual inspection inspection { get; set; }
     }
 }

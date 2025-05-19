@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ЭМК"
         mc:Ignorable="d" Title="ЭМК"
-        MinHeight="500" MinWidth="1000" WindowStartupLocation="CenterScreen" Icon="Image/medical_monitor_icon.ico">
+        MinHeight="500" MinWidth="1000" WindowStartupLocation="CenterScreen" WindowState="Maximized" Icon="Image/medical_monitor_icon.ico">
 
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
@@ -35,7 +35,6 @@
             </Grid.ColumnDefinitions>
 
             <TextBlock Text="Расширенный поиск пациента" FontSize="20" FontWeight="Bold" Margin="10,10,0,10" VerticalAlignment="Center"/>
-            <!--<Button Grid.Column="1" Content="X" Width="30" Height="30" Margin="0,10,10,10" HorizontalAlignment="Right" VerticalAlignment="Center"/>-->
         </Grid>
 
         <!-- Search Criteria (Left Column) -->
@@ -46,13 +45,13 @@
             <CheckBox x:Name="FioCheckBox" Content="Фамилия Имя Отчество" Margin="0,0,0,5"/>
             <TextBox x:Name="FioTextBox" Margin="0,0,0,10" 
                      Visibility="{Binding IsChecked, ElementName=FioCheckBox, 
-                                 Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                     Converter={StaticResource BooleanToVisibilityConverter}}"/>
 
             <!-- Дата рождения -->
             <CheckBox x:Name="BirthDateCheckBox" Content="Дата рождения" Margin="0,0,0,5"/>
             <DatePicker x:Name="BirthDatePicker" Margin="0,0,0,10" 
-                Visibility="{Binding IsChecked, ElementName=BirthDateCheckBox, 
-                            Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                        Visibility="{Binding IsChecked, ElementName=BirthDateCheckBox, 
+                        Converter={StaticResource BooleanToVisibilityConverter}}"/>
 
             <!-- Возраст -->
             <CheckBox x:Name="PolCheckBox" Content="Возраст" Margin="0,0,0,5"/>
@@ -63,20 +62,20 @@
             <!-- СНИЛС -->
             <CheckBox x:Name="SnilsCheckBox" Content="СНИЛС" Margin="0,0,0,5"/>
             <TextBox x:Name="SnilsTextBox" Margin="0,0,0,10" 
-             Visibility="{Binding IsChecked, ElementName=SnilsCheckBox, 
-                         Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                     Visibility="{Binding IsChecked, ElementName=SnilsCheckBox, 
+                     Converter={StaticResource BooleanToVisibilityConverter}}"/>
 
             <!-- ЕНП/Полис -->
             <CheckBox x:Name="EnpCheckBox" Content="ЕНП/Полис (серия номер)" Margin="0,0,0,5"/>
             <TextBox x:Name="EnpTextBox" Margin="0,0,0,10" 
-             Visibility="{Binding IsChecked, ElementName=EnpCheckBox, 
-                         Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                     Visibility="{Binding IsChecked, ElementName=EnpCheckBox, 
+                     Converter={StaticResource BooleanToVisibilityConverter}}"/>
 
             <!-- Номер телефона -->
             <CheckBox  x:Name="PhoneCheckBox" Content="Номер телефона" Margin="0,0,0,5"/>
             <TextBox x:Name="PhoneTextBox" Margin="0,0,0,10" 
-             Visibility="{Binding IsChecked, ElementName=PhoneCheckBox, 
-                         Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                     Visibility="{Binding IsChecked, ElementName=PhoneCheckBox, 
+                     Converter={StaticResource BooleanToVisibilityConverter}}"/>
 
             <Button Content="Найти" Click="SearchButton_Click" Background="#FF3F51B5" Foreground="White" Margin="0,10,0,5" Height="30"/>
             <Button Content="Сбросить" Click="ResetButton_Click" Margin="0,0,0,5" Height="30" TextBlock.Foreground="Black" Background="White"/>
@@ -84,29 +83,102 @@
 
         <!-- Search Results (Right Column) -->
         <Grid Grid.Row="2" Grid.Column="1" Margin="10">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
+            <TabControl>
+                <TabItem Header="Список пациентов">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <DataGrid Grid.Row="0" x:Name="DGPatients" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True"
+                                  SelectionChanged="PatientsDataGrid_SelectionChanged" SelectionMode="Single">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="ФИО" Width="150" Binding="{Binding FullName}"/>
+                                <DataGridTextColumn Header="Дата рождения" Width="130" Binding="{Binding BirthDate}"/>
+                                <DataGridTextColumn Header="Возраст" Width="90" Binding="{Binding Age}"/>
+                                <DataGridTextColumn Header="СНИЛС" Width="120" Binding="{Binding Snils}"/>
+                                <DataGridTextColumn Header="ЕНП" Width="150" Binding="{Binding Enp}"/>
+                                <DataGridTextColumn Header="Телефон" Width="120" Binding="{Binding Phone}"/>
+                                <DataGridTextColumn Header="Полис" Width="120" Binding="{Binding Policy}"/>
+                                <DataGridTextColumn Header="Пол" Width="120" Binding="{Binding Pol}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <Button Grid.Row="1" Content="Экспорт в PDF" Click="ExportToPdfButton_Click" Width="160" Height="30" Margin="5" 
+                                Background="#FF3F51B5" Foreground="White"/>
+                    </Grid>
+                </TabItem>
 
-            <DataGrid x:Name="DGPatients" Grid.Row="1" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True"
-                      SelectionChanged="PatientsDataGrid_SelectionChanged" SelectionMode="Single">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="ФИО" Width="150" Binding="{Binding FullName}"/>
-                    <DataGridTextColumn Header="Дата рождения" Width="130" Binding="{Binding BirthDate}"/>
-                    <DataGridTextColumn Header="Возраст" Width="90" Binding="{Binding Age}"/>
-                    <DataGridTextColumn Header="СНИЛС" Width="120" Binding="{Binding Snils}"/>
-                    <DataGridTextColumn Header="ЕНП" Width="150" Binding="{Binding Enp}"/>
-                    <DataGridTextColumn Header="Телефон" Width="120" Binding="{Binding Phone}"/>
-                    <DataGridTextColumn Header="Полис" Width="120" Binding="{Binding Policy}"/>
-                    <DataGridTextColumn Header="Пол" Width="120" Binding="{Binding Pol}"/>
-                </DataGrid.Columns>
-            </DataGrid>
+                <TabItem Header="Статистика по полу">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <StackPanel Orientation="Horizontal" Margin="0,10,0,10">
+                            <Button Content="Обновить статистику" Click="UpdateStatsButton_Click" 
+                                    Width="200" Height="30" Margin="5,0,0,0"
+                                    Background="#FF3F51B5" Foreground="White"/>
+                        </StackPanel>
+
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Диаграмма -->
+                            <Canvas x:Name="GenderChartCanvas" Margin="10" Background="White"/>
+
+                            <!-- Статистика -->
+                            <StackPanel Grid.Column="1" Orientation="Vertical" Margin="10,0,0,0">
+                                <TextBlock Text="Статистика:" FontWeight="Bold" Margin="0,0,0,5"/>
+                                <TextBlock x:Name="GenderStatsText" TextWrapping="Wrap" Width="200"/>
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+                </TabItem>
+
+                <TabItem Header="Возрастная статистика">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <StackPanel Orientation="Horizontal" Margin="0,10,0,10">
+                            <Button Content="Обновить статистику" Click="UpdateAgeStatsButton_Click" 
+                                    Width="200" Height="30" Margin="5,0,0,0"
+                                    Background="#FF3F51B5" Foreground="White"/>
+                        </StackPanel>
+
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Диаграмма -->
+                            <Canvas x:Name="AgeChartCanvas" Margin="10" Background="White" HorizontalAlignment="Stretch" 
+                                    VerticalAlignment="Stretch" Width="Auto" Height="Auto"/>
+
+                            <!-- Статистика -->
+                            <StackPanel Grid.Column="1" Orientation="Vertical" Margin="10,0,0,0">
+                                <TextBlock Text="Статистика:" FontWeight="Bold" Margin="0,0,0,5"/>
+                                <TextBlock x:Name="AgeStatsText" TextWrapping="Wrap" Width="200"/>
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+                </TabItem>
+            </TabControl>
         </Grid>
 
         <!-- Bottom Buttons -->
         <StackPanel Grid.Row="3" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
-            <!--<Button Content="Принять" Width="100" Height="30" Margin="5" TextBlock.Foreground="Black" Background="White"/>-->
+            <Button Content="Отмена" Click="BackButton_Click" Width="100" Height="30" Margin="5" Foreground="Black" Background="White"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="3" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10" >
             <Button Content="Отмена" Click="BackButton_Click" Width="100" Height="30" Margin="5" Foreground="Black" Background="White"/>
         </StackPanel>
     </Grid>
