@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\Наталья\Documents\Pre-graduate-practice\ЭМК\ЭМК\App.xaml
-151838430053
+16-927964277
 2-1372435529
-422026861979
+451145931435
 134-2032729658
-DirectionFormPage.xaml;LoginWindow.xaml;MainWindow.xaml;MedicalCaseWindow.xaml;MedicalCaseWindowReg.xaml;PatientPage.xaml;PatientsListWindow.xaml;PrescriptionForms\PrescriptionForm107.xaml;PrescriptionForms\PrescriptionForm14888.xaml;PrintTemplate.xaml;ProceduresWindow.xaml;RecordedPatientsWindow.xaml;SickLeaveFormPage.xaml;Window1.xaml;Window2.xaml;
+DirectionFormPage.xaml;LoginWindow.xaml;MainWindow.xaml;MedicalCaseWindow.xaml;MedicalCaseWindowReg.xaml;PatientsList\PatientDetailsPage.xaml;PatientsList\PatientPage.xaml;PatientsList\PatientsListWindow.xaml;PrescriptionForms\PrescriptionForm107.xaml;PrescriptionForms\PrescriptionForm14888.xaml;PrintTemplate.xaml;ProceduresWindow.xaml;RecordedPatientsWindow.xaml;SickLeaveFormPage.xaml;Window1.xaml;Window2.xaml;
 
-False
+True
 

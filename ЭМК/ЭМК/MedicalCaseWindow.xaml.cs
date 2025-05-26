@@ -351,9 +351,143 @@ namespace ЭМК
 				Grid.SetColumn(viewButton, 4);
 				Grid.SetRow(viewButton, i + 1);
 				grid.Children.Add(viewButton);
+
+
+				//var printButton = new Button
+				//{
+				//	Content = "Печать",
+				//	Margin = new Thickness(2),
+				//	Tag = direction.Id,
+				//	Style = (Style)FindResource("MaterialDesignFlatButton")
+				//};
+				//printButton.Click += PrintDirectionButton_Click;
+
+				//Grid.SetColumn(printButton, 5);
+				//Grid.SetRow(printButton, i + 1);
+				//grid.Children.Add(printButton);
 			}
 
 			DirectionsListScrollViewer.Content = grid;
+		}
+
+		//private void PrintDirectionButton_Click(object sender, RoutedEventArgs e)
+		//{
+		//	var button = sender as Button;
+		//	int directionId = (int)button.Tag;
+
+		//	// Получаем данные направления из базы
+		//	var direction = dbContext.referral.FirstOrDefault(d => d.id_referral == directionId);
+		//	if (direction == null)
+		//	{
+		//		MessageBox.Show("Направление не найдено!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+		//		return;
+		//	}
+
+		//	// Получаем данные пациента
+		//	var patient = dbContext.patient.FirstOrDefault(p => p.id_patient == direction.);
+
+		//	// Получаем данные врача
+		//	var doctor = dbContext.doctor.FirstOrDefault(d => d.id_doctor == direction.id_doctor);
+
+		//	// Создаем PDF документ
+		//	CreateDirectionPdf(direction, patient, doctor);
+		//}
+
+		//private void CreateDirectionPdf(referral direction, patient patient, doctor doctor)
+		//{
+		//	try
+		//	{
+		//		// Диалог сохранения файла
+		//		var saveFileDialog = new Microsoft.Win32.SaveFileDialog
+		//		{
+		//			Filter = "PDF файлы (*.pdf)|*.pdf",
+		//			FileName = $"Направление_{direction.id_referral}_{DateTime.Now:yyyyMMdd}.pdf"
+		//		};
+
+		//		if (saveFileDialog.ShowDialog() == true)
+		//		{
+		//			// Создаем документ PDF
+		//			Document document = new Document(PageSize.A4, 50, 50, 50, 50);
+		//			PdfWriter writer = PdfWriter.GetInstance(document, new FileStream(saveFileDialog.FileName, FileMode.Create));
+
+		//			document.Open();
+
+		//			// Добавляем шрифт с поддержкой кириллицы
+		//			string fontPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "arial.ttf");
+		//			BaseFont baseFont = BaseFont.CreateFont(fontPath, BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+		//			Font regularFont = new Font(baseFont, 12);
+		//			Font boldFont = new Font(baseFont, 12, Font.BOLD);
+		//			Font headerFont = new Font(baseFont, 14, Font.BOLD);
+
+		//			// Заголовок
+		//			iTextSharp.text.Paragraph header = new iTextSharp.text.Paragraph("НАПРАВЛЕНИЕ", headerFont);
+		//			header.Alignment = Element.ALIGN_CENTER;
+		//			header.SpacingAfter = 20;
+		//			document.Add(header);
+
+		//			// Номер и дата направления
+		//			iTextSharp.text.Paragraph numberDate = new iTextSharp.text.Paragraph();
+		//			numberDate.Add(new Phrase("№ ", regularFont));
+		//			numberDate.Add(new Phrase(direction.id_referral.ToString(), boldFont));
+		//			numberDate.Add(new Phrase($" от {direction.date_of_creation:dd.MM.yyyy}", regularFont));
+		//			numberDate.Alignment = Element.ALIGN_CENTER;
+		//			document.Add(numberDate);
+
+		//			// Пустая строка
+		//			document.Add(new iTextSharp.text.Paragraph(" "));
+
+		//			// Данные пациента
+		//			AddPdfField(document, "Пациент:", $"{patient.lastname} {patient.name} {patient.surname}", regularFont, boldFont);
+		//			AddPdfField(document, "Дата рождения:", patient.birthday?.ToString("dd.MM.yyyy"), regularFont, boldFont);
+
+		//			// Данные направления
+		//			AddPdfField(document, "Тип направления:", direction.type_of_direction, regularFont, boldFont);
+		//			AddPdfField(document, "Услуга:", direction.service, regularFont, boldFont);
+
+		//			// Fix for CS0023 - check for default DateTime value
+		//			string admissionDate = direction.date_of_admission.HasValue && direction.date_of_admission.Value != DateTime.MinValue
+		//				? direction.date_of_admission.Value.ToString("dd.MM.yyyy")
+		//				: "не указано";
+
+		//			AddPdfField(document, "Дата приема:", admissionDate, regularFont, boldFont);
+		//			AddPdfField(document, "Организация:", direction.organization, regularFont, boldFont);
+		//			AddPdfField(document, "Врач:", direction.doctor, regularFont, boldFont);
+		//			AddPdfField(document, "Обоснование:", direction.justification, regularFont, boldFont);
+
+		//			// Подпись врача
+		//			document.Add(new iTextSharp.text.Paragraph(" "));
+		//			iTextSharp.text.Paragraph signature = new iTextSharp.text.Paragraph();
+		//			signature.Add(new Phrase("Врач: ", regularFont));
+		//			signature.Add(new Phrase($"{doctor.lastname} {doctor.name[0]}.{doctor.surname[0]}.", boldFont));
+		//			signature.Alignment = Element.ALIGN_RIGHT;
+		//			document.Add(signature);
+
+		//			// Печать
+		//			iTextSharp.text.Paragraph stamp = new iTextSharp.text.Paragraph("М.П.");
+		//			stamp.Alignment = Element.ALIGN_RIGHT;
+		//			document.Add(stamp);
+
+		//			document.Close();
+
+		//			MessageBox.Show("Направление успешно сохранено в PDF!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+		//		}
+		//	}
+		//	catch (Exception ex)
+		//	{
+		//		MessageBox.Show($"Ошибка при создании PDF: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+		//	}
+		//}
+
+		private void AddPdfField(Document document, string label, string value, Font regularFont, Font boldFont)
+		{
+			if (string.IsNullOrEmpty(value))
+				value = "не указано";
+
+			iTextSharp.text.Paragraph paragraph = new iTextSharp.text.Paragraph();
+			paragraph.Add(new Phrase(label + " ", regularFont));
+			paragraph.Add(new Phrase(value, boldFont));
+			paragraph.SpacingAfter = 5;
+			document.Add(paragraph);
 		}
 
 		private void AddHeader(Grid grid, string text, int column, int row)
@@ -404,13 +538,6 @@ namespace ЭМК
 				txtDoctorInfo.Text,
 				diagnosisName,
 				this);
-		}
-
-		private void PrintDirectionButton_Click(object sender, RoutedEventArgs e)
-		{
-			var button = sender as Button;
-			int directionId = (int)button.Tag;
-			// Логика печати направления
 		}
 
 		// Текущая вводимая жалоба

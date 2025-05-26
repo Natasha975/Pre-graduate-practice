@@ -4,13 +4,29 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ЭМК"
-        mc:Ignorable="d"
-        Title="ЭМК: Городская больница №24" MinHeight="450" MinWidth="800" Icon="Image/medical_monitor_icon.ico" WindowState="Maximized" WindowStartupLocation="CenterScreen">
+        mc:Ignorable="d" MinHeight="420" MinWidth="500"
+        Title="ЭМК: Городская больница №24" Icon="Image/medical_monitor_icon.ico" WindowStartupLocation="CenterScreen" Width="694">
+
     <Grid>
-        <StackPanel Margin="20" Orientation="Vertical" HorizontalAlignment="Left">
-            <Button Margin="20" Content="Список пациентов" Width="300" Click="PatientsList_Click"/>
-            <Button Margin="20" Content="Прием пациентов" Width="300" Click="PatientAppointment_Click"/>
-            <Button Margin="20" Content="Выход" Width="300" Click="Exit_Click"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Background="#FF3F51B5" Padding="5">
+            <TextBlock x:Name="txtDoctorInfo" Foreground="White" FontSize="10" Text="" HorizontalAlignment="Left" Margin="20,0,0,0" FontWeight="Bold"/>
+        </Border>
+
+        <StackPanel Grid.Row="1" Grid.Column="0" Margin="20" Orientation="Vertical" HorizontalAlignment="Left">
+            <Button Margin="20" Content="Список пациентов" Width="300" Click="PatientsList_Click" Background="#FF3F51B5"/>
+            <Button Margin="20" Content="Прием пациентов" Width="300" Click="PatientAppointment_Click" Background="#FF3F51B5"/>
+            <Button Margin="20" Content="Выход" Width="300" Click="Exit_Click" TextBlock.Foreground="Black" Background="White"/>
         </StackPanel>
+
+        <Image Grid.Column="1" Grid.Row="1" Source="Image/HospitalPicture.jpg" Width="200" HorizontalAlignment="Center" VerticalAlignment="Center"/>
     </Grid>
 </Window>

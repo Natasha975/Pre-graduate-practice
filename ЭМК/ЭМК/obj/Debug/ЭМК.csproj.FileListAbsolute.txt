@@ -173,7 +173,9 @@ C:\Users\Наталья\Documents\Pre-graduate-practice\ЭМК\ЭМК\obj\Debug\
 C:\Users\Наталья\Documents\Pre-graduate-practice\ЭМК\ЭМК\obj\Debug\ЭМК.pdb
 C:\Users\Наталья\Documents\Pre-graduate-practice\ЭМК\ЭМК\obj\Debug\RecordedPatientsWindow.g.cs
 C:\Users\Наталья\Documents\Pre-graduate-practice\ЭМК\ЭМК\obj\Debug\RecordedPatientsWindow.baml
-C:\Users\Наталья\Documents\Pre-graduate-practice\ЭМК\ЭМК\obj\Debug\PatientPage.g.cs
-C:\Users\Наталья\Documents\Pre-graduate-practice\ЭМК\ЭМК\obj\Debug\PatientsListWindow.g.cs
-C:\Users\Наталья\Documents\Pre-graduate-practice\ЭМК\ЭМК\obj\Debug\PatientPage.baml
-C:\Users\Наталья\Documents\Pre-graduate-practice\ЭМК\ЭМК\obj\Debug\PatientsListWindow.baml
+C:\Users\Наталья\Documents\Pre-graduate-practice\ЭМК\ЭМК\obj\Debug\PatientsList\PatientsListWindow.g.cs
+C:\Users\Наталья\Documents\Pre-graduate-practice\ЭМК\ЭМК\obj\Debug\PatientsList\PatientPage.g.cs
+C:\Users\Наталья\Documents\Pre-graduate-practice\ЭМК\ЭМК\obj\Debug\PatientsList\PatientPage.baml
+C:\Users\Наталья\Documents\Pre-graduate-practice\ЭМК\ЭМК\obj\Debug\PatientsList\PatientsListWindow.baml
+C:\Users\Наталья\Documents\Pre-graduate-practice\ЭМК\ЭМК\obj\Debug\PatientsList\PatientDetailsPage.g.cs
+C:\Users\Наталья\Documents\Pre-graduate-practice\ЭМК\ЭМК\obj\Debug\PatientsList\PatientDetailsPage.baml

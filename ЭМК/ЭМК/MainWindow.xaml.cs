@@ -1,18 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using ЭМК.Model;
 
 namespace ЭМК
@@ -22,9 +11,53 @@ namespace ЭМК
 	/// </summary>
 	public partial class MainWindow : Window
 	{
+		private MedCardDBEntities dbContext;
 		public MainWindow()
 		{
-			InitializeComponent();			
+			InitializeComponent();
+
+			dbContext = new MedCardDBEntities();
+
+			LoadDoctorInfo();
+		}
+
+		private async void LoadDoctorInfo()
+		{
+			try
+			{
+				if (App.CurrentDoctor != null)
+				{
+					// Создаем базовую строку с ФИО
+					string doctorInfo = $"{App.CurrentDoctor.lastname} {App.CurrentDoctor.name}";
+
+					// Добавляем отчество, если оно есть
+					if (!string.IsNullOrEmpty(App.CurrentDoctor.surname))
+					{
+						doctorInfo += $" {App.CurrentDoctor.surname}";
+					}
+
+					// Загружаем специальность
+					if (App.CurrentDoctor.id_specialization > 0)
+					{
+						var specialization = await dbContext.specialization
+							.Where(s => s.id_specialization == App.CurrentDoctor.id_specialization)
+							.FirstOrDefaultAsync();
+
+						if (specialization != null)
+						{
+							// Добавляем специальность в скобках
+							doctorInfo += $" ({specialization.name})";
+						}
+					}
+
+					// Устанавливаем текст в Label
+					txtDoctorInfo.Text = doctorInfo;
+				}
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show($"Ошибка при загрузке врачач: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+			}
 		}
 
 		// Обработчик кнопки "Список пациентов"

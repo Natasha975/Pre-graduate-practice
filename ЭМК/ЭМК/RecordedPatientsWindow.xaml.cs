@@ -30,6 +30,7 @@ namespace ЭМК
 			dbContext = new MedCardDBEntities();
 
 			LoadDoctorInfo();
+			LoadTodayAppointments();
 		}
 
 		private async void LoadDoctorInfo()
@@ -57,8 +58,38 @@ namespace ЭМК
 						txtDoctorInfo.Text += $" ({specialization.name})";
 					}
 				}
+			}
+		}
 
-				// Устанавливаем текст в Label
+		private async void LoadTodayAppointments()
+		{
+			try
+			{
+				var today = DateTime.Today;
+
+				var appointments = await dbContext.appointment
+					.Where(a => DbFunctions.TruncateTime(a.date) == today && a.id_doctor == App.CurrentDoctor.id_doctor)
+					.Join(dbContext.patient,
+						a => a.id_patient,
+						p => p.id_patient,
+						(a, p) => new TodayAppointment
+						{
+							Time = a.time,
+							AppointmentType = a.type_of_appointment,
+							PatientFullName = $"{p.lastname} {p.name} {p.surname}",
+							PatientBirthDate = p.birthday.HasValue ? p.birthday.Value.ToString("dd.MM.yyyy") : "",
+							PatientSnils = p.snils,
+							PatientId = p.id_patient
+						})
+					.OrderBy(a => a.Time)
+					.ToListAsync();
+
+				AppointmentsDataGrid.ItemsSource = appointments;
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show($"Ошибка при загрузке записей: {ex.Message}", "Ошибка",
+					MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 		}
 
@@ -68,5 +99,22 @@ namespace ЭМК
 			window1.Show();
 			this.Close();
 		}
+
+		private void ExitBt_Click(object sender, RoutedEventArgs e)
+		{
+			MainWindow mainWindow = new MainWindow();
+			mainWindow.Show();
+			this.Close();
+        }
+    }
+
+	public class TodayAppointment
+	{
+		public DateTime Time { get; set; }
+		public string AppointmentType { get; set; }
+		public string PatientFullName { get; set; }
+		public string PatientBirthDate { get; set; }
+		public string PatientSnils { get; set; }
+		public int PatientId { get; set; }
 	}
 }

@@ -94,6 +94,9 @@ namespace ЭМК
 						Snils = p.snils,
 						Phone = p.phone,
 						Address = p.address,
+						passport_number_and_series = p.passport_number_and_series,
+						name_insurance_company = p.name_insurance_company,
+						place_of_work = p.place_of_work,
 						HospitalName = dbContext.attachment
 							.Where(a => a.id_patient == p.id_patient)
 							.Join(dbContext.hospital,

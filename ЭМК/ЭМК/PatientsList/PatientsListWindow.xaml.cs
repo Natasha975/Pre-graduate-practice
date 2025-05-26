@@ -19,15 +19,17 @@ namespace ЭМК
 	/// </summary>
 	public partial class PatientsListWindow : Window
 	{
-		public PatientsListWindow()
+		private readonly bool _isReception;
+		public PatientsListWindow(bool isReception = false)
 		{
 			InitializeComponent();
+			_isReception = isReception;
 		}
 
 		// Обработчик нажатия кнопки просмотра пациентов
 		private void PatientView_Click(object sender, RoutedEventArgs e)
 		{
-			MainFrame.Navigate(new PatientPage());
+			MainFrame.Navigate(new PatientPage(_isReception));
 		}
 
 		// Обработчик нажатия кнопки "Назад"
@@ -42,8 +44,18 @@ namespace ЭМК
 		// Обработчик нажатия кнопки выхода
 		private void ExitBt_Click(object sender, RoutedEventArgs e)
 		{
-			MainWindow mainWindow = new MainWindow();
-			mainWindow.ShowDialog();
+			if (_isReception)
+			{
+				// Для регистратуры - открываем окно авторизации
+				var loginWindow = new LoginWindow();
+				loginWindow.Show();
+			}
+			else
+			{
+				// Для врачей - открываем главное окно (как было)
+				var mainWindow = new MainWindow();
+				mainWindow.Show();
+			}
 			this.Close();
 		}
 	}

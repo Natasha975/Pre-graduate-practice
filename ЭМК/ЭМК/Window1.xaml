@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ЭМК"
-        mc:Ignorable="d" Title="ЭМК"
+        mc:Ignorable="d" Title="ЭМК: Городская больница №24"
         MinHeight="500" MinWidth="1000" WindowStartupLocation="CenterScreen" WindowState="Maximized" Icon="Image/medical_monitor_icon.ico">
 
     <Window.Resources>

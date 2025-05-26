@@ -166,6 +166,7 @@
     <Compile Include="Model\referral.cs">
       <DependentUpon>ModelDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Region.cs" />
     <Compile Include="Model\representative_patient.cs">
       <DependentUpon>ModelDB.tt</DependentUpon>
     </Compile>
@@ -176,11 +177,14 @@
     <Compile Include="Model\sysdiagrams.cs">
       <DependentUpon>ModelDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="PatientPage.xaml.cs">
+    <Compile Include="PatientsList\PatientDetailsPage.xaml.cs">
+      <DependentUpon>PatientDetailsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PatientsList\PatientPage.xaml.cs">
       <DependentUpon>PatientPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Patients.cs" />
-    <Compile Include="PatientsListWindow.xaml.cs">
+    <Compile Include="PatientsList\PatientsListWindow.xaml.cs">
       <DependentUpon>PatientsListWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Prescription.cs" />
@@ -233,11 +237,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="PatientPage.xaml">
+    <Page Include="PatientsList\PatientDetailsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="PatientsListWindow.xaml">
+    <Page Include="PatientsList\PatientPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PatientsList\PatientsListWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -318,6 +326,7 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Image\HospitalPicture.jpg" />
     <Content Include="Model\ModelDB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ModelDB.edmx</DependentUpon>

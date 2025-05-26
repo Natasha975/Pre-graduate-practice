@@ -15,5 +15,6 @@ namespace ЭМК
 	public partial class App : Application
 	{
 		public static doctor CurrentDoctor { get; set; }
+		public static string CurrentUserType { get; set; }
 	}
 }

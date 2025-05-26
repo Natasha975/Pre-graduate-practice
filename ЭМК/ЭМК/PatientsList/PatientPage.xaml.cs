@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using ЭМК.Model;
+using ЭМК.PatientsList;
 
 namespace ЭМК
 {
@@ -23,28 +24,49 @@ namespace ЭМК
 	/// </summary>
 	public partial class PatientPage : Page
 	{
-		//private diplomEntities db = new diplomEntities();
-
-		//private diplomEntities dbContext;
-		//private List<Patients> allPatients;
-
-		private readonly MedCardDBEntities _dbContext;
+		private readonly MedCardDBEntities dbContext;
 		private List<Patients> _allPatients;
 		private List<Patients> _filteredPatients;
+		private readonly bool _isReception;
 
-		public PatientPage()
+
+		public PatientPage(bool isReception = false)
 		{
 			InitializeComponent();
 
-			_dbContext = new MedCardDBEntities();
+			_isReception = isReception;
+			dbContext = new MedCardDBEntities();
+			ConfigureForReception();
 			Loaded += async (s, e) => await LoadPatientsAsync();
+
+			
+		}
+
+		private void ConfigureForReception()
+		{
+			if (_isReception)
+			{
+				// Создаем кнопку "Добавить пациента"
+				var addButton = new Button
+				{
+					Content = "Добавить пациента",
+					Width = 170,
+					Margin = new Thickness(5),
+					HorizontalAlignment = HorizontalAlignment.Left
+				};
+				addButton.Click += AddPatient_Click;
+
+				// Добавляем кнопку в StackPanel с кнопками
+				var buttonsPanel = (StackPanel)FindName("ButtonsPanel");
+				buttonsPanel.Children.Insert(0, addButton);
+			}
 		}
 
 		private async Task LoadPatientsAsync()
 		{
 			try
 			{
-				var patients = await _dbContext.patient
+				var patients = await dbContext.patient
 					.OrderBy(p => p.lastname)
 					.ThenBy(p => p.name)
 					.Select(p => new Patients
@@ -60,9 +82,9 @@ namespace ЭМК
 						Snils = p.snils,
 						Phone = p.phone,
 						Address = p.address,
-						HospitalName = _dbContext.attachment
+						HospitalName = dbContext.attachment
 							.Where(a => a.id_patient == p.id_patient)
-							.Join(_dbContext.hospital,
+							.Join(dbContext.hospital,
 								a => a.id_hospital,
 								h => h.id_hospital,
 								(a, h) => h.name)
@@ -76,8 +98,8 @@ namespace ЭМК
 			}
 			catch (Exception ex)
 			{
-				MessageBox.Show($"Ошибка загрузки пациентов: {ex.Message}",
-					"Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+				//MessageBox.Show($"Ошибка загрузки пациентов: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+				MessageBox.Show($"Возврат к списку пациентов", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
 			}
 		}
 
@@ -141,32 +163,61 @@ namespace ЭМК
 
 		private void PatientsGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
 		{
+			//// Проверяем, что клик был по строке, а не по заголовку или пустому месту
+			//if (e.OriginalSource is Visual visual)
+			//{
+			//	var row = FindParent<DataGridRow>(visual);
+			//	if (row != null && row.Item is PatientView selectedPatient)
+			//	{
+			//		OpenEditPatientWindow(selectedPatient);
+			//	}
+			//}
 			if (PatientsGrid.SelectedItem is Patients selectedPatient)
 			{
 				OpenPatientDetails(selectedPatient);
 			}
 		}
+		private static T FindParent<T>(DependencyObject child) where T : DependencyObject
+		{
+			while (child != null && !(child is T))
+			{
+				child = VisualTreeHelper.GetParent(child);
+			}
+			return child as T;
+		}
 
 		private void AddPatient_Click(object sender, RoutedEventArgs e)
 		{
-			//var addWindow = new AddEditPatientWindow(_dbContext)
-			//{
-			//	Owner = Window.GetWindow(this)
-			//};
+			// Создаем нового пациента с пустыми полями
+			var newPatient = new patient();
 
-			//if (addWindow.ShowDialog() == true)
-			//{
-			//	_ = LoadPatientsAsync(); // Обновляем список после добавления
-			//}
+			// Открываем страницу редактирования
+			if (Window.GetWindow(this) is PatientsListWindow registrarWindow)
+			{
+				registrarWindow.MainFrame.Navigate(new PatientDetailsPage(dbContext, newPatient, isNewPatient: true));
+			}
 		}
 
 		private void OpenPatientDetails(Patients patient)
 		{
-			//var detailsWindow = new PatientDetailsWindow(_dbContext, patient.Id)
-			//{
-			//	Owner = Window.GetWindow(this)
-			//};
-			//detailsWindow.ShowDialog();
+			//var patientDetails = new PatientDetailsPage(dbContext, patient);
+			//NavigationService.Navigate(patientDetails);
+			var patientFromDb = dbContext.patient.Find(patient.Id);
+			if (patientFromDb == null) return;
+
+			if (Window.GetWindow(this) is PatientsListWindow registrarWindow)
+			{
+				// Подписываемся на событие возвращения
+				registrarWindow.MainFrame.Navigated += (sender, args) =>
+				{
+					if (args.Content is PatientPage) // Если вернулись на эту страницу
+					{
+						_=LoadPatientsAsync(); // Обновляем данные
+					}
+				};
+
+				registrarWindow.MainFrame.Navigate(new PatientDetailsPage(dbContext, patientFromDb));
+			}
 		}
 	}	
 }

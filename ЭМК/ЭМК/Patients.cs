@@ -17,7 +17,10 @@ namespace ЭМК
 		public string Enp => number_policy_OMS;
 		public string Phone { get; set; }
 		public string Policy => number_policy_OMS;
+		public string passport_number_and_series { get; set; }
+		public string name_insurance_company { get; set; }
 
+		public string place_of_work { get; set; }
 
 		// Свойства, соответствующие полям таблицы patient
 		public string lastname { get; set; }

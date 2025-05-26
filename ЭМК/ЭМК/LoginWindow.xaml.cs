@@ -2,8 +2,7 @@
 using System.Windows;
 using System.Windows.Input;
 using ЭМК.Model;
-using System.Data.Entity; // Для методов расширения Entity Framework
-using System.Threading.Tasks; // Для работы с async/await
+using System.Data.Entity;
 
 namespace ЭМК
 {
@@ -43,25 +42,60 @@ namespace ЭМК
 
 			try
 			{
-				var user = await dbContext.doctor.Where(u => u.login == username && u.password == password).FirstOrDefaultAsync();
+				// Проверяем вход для доктора
+				var doctor = await dbContext.doctor
+					.Where(u => u.login == username && u.password == password)
+					.FirstOrDefaultAsync();
 
-				if (user != null)
+				// Фиксированные данные для сотрудника регистратуры
+				const string receptionLogin = "reception";
+				const string receptionPassword = "reception123";
+
+				if (doctor != null)
 				{
-					// Сохраняем информацию о текущем пользователе
-					App.CurrentDoctor = user;
+					// Сохраняем информацию о текущем пользователе (докторе)
+					App.CurrentDoctor = doctor;
+					App.CurrentUserType = "Doctor";
 
 					// Открываем главное окно
 					MainWindow mainWindow = new MainWindow();
 					mainWindow.Show();
 					this.Close();
 				}
+				else if (username == receptionLogin && password == receptionPassword)
+				{
+					// Создаем запись для сотрудника регистратуры
+					App.CurrentUserType = "Reception";
+
+					// Открываем главное окно
+					PatientsListWindow patientsListWindow = new PatientsListWindow(isReception: true);
+					patientsListWindow.Show();
+					this.Close();
+				}
 				else
 				{
-					MessageBox.Show("Неверный логин или пароль", "Ошибка авторизации",
-								  MessageBoxButton.OK, MessageBoxImage.Error);
-								  txtPassword.Password = "";
-								  txtPassword.Focus();
+					MessageBox.Show("Неверный логин или пароль", "Ошибка авторизации", MessageBoxButton.OK, MessageBoxImage.Error);
+					txtPassword.Password = "";
+					txtPassword.Focus();
 				}
+				//var user = await dbContext.doctor.Where(u => u.login == username && u.password == password).FirstOrDefaultAsync();
+
+				//if (user != null)
+				//{
+				//	// Сохраняем информацию о текущем пользователе
+				//	App.CurrentDoctor = user;
+
+				//	// Открываем главное окно
+				//	MainWindow mainWindow = new MainWindow();
+				//	mainWindow.Show();
+				//	this.Close();
+				//}
+				//else
+				//{
+				//	MessageBox.Show("Неверный логин или пароль", "Ошибка авторизации", MessageBoxButton.OK, MessageBoxImage.Error);
+				//	txtPassword.Password = "";
+				//	txtPassword.Focus();
+				//}
 			}
 			catch (System.Exception ex)
 			{
